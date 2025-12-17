@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stemawy - Student Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        /* Apply Inter font family and smooth scrolling */
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        /* --- Custom Scrollbar (Hidden for Auto-Scroll) --- */
+        .horizontal-scroll-wrapper {
+            overflow: hidden; 
+            padding-bottom: 1.5rem; 
+        }
+
+        /* The moving content container */
+        .horizontal-scroll-content {
+            display: flex;
+            width: max-content; 
+            /* faster auto-scroll: reduced duration */
+            animation: auto-scroll 25s linear infinite; 
+        }
+        
+        /* Keyframes for continuous, seamless loop */
+        @keyframes auto-scroll {
+            from {
+                transform: translateX(0);
+            }
+            to {
+                transform: translateX(-50%); 
+            }
+        }
+        
+        /* Pause animation on hover */
+        .horizontal-scroll-content:hover {
+            animation-play-state: paused;
+        }
+
+        /* Ensure responsive card height consistency */
+        .subject-card {
+            min-height: 200px;
+        }
+
+
+        /* --- SUBTLE NEON GLOW EFFECTS (Only for shadows) --- */
+        .shadow-subtle-glow {
+            box-shadow: 0 4px 15px rgba(51, 255, 204, 0.25), 0 0 5px rgba(51, 255, 204, 0.1);
+            transition: all 0.3s ease-in-out;
+        }
+        .hover\:shadow-subtle-glow-lg:hover {
+            box-shadow: 0 6px 20px rgba(51, 255, 204, 0.4), 0 0 8px rgba(51, 255, 204, 0.2);
+        }
+
+        /* Competition Card Hover Animation */
+        .comp-card {
+            transition: all 0.3s ease;
+        }
+        .comp-card:hover {
+            border-color: #33FFCC; 
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: 0 10px 30px rgba(0, 191, 255, 0.3);
+        }
+
+        .section-container {
+            max-width: 1300px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 3rem 1.5rem;
+        }
+
+        /* ----------------------------------------------- */
+        /* --- NEW: Gradient Text Animation Styles for Headers --- */
+        /* ----------------------------------------------- */
+        
+        /* Keyframes for continuous gradient shift */
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Base class for the animated text effect */
+        .gradient-text-wrapper {
+            display: inline-block; 
+            background-size: 300% 100%;
+            animation: gradient-shift 8s linear infinite; 
+            /* The magic: clip the background (gradient) to the text shape */
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent; /* Make the foreground color transparent */
+            line-height: 1.2;
+            white-space: nowrap; /* Prevent gradient text from wrapping */
+        }
+
+        /* Style for the main H2 section headers (Tech Primary/Secondary) */
+        .gradient-h2 {
+            background-image: linear-gradient(to right, #00BFFF, #33FFCC, #00BFFF, #33FFCC); 
+            animation-duration: 8s; 
+        }
+
+        /* Style for the Task/Subject H3 headers (Tech Secondary/Primary) */
+        .gradient-h3-comp {
+            background-image: linear-gradient(to right, #33FFCC, #00BFFF, #33FFCC, #00BFFF); 
+            animation-duration: 6s;
+        }
+
+    </style>
+    <script>
+        // Tailwind Configuration with a Modern Tech Palette
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'tech-bg': '#1A1F26', 
+                        'tech-dark-alt': '#2C333F', 
+                        'tech-light': '#E0E6F0', 
+                        'tech-primary': '#00BFFF', 
+                        'tech-secondary': '#33FFCC', 
+                    }
+                }
+            }
+        }
+        
+        // Skill cards for the "Enhance Your Skills" auto-scrolling row
+        const skillCards = [
+            {
+                title: "Test Your Writing Speed",
+                desc: "you write fast in your journals, your fingers moves in light speed, let's see what you got 🥇",
+                link: "https://monkeytype.com/",
+                btn: "Try Now"
+            },
+            {
+                title: "Learn Proper Writing",
+                desc: "still can't get your eyes of the keyboard, feel the chains holding your hands. start practicing proper writing right now ⌨",
+                link: "https://www.edclub.com/login.html",
+                btn: "Practice"
+            },
+            {
+                title: "Test Your English",
+                desc: "let's see what is your level in the global language, in all terms.",
+                link: "https://www.berlitz.com/online-placement-test/adults/en?US",
+                btn: "Take Test"
+            },
+            {
+                title: "AI detector",
+                desc: "you got a task to submit, let's see what is your AI percentage.",
+                link: "https://www.zerogpt.com/",
+                btn: "Check"
+            },
+            {
+                title: "Improve Your Vocabulary",
+                desc: "expand your word bank with fun and interactive exercises to boost your vocabulary skills.",
+                link: "https://www.vocabulary.com/",
+                btn: "Start Learning"
+            },
+            {
+                title: "Grammar Exercises",
+                desc: "master the rules of grammar with engaging exercises and quizzes designed for all levels.",
+                link: "https://www.englishgrammar.org/category/exercises/",
+                btn: "Practice Now"
+            },
+            {
+                title: "Reading Comprehension",
+                desc: "enhance your reading skills with passages and questions that challenge your understanding.",
+                link: "https://www.readtheory.org/",
+                btn: "Read & Learn"
+            },
+            {
+                title: "Writing Prompts",
+                desc: "get inspired with creative writing prompts to practice and improve your writing skills.",
+                link: "https://www.writingforward.com/creative-writing-prompts",
+                btn: "Get Inspired"
+            },
+            {
+                title: "Listening Practice",
+                desc: "boost your listening skills with audio exercises and comprehension questions.",
+                link: "https://www.esl-lab.com/",
+                btn: "Listen Now"
+            },
+            {
+                title: "Speaking Exercises",
+                desc: "improve your spoken English with interactive speaking exercises and feedback.",
+                link: "https://www.speakenglish.co.uk/speaking-exercises.html",
+                btn: "Speak Up"
+            },
+            {
+                title: "Idioms and Phrases",
+                desc: "learn common idioms and phrases to sound more natural in English conversations.",
+                link: "https://www.theidioms.com/",
+                btn: "Learn More"
+            },
+            {
+                title: "MATH helper",
+                desc: "solve any math problem, step by step.",
+                link: "https://www.symbolab.com/",
+                btn: "Explore"
+            },
+            {
+                title: "Science Experiments",
+                desc: "discover fun and educational science experiments to try at home or in the classroom.",
+                link: "https://www.sciencefun.org/kidszone/experiments/",
+                btn: "Experiment"
+            },
+            {
+                title: "Learn anything",
+                desc: "You can now learn anything you want in simple way, enhancing yourself.",
+                link: "https://learn-anything.xyz/",
+                btn: "Learn Now"
+            },
+            {
+                title: "Coding Practice",
+                desc: "improve your coding skills with interactive exercises and challenges in various programming languages.",
+                link: "https://www.hackerrank.com/domains/tutorials/10-days-of-javascript",
+                btn: "Code Now"
+            },
+            {
+                title: "Memory Improvement",
+                desc: "Boost your memory skills with scientifically designed exercises and games.",
+                link: "https://www.memory-improvement-tips.com/free-memory-games.html",
+                btn: "Train Memory"
+            }
+        ];
+
+        // Create a skill card HTML string
+        function createSkillCard(card) {
+            return `
+                <div class="min-w-[320px] w-[320px] p-5 bg-tech-dark-alt rounded-xl border border-tech-primary/30 flex-shrink-0 transition duration-300 hover:shadow-subtle-glow">
+                    <h3 class="text-2xl font-extrabold mb-2 text-tech-primary">${card.title}</h3>
+                    <p class="text-sm text-tech-light/90 mb-4 min-h-[56px]">${card.desc}</p>
+                    <a href="${card.link}" target="_blank" rel="noopener noreferrer" class="inline-block w-full text-center py-2 font-semibold text-tech-bg bg-tech-primary rounded-lg hover:bg-tech-secondary transition duration-300">${card.btn} &rarr;</a>
+                </div>
+            `;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const scrollContent = document.getElementById('scroll-content');
+            if (scrollContent) {
+                const originalContent = skillCards.map(createSkillCard).join('');
+                // Duplicate for seamless loop
+                scrollContent.innerHTML = originalContent + originalContent;
+            }
+        });
+
+    </script>
+</head>
+<body class="bg-tech-bg text-tech-light min-h-screen">
+
+    <header class="sticky top-0 bg-tech-bg/95 backdrop-blur-sm border-b border-tech-primary/30 z-30">
+        <div class="section-container flex justify-between items-center py-4 px-4 sm:px-6 md:px-8">
+            
+            <div class="text-2xl font-extrabold text-tech-light tracking-widest hidden sm:block">
+                STEMAWY<span class="text-tech-primary"></span>
+            </div>
+
+            </div>
+    </header>
+
+    <main class="section-container pt-8">
+        
+        <h2 class="text-3xl font-bold mb-6 border-b border-tech-primary/30 pb-2">
+            <span class="gradient-text-wrapper gradient-h2">✨ Enhance Your Skills (Hover to Pause)</span>
+        </h2>
+
+        <div class="horizontal-scroll-wrapper">
+            <div id="scroll-content" class="horizontal-scroll-content space-x-6">
+                </div>
+        </div>
+
+        <h2 class="text-3xl font-bold mt-12 mb-6 border-b border-tech-primary/30 pb-2">
+            <span class="gradient-text-wrapper gradient-h2">📚 All Subjects and Resources</span>
+        </h2>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            
+            <div class="subject-card p-5 bg-tech-dark-alt rounded-xl shadow-lg border border-tech-primary/20 transition duration-300 hover:border-tech-primary/70">
+                <h3 class="text-xl font-bold mb-2">
+                    <span class="gradient-text-wrapper gradient-h3-comp">Physics</span>
+                </h3>
+                <p class="text-sm text-tech-light/70 mb-4">Mechanics, E&M, Thermodynamics, and Quantum Theory from introductory to advanced levels.</p>
+                <a href="./physics g10/index.html" class="block w-full text-center py-2 text-sm font-semibold text-tech-bg bg-tech-primary rounded-lg hover:bg-tech-secondary transition duration-300">
+                    Study Now
+                </a>
+            </div>
+            
+            <div class="subject-card p-5 bg-tech-dark-alt rounded-xl shadow-lg border border-tech-primary/20 transition duration-300 hover:border-tech-primary/70">
+                <h3 class="text-xl font-bold mb-2">
+                    <span class="gradient-text-wrapper gradient-h3-comp">Chemistry</span>
+                </h3>
+                <p class="text-sm text-tech-light/70 mb-4">Organic, Inorganic, Physical, and Analytical Chemistry resources including lab guides.</p>
+                <a href="./chemestry g10/index.html" class="block w-full text-center py-2 text-sm font-semibold text-tech-bg bg-tech-primary rounded-lg hover:bg-tech-secondary transition duration-300">
+                    Study Now
+                </a>
+            </div>
+            
+            <div class="subject-card p-5 bg-tech-dark-alt rounded-xl shadow-lg border border-tech-primary/20 transition duration-300 hover:border-tech-primary/70">
+                <h3 class="text-xl font-bold mb-2">
+                    <span class="gradient-text-wrapper gradient-h3-comp">Geology</span>
+                </h3>
+                <p class="text-sm text-tech-light/70 mb-4">Earth science, rock cycles, plate tectonics, and environmental geology resources.</p>
+                <a href="./geology g10/index.html" class="block w-full text-center py-2 text-sm font-semibold text-tech-bg bg-tech-primary rounded-lg hover:bg-tech-secondary transition duration-300">
+                    Study Now
+                </a>
+            </div>
+
+            <div class="subject-card p-5 bg-tech-dark-alt rounded-xl shadow-lg border border-tech-primary/20 transition duration-300 hover:border-tech-primary/70">
+                <h3 class="text-xl font-bold mb-2">
+                    <span class="gradient-text-wrapper gradient-h3-comp">Social Studies</span>
+                </h3>
+                <p class="text-sm text-tech-light/70 mb-4">History, civics, and economics modules with detailed documents and video lectures.</p>
+                <a href="./social g10/index.html" class="block w-full text-center py-2 text-sm font-semibold text-tech-bg bg-tech-primary rounded-lg hover:bg-tech-secondary transition duration-300">
+                    Study Now
+                </a>
+            </div>
+
+            <div class="subject-card p-5 bg-tech-dark-alt rounded-xl shadow-lg border border-tech-primary/20 transition duration-300 hover:border-tech-primary/70">
+                <h3 class="text-xl font-bold mb-2">
+                    <span class="gradient-text-wrapper gradient-h3-comp">Biology</span>
+                </h3>
+                <p class="text-sm text-tech-light/70 mb-4">Cellular biology, genetics, anatomy, and ecology modules with video walkthroughs.</p>
+                <a href="./biology g10/index.html" class="block w-full text-center py-2 text-sm font-semibold text-tech-bg bg-tech-primary rounded-lg hover:bg-tech-secondary transition duration-300">
+                    Study Now
+                </a>
+            </div>
+
+            <div class="subject-card p-5 bg-tech-dark-alt rounded-xl shadow-lg border border-tech-primary/20 transition duration-300 hover:border-tech-primary/70">
+                <h3 class="text-xl font-bold mb-2">
+                    <span class="gradient-text-wrapper gradient-h3-comp">English</span>
+                </h3>
+                <p class="text-sm text-tech-light/70 mb-4">Advanced essay writing, literature analysis, and comprehension resources.</p>
+                <a href="./english g10/index.html" class="block w-full text-center py-2 text-sm font-semibold text-tech-bg bg-tech-primary rounded-lg hover:bg-tech-secondary transition duration-300">
+                    Study Now
+                </a>
+            </div>
+
+            <div class="subject-card p-5 bg-tech-dark-alt rounded-xl shadow-lg border border-tech-primary/20 transition duration-300 hover:border-tech-primary/70">
+                <h3 class="text-xl font-bold mb-2">
+                    <span class="gradient-text-wrapper gradient-h3-comp">Arabic</span>
+                </h3>
+                <p class="text-sm text-tech-light/70 mb-4">Grammar, literature, and advanced composition modules for all grades.</p>
+                <a href="./Arabic g10/index.htm" class="block w-full text-center py-2 text-sm font-semibold text-tech-bg bg-tech-primary rounded-lg hover:bg-tech-secondary transition duration-300">
+                    Study Now
+                </a>
+            </div>
+            
+            <div class="subject-card p-5 bg-tech-dark-alt rounded-xl shadow-lg border border-tech-primary/20 transition duration-300 hover:border-tech-primary/70">
+                <h3 class="text-xl font-bold mb-2">
+                    <span class="gradient-text-wrapper gradient-h3-comp">Math</span>
+                </h3>
+                <p class="text-sm text-tech-light/70 mb-4">Algebra, Calculus, Statistics, and Discrete Math with practice problem sets.</p>
+                <a href="./math g10/index.html" class="block w-full text-center py-2 text-sm font-semibold text-tech-bg bg-tech-primary rounded-lg hover:bg-tech-secondary transition duration-300">
+                    Study Now
+                </a>
+            </div>
+            
+            <div class="subject-card p-5 bg-tech-dark-alt rounded-xl shadow-lg border border-tech-primary/20 transition duration-300 hover:border-tech-primary/70">
+                <h3 class="text-xl font-bold mb-2">
+                    <span class="gradient-text-wrapper gradient-h3-comp">Mechanics</span>
+                </h3>
+                <p class="text-sm text-tech-light/70 mb-4">Applied mechanics, statics, dynamics, and structural analysis tutorials and files.</p>
+                <a href="./mechanics g10/index.html" class="block w-full text-center py-2 text-sm font-semibold text-tech-bg bg-tech-primary rounded-lg hover:bg-tech-secondary transition duration-300">
+                    Study Now
+                </a>
+            </div>
+
+            <div class="subject-card p-5 bg-tech-dark-alt rounded-xl shadow-lg border border-tech-primary/20 transition duration-300 hover:border-tech-primary/70">
+                <h3 class="text-xl font-bold mb-2">
+                    <span class="gradient-text-wrapper gradient-h3-comp">German</span>
+                </h3>
+                <p class="text-sm text-tech-light/70 mb-4">Vocabulary building, dialogue practice, and cultural context files.</p>
+                <a href="./german g10/index.html" class="block w-full text-center py-2 text-sm font-semibold text-tech-bg bg-tech-primary rounded-lg hover:bg-tech-secondary transition duration-300">
+                    Study Now
+                </a>
+            </div>
+
+            <div class="subject-card p-5 bg-tech-dark-alt rounded-xl shadow-lg border border-tech-primary/20 transition duration-300 hover:border-tech-primary/70">
+                <h3 class="text-xl font-bold mb-2">
+                    <span class="gradient-text-wrapper gradient-h3-comp">French</span>
+                </h3>
+                <p class="text-sm text-tech-light/70 mb-4">Grammar, verb conjugation, and conversational fluency resources.</p>
+                <a href="./french g10/index.html" class="block w-full text-center py-2 text-sm font-semibold text-tech-bg bg-tech-primary rounded-lg hover:bg-tech-secondary transition duration-300">
+                    Study Now
+                </a>
+            </div>
+            
+            <div class="subject-card p-5 bg-tech-dark-alt rounded-xl shadow-lg border border-tech-primary/20 transition duration-300 hover:border-tech-primary/70">
+                <h3 class="text-xl font-bold mb-2">
+                    <span class="gradient-text-wrapper gradient-h3-comp">Computer Science</span>
+                </h3>
+                <p class="text-sm text-tech-light/70 mb-4">Algorithms, data structures, programming concepts (html, CSS), and computational theory.</p>
+                <a href="./cs g10/index.html" class="block w-full text-center py-2 text-sm font-semibold text-tech-bg bg-tech-primary rounded-lg hover:bg-tech-secondary transition duration-300">
+                    Study Now
+                </a>
+            </div>
+            
+            <div class="subject-card p-5 bg-tech-dark-alt rounded-xl shadow-lg border border-tech-secondary/40 transition duration-300 hover:border-tech-secondary/70">
+                <h3 class="text-xl font-bold mb-2">
+                    <span class="gradient-text-wrapper gradient-h3-comp">Capstone</span>
+                </h3>
+                <p class="text-sm text-tech-light/70 mb-4">Guidance, frameworks, and resources for planning and executing your final research project.</p>
+                <a href="./capstone g10/index.html" class="block w-full text-center py-2 text-sm font-semibold text-tech-bg bg-tech-secondary rounded-lg hover:bg-tech-primary transition duration-300">
+                    Project Hub
+                </a>
+            </div>
+        </div>
+
+
+        <h2 class="text-3xl font-bold mt-12 mb-6 border-b border-tech-primary/30 pb-2">
+            <span class="gradient-text-wrapper gradient-h2">🏆 External Opportunities & Competitions</span>
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            <div class="comp-card p-6 bg-tech-dark-alt rounded-xl border border-tech-primary/20 transition duration-300 hover:shadow-subtle-glow">
+                <h3 class="text-2xl font-extrabold mb-2">
+                    <span class="gradient-text-wrapper gradient-h3-comp">YYAS</span>
+                </h3>
+                <p class="text-sm text-tech-light/80 mb-4">Yale Young African Scholars: An intense academic and leadership program for high-achieving African students.</p>
+                <a href="https://africanscholars.yale.edu/" target="_blank" class="block w-full text-center py-2 text-sm font-semibold text-tech-bg bg-tech-secondary rounded-lg hover:bg-tech-primary transition duration-300">
+                    Visit Website &rarr;
+                </a>
+            </div>
+
+            <div class="comp-card p-6 bg-tech-dark-alt rounded-xl border border-tech-primary/20 transition duration-300 hover:shadow-subtle-glow">
+                <h3 class="text-2xl font-extrabold mb-2">
+                    <span class="gradient-text-wrapper gradient-h3-comp">ALA</span>
+                </h3>
+                <p class="text-sm text-tech-light/80 mb-4">African Leadership Academy: Developing leaders who will transform the future of the African continent.</p>
+                <a href="https://www.africanleadershipacademy.org/" target="_blank" class="block w-full text-center py-2 text-sm font-semibold text-tech-bg bg-tech-secondary rounded-lg hover:bg-tech-primary transition duration-300">
+                    Visit Website &rarr;
+                </a>
+            </div>
+
+            <div class="comp-card p-6 bg-tech-dark-alt rounded-xl border border-tech-primary/20 transition duration-300 hover:shadow-subtle-glow">
+                <h3 class="text-2xl font-extrabold mb-2">
+                    <span class="gradient-text-wrapper gradient-h3-comp">Polygence </span>
+                </h3>
+                <p class="text-sm text-tech-light/80 mb-4">**Polygence is a leading research academy** that connects students with research mentors to pursue personalized, independent research projects.</p>
+                <a href="https://www.polygence.org/" target="_blank" class="block w-full text-center py-2 text-sm font-semibold text-tech-bg bg-tech-secondary rounded-lg hover:bg-tech-primary transition duration-300">
+                    Visit Website &rarr;
+                </a>
+            </div>
+
+            <div class="comp-card p-6 bg-tech-dark-alt rounded-xl border border-tech-primary/20 transition duration-300 hover:shadow-subtle-glow">
+                <h3 class="text-2xl font-extrabold mb-2">
+                    <span class="gradient-text-wrapper gradient-h3-comp">CCIR</span>
+                </h3>
+                <p class="text-sm text-tech-light/80 mb-4">Comprehensive College/Career/Research: Advanced research mentorship for ambitious high school students.</p>
+                <a href="https://ccir.smapply.org/tsk/33352364/frm/293391747/e/" target="_blank" class="block w-full text-center py-2 text-sm font-semibold text-tech-bg bg-tech-secondary rounded-lg hover:bg-tech-primary transition duration-300">
+                    Visit Website &rarr;
+                </a>
+            </div>
+
+            <div class="comp-card p-6 bg-tech-dark-alt rounded-xl border border-tech-primary/20 transition duration-300 hover:shadow-subtle-glow">
+                <h3 class="text-2xl font-extrabold mb-2">
+                    <span class="gradient-text-wrapper gradient-h3-comp">Horizon</span>
+                </h3>
+                <p class="text-sm text-tech-light/80 mb-4">**Horizon Research** provides mentorship programs designed to cultivate students' research skills across various disciplines and subjects.</p>
+                <a href="https://airtable.com/appVSLDvRVIOB8e97/shrKtvMuFbpIfgIC0" target="_blank" class="block w-full text-center py-2 text-sm font-semibold text-tech-bg bg-tech-secondary rounded-lg hover:bg-tech-primary transition duration-300">
+                    Visit Website &rarr;
+                </a>
+            </div>
+
+            <div class="comp-card p-6 bg-tech-dark-alt rounded-xl border border-tech-primary/20 transition duration-300 hover:shadow-subtle-glow">
+                <h3 class="text-2xl font-extrabold mb-2">
+                    <span class="gradient-text-wrapper gradient-h3-comp">Pioneer</span>
+                </h3>
+                <p class="text-sm text-tech-light/80 mb-4">**Pioneer Academics** is an exclusive, virtual research program that connects students with university professors for remote research.</p>
+                <a href="https://apply.pioneeracademics.com/portal/apply" target="_blank" class="block w-full text-center py-2 text-sm font-semibold text-tech-bg bg-tech-secondary rounded-lg hover:bg-tech-primary transition duration-300">
+                    Visit Website &rarr;
+                </a>
+            </div>
+
+            <div class="comp-card p-6 bg-tech-dark-alt rounded-xl border border-tech-primary/20 transition duration-300 hover:shadow-subtle-glow">
+                <h3 class="text-2xl font-extrabold mb-2">
+                    <span class="gradient-text-wrapper gradient-h3-comp">Wolfram</span>
+                </h3>
+                <p class="text-sm text-tech-light/80 mb-4">**Wolfram Summer School** focuses on computation, data science, and innovation, utilizing Wolfram Language and technology.</p>
+                <a href="https://www.wolfram.com/company/careers/opportunities/#op-628015-2025-wolfram-summer-school" target="_blank" class="block w-full text-center py-2 text-sm font-semibold text-tech-bg bg-tech-secondary rounded-lg hover:bg-tech-primary transition duration-300">
+                    Visit Website &rarr;
+                </a>
+            </div>
+
+            <div class="comp-card p-6 bg-tech-dark-alt rounded-xl border border-tech-primary/20 transition duration-300 hover:shadow-subtle-glow">
+                <h3 class="text-2xl font-extrabold mb-2">
+                    <span class="gradient-text-wrapper gradient-h3-comp">NC State Research Program</span>
+                </h3>
+                <p class="text-sm text-tech-light/80 mb-4">A research-focused opportunity, likely tied to North Carolina State University, for high school students interested in STEM fields.</p>
+                <a href="https://airtable.com/appfk0qmR9Gf3WPsr/pag7LItHDUWsaNemI/form" target="_blank" class="block w-full text-center py-2 text-sm font-semibold text-tech-bg bg-tech-secondary rounded-lg hover:bg-tech-primary transition duration-300">
+                    Visit Website &rarr;
+                </a>
+            </div>
+            <div class="comp-card p-6 bg-tech-dark-alt rounded-xl border border-tech-primary/20 transition duration-300 hover:shadow-subtle-glow">
+                <h3 class="text-2xl font-extrabold mb-2">
+                    <span class="gradient-text-wrapper gradient-h3-comp">CS50</span>
+                </h3>
+                <p class="text-sm text-tech-light/80 mb-4">Wanaa learn from Harverd , start your programming journey</p>
+                <a href="https://pll.harvard.edu/course/cs50-introduction-computer-science" target="_blank" class="block w-full text-center py-2 text-sm font-semibold text-tech-bg bg-tech-secondary rounded-lg hover:bg-tech-primary transition duration-300">
+                    Visit Website &rarr;
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="mt-12 py-8 bg-tech-dark-alt text-tech-light/70">
+        <div class="section-container flex flex-col sm:flex-row justify-between items-center text-sm">
+            <p class="order-2 sm:order-1 mt-4 sm:mt-0">&copy; 2025 Stemawy. All rights reserved.</p>
+            
+            <div class="space-x-4 order-1 sm:order-2">
+                <a href="#" class="hover:text-tech-primary transition duration-200">Settings</a>
+                <a href="#" class="hover:text-tech-primary transition duration-200">Support</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
