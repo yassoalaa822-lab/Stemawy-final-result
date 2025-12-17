@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capstone Checkpoints — First Semester</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+
+    <style>
+        /* Apply Inter font family and smooth scrolling */
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        /* --- Tech Aesthetic Colors and Glows --- */
+        .shadow-subtle-glow {
+            box-shadow: 0 4px 15px rgba(51, 255, 204, 0.25), 0 0 5px rgba(51, 255, 204, 0.1);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .hover\:shadow-subtle-glow-lg:hover {
+            box-shadow: 0 6px 20px rgba(51, 255, 204, 0.4), 0 0 8px rgba(51, 255, 204, 0.2);
+        }
+
+        /* Keyframes for continuous gradient shift */
+        @keyframes gradient-shift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Base class for the animated text effect */
+        .gradient-text-wrapper {
+            display: inline-block;
+            background-size: 300% 100%;
+            animation: gradient-shift 8s linear infinite;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            line-height: 1.2;
+            white-space: nowrap;
+        }
+
+        /* Style for the main header */
+        .gradient-h1 {
+            background-image: linear-gradient(to right, #00BFFF, #33FFCC, #00BFFF, #33FFCC);
+            animation-duration: 8s;
+        }
+
+        /* Theme variables and utility classes so the toggle visibly switches colors */
+        :root[data-theme="dark"] {
+            --tech-bg: #1A1F26;
+            --tech-dark-alt: #2C333F;
+            --tech-light: #E0E6F0;
+            --tech-primary: #00BFFF;
+            --tech-secondary: #33FFCC;
+            --border-color: rgba(51, 255, 204, 0.3);
+        }
+
+        :root[data-theme="light"] {
+            --tech-bg: #ffffff;
+            --tech-dark-alt: #f3f4f6;
+            --tech-light: #111827;
+            --tech-primary: #0369a1;
+            --tech-secondary: #0e7490;
+            --border-color: rgba(2, 132, 199, 0.3);
+        }
+
+        body {
+            background-color: var(--tech-bg);
+            color: var(--tech-light);
+        }
+
+        .bg-tech-bg {
+            background-color: var(--tech-bg) !important;
+        }
+
+        .bg-tech-dark-alt {
+            background-color: var(--tech-dark-alt) !important;
+        }
+
+        .text-tech-light {
+            color: var(--tech-light) !important;
+        }
+
+        .text-tech-primary {
+            color: var(--tech-primary) !important;
+        }
+
+        .text-tech-secondary {
+            color: var(--tech-secondary) !important;
+        }
+
+        .border-tech-primary {
+            border-color: var(--border-color) !important;
+        }
+
+        /* Custom scrollbar style for the content area */
+        #content-area {
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #00BFFF #1A1F26;
+        }
+
+        #content-area::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #content-area::-webkit-scrollbar-thumb {
+            background-color: #00BFFF;
+            border-radius: 4px;
+        }
+
+        #content-area::-webkit-scrollbar-track {
+            background-color: #1A1F26;
+        }
+
+        /* Custom style for the LO button when active */
+        .lo-item.active {
+            background-color: #00BFFF33;
+            /* tech-primary with opacity */
+            border-left-color: #33FFCC;
+            /* tech-secondary */
+            box-shadow: 0 0 10px rgba(51, 255, 204, 0.3);
+        }
+
+        /* Details summary arrow rotation */
+        details summary .arrow-icon {
+            transform: rotate(0deg);
+            transition: transform 0.3s;
+        }
+
+        details[open] summary .arrow-icon {
+            transform: rotate(90deg);
+        }
+    </style>
+
+    <script>
+        // Tailwind Configuration with Modern Tech Palette
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'tech-bg': '#1A1F26',
+                        'tech-dark-alt': '#2C333F',
+                        'tech-light': '#E0E6F0',
+                        'tech-primary': '#00BFFF',
+                        'tech-secondary': '#33FFCC',
+                    }
+                }
+            }
+        }
+
+        // Sidebar files (all files in capstone g10/first semester)
+        const capstoneFiles = [
+            'first semester/capstone feedback.pptx',
+            'first semester/Capstone Portfolio Template.pdf',
+            'first semester/Capstone Rubric (Poster).pdf',
+            'first semester/Capstone_Challenge_Grade_10_FIRST_semester_2025-2026.pdf',
+            'first semester/EDP.jpg',
+            'first semester/Journals and feedbacks.pdf',
+            'first semester/poster rubric simplified.pdf'
+        ];
+
+        // Drive share links from export CSV (fallbacks to local path if missing)
+        const shareMap = {
+            'capstone feedback.pptx': 'https://docs.google.com/presentation/d/1wLrXOhLRz0M_OTF4mEDyMbL0jbw8cKQp/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true',
+            'Capstone Portfolio Template.pdf': 'https://drive.google.com/file/d/1ZHil6hjqLXqtRDD9lPwZHYimMCh-0pSY/view?usp=drivesdk',
+            'Capstone Rubric (Poster).pdf': 'https://drive.google.com/file/d/1ZxOQl82UWMvOcm7k_o-k1Ci5UfI08xvQ/view?usp=drivesdk',
+            'Capstone_Challenge_Grade_10_FIRST_semester_2025-2026.pdf': 'https://drive.google.com/file/d/1tJx01DT3L7Vkh35KRjyCiMSRmy4EAGmW/view?usp=drivesdk',
+            'EDP.jpg': 'https://drive.google.com/file/d/1-zSzCpjERFryNQ8RXms_QoER9W53kauz/view?usp=drivesdk',
+            'Journals and feedbacks.pdf': 'https://drive.google.com/file/d/1UUFiY6gRo0jQrqhODP8Ynswdx0ZFBD2C/view?usp=drivesdk',
+            'poster rubric simplified.pdf': 'https://drive.google.com/file/d/1hW1x5mFZv2wXzQOMiEnxY2dls86Q4OiU/view?usp=drivesdk'
+        };
+
+        // Minimal data structure (no LO content needed for Capstone page)
+        const learningObjectives = {
+            references: {
+                title: 'Files',
+                conceptLinks: []
+            }
+        };
+
+        function renderFilesList() {
+            if (!Array.isArray(capstoneFiles) || capstoneFiles.length === 0) return `<div class="p-6 text-tech-light">No files found.</div>`;
+            let html = `<div class="p-6 bg-tech-bg/70 rounded-lg border border-tech-dark-alt"><h3 class="text-xl font-bold text-tech-secondary mb-3">Files</h3><ul class="space-y-2">`;
+            capstoneFiles.forEach(f => {
+                const name = f.split('/').pop();
+                const url = shareMap[name] || f;
+                html += `<li><a href="${url}" target="_blank" rel="noopener noreferrer" class="text-tech-primary underline hover:text-tech-secondary">${name}</a></li>`;
+            });
+            html += `</ul></div>`;
+            return html;
+        }
+
+        function handleNavigationClick(key) {
+            const contentArea = document.getElementById('dynamic-content');
+            const defaultMessage = document.getElementById('default-message');
+            if (defaultMessage) defaultMessage.style.display = 'none';
+            if (key === 'references') {
+                contentArea.innerHTML = renderFilesList();
+            } else {
+                contentArea.innerHTML = `<div class="p-6">No content.</div>`;
+            }
+            document.getElementById('content-area').scrollTop = 0;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const loList = document.getElementById('lo-list');
+            const listItem = document.createElement('li');
+            listItem.innerHTML = `<button id="lo-references" class="lo-item w-full text-left p-3 rounded-lg border-l-4 border-tech-dark-alt transition duration-200 hover:bg-tech-primary/10 hover:border-tech-primary font-medium" data-lo-key="references">Files</button>`;
+            loList.appendChild(listItem);
+
+            loList.addEventListener('click', (event) => {
+                const button = event.target.closest('.lo-item');
+                if (button) {
+                    const key = button.getAttribute('data-lo-key');
+                    handleNavigationClick(key);
+                }
+            });
+
+
+            // Initialize theme from localStorage. If no preference saved yet, default to dark and persist it.
+            let savedTheme = localStorage.getItem('site-theme');
+            if (!savedTheme) {
+                savedTheme = 'dark';
+                localStorage.setItem('site-theme', savedTheme);
+            }
+            document.documentElement.setAttribute('data-theme', savedTheme);
+
+            // Right-side theme toggle (keeps compatibility with other pages)
+            const themeToggle = document.getElementById('theme-toggle');
+            function updateThemeIcon(theme) {
+                if (!themeToggle) return;
+                if (theme === 'light') {
+                    // Sun icon for light
+                    themeToggle.innerHTML = `
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5" fill="currentColor" />
+                            <g stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                                <line x1="12" y1="2" x2="12" y2="4" />
+                                <line x1="12" y1="20" x2="12" y2="22" />
+                                <line x1="2" y1="12" x2="4" y2="12" />
+                                <line x1="20" y1="12" x2="22" y2="12" />
+                                <line x1="4.9" y1="4.9" x2="6.3" y2="6.3" />
+                                <line x1="17.7" y1="17.7" x2="19.1" y2="19.1" />
+                                <line x1="4.9" y1="19.1" x2="6.3" y2="17.7" />
+                                <line x1="17.7" y1="6.3" x2="19.1" y2="4.9" />
+                            </g>
+                        </svg>
+                    `;
+                } else {
+                    // Moon icon for dark
+                    themeToggle.innerHTML = `
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="currentColor" />
+                        </svg>
+                    `;
+                }
+            }
+
+            if (themeToggle) {
+                // set initial icon
+                updateThemeIcon(savedTheme);
+                themeToggle.addEventListener('click', () => {
+                    const current = document.documentElement.getAttribute('data-theme') || 'dark';
+                    const next = current === 'dark' ? 'light' : 'dark';
+                    document.documentElement.setAttribute('data-theme', next);
+                    localStorage.setItem('site-theme', next);
+                    updateThemeIcon(next);
+                });
+            }
+
+            // initialize with Files
+            handleNavigationClick('references');
+        });
+    </script>
+</head>
+
+<body class="bg-tech-bg text-tech-light min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header
+        class="w-full bg-tech-dark-alt p-4 shadow-xl shadow-tech-primary/10 border-b border-tech-primary/30 sticky top-0 z-10">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <!-- Left: Back Button & Logo (match Math template) -->
+            <div class="flex items-center space-x-4">
+                <button onclick="window.location.href='../index.html'"
+                    class="text-tech-light hover:text-tech-secondary transition duration-200 p-2 rounded-full hover:bg-tech-primary/20">
+                    <!-- Back Arrow SVG Icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 12H5" />
+                        <path d="m12 19-7-7 7-7" />
+                    </svg>
+                </button>
+
+                <!-- Logo: Single gradient-styled "Stemawy" -->
+                <a href="../index.html"
+                    class="flex items-center space-x-2 text-2xl font-extrabold transition duration-200 hover:opacity-80">
+                    <span class="gradient-text-wrapper gradient-h1">Stemawy</span>
+                </a>
+            </div>
+
+            <!-- Center: Title -->
+            <h1 class="text-4xl font-extrabold tracking-tight text-center">
+                <span class="gradient-text-wrapper gradient-h1">Capstone</span>
+            </h1>
+
+            <!-- Right: Theme toggle -->
+            <div class="flex items-center space-x-3">
+                <button id="theme-toggle" title="Toggle theme"
+                    class="p-2 rounded bg-tech-primary text-tech-bg hover:opacity-90 inline-flex items-center justify-center"
+                    aria-label="Toggle theme">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="currentColor" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex flex-1 overflow-hidden max-w-7xl mx-auto w-full p-4 sm:p-6">
+
+        <!-- Left Sidebar (Files Navigation) -->
+        <nav id="sidebar"
+            class="w-full sm:w-64 bg-tech-dark-alt rounded-xl p-4 mr-6 flex-shrink-0 border border-tech-primary/20 h-full overflow-y-auto">
+            <h2
+                class="text-lg font-bold mb-4 text-tech-secondary uppercase tracking-wider border-b border-tech-secondary/30 pb-2">
+                Files</h2>
+            <ul id="lo-list" class="space-y-2">
+                <!-- single Files button injected by JS -->
+            </ul>
+        </nav>
+
+        <!-- Right Content Area -->
+        <section id="content-area"
+            class="flex-1 bg-tech-dark-alt rounded-xl p-6 border border-tech-primary/50 shadow-subtle-glow">
+            <div id="dynamic-content" class="h-full">
+                <!-- Default State -->
+                <div id="default-message"
+                    class="flex items-center justify-center h-full text-3xl font-light text-tech-light/50">
+                    Please choose your file
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full bg-tech-dark-alt p-4 mt-auto border-t border-tech-primary/30">
+        <div class="text-center text-sm text-tech-light/70">
+            If you have any comments please text me <a href="mailto:yassoalaa822@gmail.com"
+                class="text-tech-secondary hover:text-tech-primary transition duration-200">yassoalaa822@gmail.com</a>
+        </div>
+    </footer>
+</body>
+
+</html>
