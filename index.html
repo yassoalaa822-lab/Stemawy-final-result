@@ -1,370 +1,709 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stemawy - The Integrated STEM Study Hub</title>
-    <!-- Load Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Load Inter Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <title>Stemawy | The Future of Learning</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=Space+Grotesk:wght@300;500;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Three.js & GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
     <style>
-        /* Apply Inter font family and smooth scrolling */
+        :root {
+            --primary: #00BFFF;
+            /* Electric Blue */
+            --secondary: #33FFCC;
+            /* Mint/Cyan */
+            --accent: #FFD700;
+            /* Gold */
+            --dark: #050505;
+            /* Deep Space Black */
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #ffffff;
+            --text-muted: rgba(255, 255, 255, 0.7);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
-            scroll-behavior: smooth;
+            background-color: var(--dark);
+            font-family: 'Outfit', sans-serif;
+            color: var(--text-main);
+            overflow-x: hidden;
         }
 
-        /* --- SUBTLE NEON GLOW EFFECTS (Only for shadows) --- */
-
-        /* Subtle glow shadow for primary action buttons */
-        .shadow-subtle-glow {
-            /* Shadow color is soft cyan/mint */
-            box-shadow: 0 4px 15px rgba(51, 255, 204, 0.25), 0 0 5px rgba(51, 255, 204, 0.1);
-            transition: all 0.3s ease-in-out;
-        }
-        .hover\:shadow-subtle-glow-lg:hover {
-            box-shadow: 0 6px 20px rgba(51, 255, 204, 0.4), 0 0 8px rgba(51, 255, 204, 0.2);
-        }
-
-        /* Particle Animation Setup (Continuous dynamic background) */
-        #particle-canvas {
+        /* --- 3D Background --- */
+        #canvas-container {
             position: fixed;
             top: 0;
             left: 0;
-            z-index: -2; /* Set behind the video section */
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+        }
+
+        /* --- Scroll Layout --- */
+        main {
+            position: relative;
+            z-index: 10;
+        }
+
+        section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        /* --- Typography & Components --- */
+        h1,
+        h2,
+        h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            line-height: 1.1;
+        }
+
+        h1 {
+            font-size: clamp(3.5rem, 8vw, 7rem);
+            font-weight: 700;
+            background: linear-gradient(135deg, white 20%, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 0 30px rgba(0, 191, 255, 0.3));
+        }
+
+        h2 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 3rem;
+            color: var(--secondary);
+            text-align: center;
+            text-shadow: 0 0 20px rgba(51, 255, 204, 0.4);
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+
+        /* --- Glass Cards --- */
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border-color: var(--primary);
+        }
+
+        .section-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        /* --- Hero Section --- */
+        #hero {
+            text-align: center;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
+
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+
+        /* --- Vision Section --- */
+        #vision {
+            align-items: flex-start;
+            /* Align content to left to balance 3D object on right (reversed in logic below) */
+        }
+
+        .vision-content {
+            max-width: 500px;
+            margin-left: 5%;
+            /* Keep content to one side */
+        }
+
+        .number-badge {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary);
+            opacity: 0.5;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        /* --- Resources Section --- */
+        #resources {
+            /* Center alignment */
+        }
+
+        .resource-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* --- Contact Section --- */
+        #contact {
+            align-items: center;
+        }
+
+        .contact-form-container {
+            width: 100%;
+            max-width: 600px;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--glass-border);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            color: white;
+            font-family: 'Outfit', sans-serif;
+            transition: 0.3s;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 15px rgba(51, 255, 204, 0.2);
+        }
+
+        button.btn-primary {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 10px;
+            color: var(--dark);
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button.btn-primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 30px rgba(0, 191, 255, 0.4);
+        }
+
+        /* --- Dashboard Button (Fixed) --- */
+        .dashboard-fab {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            z-index: 100;
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--primary);
+            border-radius: 50px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            transition: 0.3s;
+            overflow: hidden;
+        }
+
+        .dashboard-fab:hover {
+            background: var(--primary);
+            color: var(--dark);
+            box-shadow: 0 0 20px rgba(0, 191, 255, 0.5);
+        }
+
+        /* --- Loader --- */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none; 
-            opacity: 0.6; /* Reduced opacity for a calmer look */
-        }
-        .section-container {
-            max-width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
-            padding: 4rem 1.5rem;
-            position: relative; 
-            z-index: 1;
+            background: var(--dark);
+            z-index: 200;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s;
         }
     </style>
-    <script>
-        // Tailwind Configuration with a Modern Tech Palette
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'tech-bg': '#1A1F26',          /* Deep Charcoal Blue (Background) */
-                        'tech-dark-alt': '#2C333F',    /* Darker Slate for card backgrounds */
-                        'tech-light': '#E0E6F0',       /* Soft White/Light Blue (Text) */
-                        'tech-primary': '#00BFFF',     /* Electric Blue (Primary Accent) */
-                        'tech-secondary': '#33FFCC',   /* Soft Mint/Cyan (Glow/Secondary Accent) */
-                    }
-                }
-            }
-        }
-    </script>
 </head>
-<body class="bg-tech-bg text-tech-light">
 
-    <!-- CONTINUOUS ANIMATION CANVAS -->
-    <canvas id="particle-canvas"></canvas>
+<body>
 
-    <!-- Header & Navigation Bar -->
-    <header class="sticky top-0 bg-tech-bg/95 backdrop-blur-sm border-b border-tech-primary/30 z-30">
-        <div class="section-container flex justify-between items-center py-4">
-            <!-- Logo (unified with other pages) -->
-            <a href="#next-page" class="flex items-center space-x-2 text-3xl font-extrabold text-tech-light tracking-widest transition duration-200 hover:opacity-80">
-                <span class="gradient-text-wrapper gradient-h1">Stemawy</span>
-            </a>
+    <!-- Loader -->
+    <div id="loader">
+        <svg width="100" height="100" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="40" stroke="#00BFFF" stroke-width="4" fill="none" stroke-dasharray="250"
+                stroke-dashoffset="250">
+                <animate attributeName="stroke-dashoffset" from="250" to="0" dur="1.5s" fill="freeze" />
+            </circle>
+        </svg>
+    </div>
 
-            <!-- Navigation Buttons -->
-            <nav class="hidden md:flex space-x-8 text-sm font-medium">
-                <a href="#about" class="py-2 px-3 rounded-md transition duration-200 hover:text-tech-primary hover:bg-tech-dark-alt">About</a>
-                <a href="#resources" class="py-2 px-3 rounded-md transition duration-200 hover:text-tech-primary hover:bg-tech-dark-alt">Resources</a>
-                <a href="#vision" class="py-2 px-3 rounded-md transition duration-200 hover:text-tech-primary hover:bg-tech-dark-alt">Our Vision</a>
-                <a href="#contact" class="py-2 px-3 rounded-md transition duration-200 hover:text-tech-primary hover:bg-tech-dark-alt">Contact Us</a>
-            </nav>
+    <!-- 3D Canvas -->
+    <div id="canvas-container"></div>
 
-            <!-- removed auth buttons as requested -->
-        </div>
-    </header>
+    <!-- Navigation FAB -->
+    <a href="./stemawy/index.html" class="dashboard-fab">Enter Dashboard &rarr;</a>
 
-    <!-- 1. Hero / Introduction Section -->
-    <section id="about" class="min-h-[70vh] flex items-center py-20 relative overflow-hidden">
-        
-        <!-- Video Background Layer -->
-        <!-- IMPORTANT: REPLACE THE 'src' ATTRIBUTE BELOW with your actual loopable STEM-themed background video URL -->
-        <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover z-0 opacity-40">
-            <source src="./the vedio.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
+    <main>
+        <!-- HERO -->
+        <section id="hero">
+            <h1 class="gsap-hero-title">STEMAWY</h1>
+            <p style="font-size: 1.5rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 2rem;">The
+                Integrated Learning Hub</p>
+            <div class="glass-card" style="display:inline-block; padding: 1rem 2rem;">
+                <p>Scroll to Explore the Universe of Knowledge</p>
+            </div>
+            <div class="scroll-indicator">
+                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                    <path d="M7 13l5 5 5-5M7 6l5 5 5-5" />
+                </svg>
+            </div>
+        </section>
 
-        <!-- Dark Overlay for Text Legibility (z-10 ensures it's above the video) -->
-        <div class="absolute inset-0 bg-tech-bg opacity-70 z-10"></div>
-        
-        <!-- Content Layer (z-20 ensures it's above the overlay) -->
-        <div class="section-container text-center z-20">
-            <h1 class="text-5xl sm:text-7xl font-extrabold leading-snug mb-8">
-                <span class="text-tech-light/90">Centralized Learning for</span> <br>
-                <span class="text-tech-primary">All STEM Grades</span>
-            </h1>
-            <p class="text-xl sm:text-2xl text-tech-light/80 max-w-4xl mx-auto mb-10">
-                Stemawy is the single hub designed to simplify your STEM journey. We provide verified videos, structured files, and comprehensive test banks in one place—eliminating endless searching.
-            </p>
-            <!-- Primary Call-to-Action with Subtle Neon Glow -->
-            <a href="#resources" class="inline-block px-12 py-4 text-lg font-bold text-tech-bg bg-tech-primary rounded-lg 
-               shadow-subtle-glow hover:shadow-subtle-glow-lg transition duration-300 transform hover:scale-[1.05]">
-                Explore Resources &rarr;
-            </a>
-        </div>
-    </section>
-
-    <!-- 2.5 Start Learning CTA Section -->
-    <section id="start-learning" class="py-20 bg-gradient-to-r from-tech-dark-alt/40 to-tech-bg/30">
-        <div class="section-container text-center">
-            <h2 class="text-4xl font-extrabold mb-6 text-tech-light">Start your learning process now</h2>
-            <p class="text-lg text-tech-light/70 mb-8 max-w-2xl mx-auto">Ready to dive in? Click below to begin — you'll be taken to the learning page.</p>
-            <a id="start-learning-btn" href="./stemawy/index.html" class="inline-block px-10 py-4 text-lg font-bold text-tech-bg bg-tech-primary rounded-lg shadow-subtle-glow hover:shadow-subtle-glow-lg transition duration-300 transform hover:scale-[1.03]">
-                Start Learning
-            </a>
-        </div>
-    </section>
-
-    <!-- 2. Our Vision Section -->
-    <section id="vision" class="py-20 bg-tech-dark-alt/50 border-y border-tech-primary/20">
-        <div class="section-container">
-            <h2 class="text-4xl font-bold text-center mb-16 text-tech-light">Our Vision: Simplifying STEM</h2>
-            <div class="grid md:grid-cols-3 gap-10">
-                
-                <div class="p-8 rounded-xl bg-tech-dark-alt border-t-4 border-tech-primary transition duration-300 hover:border-tech-secondary/70">
-                    <div class="text-4xl text-tech-primary mb-4 font-extrabold">01</div>
-                    <h3 class="text-2xl font-semibold mb-3 text-tech-light">One-Stop Platform</h3>
-                    <p class="text-tech-light/80">Never waste time searching again. Every critical study resource—from lesson videos to test banks—is curated and validated here.</p>
+        <!-- VISION -->
+        <section id="vision">
+            <div class="section-grid">
+                <div class="vision-content">
+                    <h2>Our Vision</h2>
+                    <div class="glass-card mb-8" style="margin-bottom: 2rem;">
+                        <span class="number-badge">01</span>
+                        <h3>One-Stop Platform</h3>
+                        <p>Never waste time searching again. Every critical study resource—from lesson videos to test
+                            banks—is verified and centralized here.</p>
+                    </div>
+                    <div class="glass-card mb-8" style="margin-bottom: 2rem;">
+                        <span class="number-badge">02</span>
+                        <h3>Focus on Mastery</h3>
+                        <p>We remove the friction of searching, allowing you to dedicate 100% of your energy to
+                            understanding complex STEM concepts.</p>
+                    </div>
                 </div>
+                <!-- 3D Content will occupy the Right side visually -->
+            </div>
+        </section>
 
-                <div class="p-8 rounded-xl bg-tech-dark-alt border-t-4 border-tech-primary transition duration-300 hover:border-tech-secondary/70">
-                    <div class="text-4xl text-tech-primary mb-4 font-extrabold">02</div>
-                    <h3 class="text-2xl font-semibold mb-3 text-tech-light">Grade-Agnostic Content</h3>
-                    <p class="text-tech-light/80">Whether you're in middle school or university, we map content to specific academic standards and subjects across all STEM grades.</p>
+        <!-- RESOURCES -->
+        <section id="resources">
+            <h2>Integrated Resources</h2>
+            <div class="section-grid">
+                <div class="glass-card" style="text-align: center;">
+                    <div class="resource-icon">🎥</div>
+                    <h3>Curated Videos</h3>
+                    <p>Expert-led lessons and concept walkthroughs.</p>
                 </div>
-
-                <div class="p-8 rounded-xl bg-tech-dark-alt border-t-4 border-tech-primary transition duration-300 hover:border-tech-secondary/70">
-                    <div class="text-4xl text-tech-primary mb-4 font-extrabold">03</div>
-                    <h3 class="text-2xl font-semibold mb-3 text-tech-light">Focus on Mastery</h3>
-                    <p class="text-tech-light/80">By removing the friction of searching, we allow students to dedicate 100% of their energy to understanding and mastering the material.</p>
+                <div class="glass-card" style="text-align: center;">
+                    <div class="resource-icon">📁</div>
+                    <h3>Structured Files</h3>
+                    <p>Lecture notes, formula sheets, and lab reports.</p>
+                </div>
+                <div class="glass-card" style="text-align: center;">
+                    <div class="resource-icon">📝</div>
+                    <h3>Test Banks</h3>
+                    <p>Practice exams with instant feedback.</p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- 3. Resource Types Section -->
-    <section id="resources" class="py-20">
-        <div class="section-container text-center">
-            <h2 class="text-4xl font-bold mb-6 text-tech-primary">Integrated Resource Types</h2>
-            <p class="text-xl text-tech-light/70 mb-12 max-w-3xl mx-auto">Access the three pillars of effective study in one organized interface.</p>
-            
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
-                <!-- Videos -->
-                <div class="p-8 bg-tech-dark-alt rounded-xl shadow-lg border border-tech-primary/30 transition duration-300 hover:scale-[1.02]">
-                    <div class="text-5xl text-tech-secondary mb-4">🎥</div>
-                    <h3 class="text-2xl font-bold text-tech-light mb-2">Curated Videos</h3>
-                    <p class="text-tech-light/70">Expert-led video lessons, simulations, and concept walkthroughs, organized by topic and difficulty.</p>
-                </div>
-                <!-- Files -->
-                <div class="p-8 bg-tech-dark-alt rounded-xl shadow-lg border border-tech-primary/30 transition duration-300 hover:scale-[1.02]">
-                    <div class="text-5xl text-tech-secondary mb-4">📁</div>
-                    <h3 class="text-2xl font-bold text-tech-light mb-2">Structured Files</h3>
-                    <p class="text-tech-light/70">Downloadable lecture notes, formula sheets, lab reports, and supplementary reading materials.</p>
-                </div>
-                <!-- Test Banks -->
-                <div class="p-8 bg-tech-dark-alt rounded-xl shadow-lg border border-tech-primary/30 transition duration-300 hover:scale-[1.02]">
-                    <div class="text-5xl text-tech-secondary mb-4">📝</div>
-                    <h3 class="text-2xl font-bold text-tech-light mb-2">Comprehensive Test Banks</h3>
-                    <p class="text-tech-light/70">Practice exams, quizzes, and problem sets with instant feedback and step-by-step solutions.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+        <!-- CONTACT -->
+        <section id="contact">
+            <div class="contact-form-container glass-card">
+                <h2 style="margin-bottom: 1.5rem;">Join the Network</h2>
+                <p style="text-align: center; margin-bottom: 2rem;">Ready to start? Have questions? Contact us.</p>
 
-    <!-- 4. Contact Us Section -->
-    <section id="contact" class="py-20 bg-tech-dark-alt/50 border-t border-tech-primary/20">
-        <div class="section-container">
-            <h2 class="text-4xl font-bold text-center mb-12 text-tech-light">Get in Touch</h2>
-            <div id="contact-card" class="max-w-3xl mx-auto bg-tech-dark-alt p-8 sm:p-12 rounded-2xl shadow-lg border border-tech-primary/30">
-                <p class="text-center text-lg text-tech-light/80 mb-8">
-                    Need support or have a suggestion for a resource? Send us a message.
-                </p>
-
-                <form id="contact-form" class="space-y-6" onsubmit="return sendEmail(event)">
-                    <div>
-                        <label for="name" class="block text-sm font-medium text-tech-primary mb-1">Name</label>
-                        <input type="text" id="name" name="name" placeholder="Your Name" required
-                               class="w-full px-4 py-3 border border-tech-primary/30 bg-tech-bg text-tech-light rounded-lg focus:ring-2 focus:ring-tech-secondary transition duration-200">
-                    </div>
-                    <div>
-                        <label for="email" class="block text-sm font-medium text-tech-primary mb-1">Email Address</label>
-                        <input type="email" id="email" name="email" placeholder="email@domain.com" required
-                               class="w-full px-4 py-3 border border-tech-primary/30 bg-tech-bg text-tech-light rounded-lg focus:ring-2 focus:ring-tech-secondary transition duration-200">
-                    </div>
-                    <div>
-                        <label for="message" class="block text-sm font-medium text-tech-primary mb-1">Message</label>
-                        <textarea id="message" name="message" rows="4" placeholder="How can we help you today?" required
-                                  class="w-full px-4 py-3 border border-tech-primary/30 bg-tech-bg text-tech-light rounded-lg focus:ring-2 focus:ring-tech-secondary transition duration-200"></textarea>
-                    </div>
-                    
-                    <!-- Submit Button with Subtle Neon Glow -->
-                    <button type="submit" class="w-full px-6 py-3 mt-4 text-lg font-bold text-tech-bg bg-tech-secondary rounded-xl 
-                                                    shadow-subtle-glow hover:shadow-subtle-glow-lg transition duration-300 transform hover:scale-[1.01]">
-                        Send Message
-                    </button>
+                <form id="contact-form" onsubmit="return handleJoin(event)">
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Email Address" required>
+                    <textarea rows="4" placeholder="Your Message"></textarea>
+                    <button type="submit" class="btn-primary">Initialize & Enter System</button>
                 </form>
             </div>
-            <!-- Confirmation message (hidden by default) -->
-            <div id="contact-confirmation" class="max-w-3xl mx-auto p-8 sm:p-12 rounded-2xl text-center hidden">
-                <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-green-600/20 mx-auto mb-4">
-                    <!-- check icon -->
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-green-400" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-10.293a1 1 0 00-1.414-1.414L9 9.586 7.707 8.293a1 1 0 10-1.414 1.414L9 12.414l4.707-4.707z" clip-rule="evenodd" />
-                    </svg>
-                </div>
-                <h3 class="text-2xl font-bold text-tech-light mb-2">We received your response</h3>
-                <p class="text-tech-light/80">Thank you! We'll get back to you shortly.</p>
-            </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
-    <!-- Footer -->
-    <footer class="mt-12 py-8 bg-tech-dark-alt text-tech-light/70">
-        <div class="section-container flex flex-col sm:flex-row justify-between items-center text-sm">
-            <p class="order-2 sm:order-1 mt-4 sm:mt-0">&copy; 2025 Stemawy. All rights reserved.</p>
-            
-            <div class="space-x-4 order-1 sm:order-2">
-                <a href="#" class="hover:text-tech-primary transition duration-200">Terms</a>
-                <a href="#" class="hover:text-tech-primary transition duration-200">Privacy</a>
-            </div>
-        </div>
-    </footer>
-
-    <!-- JAVASCRIPT FOR PARTICLE ANIMATION (Calm Tech Version) -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const canvas = document.getElementById('particle-canvas');
-            const ctx = canvas.getContext('2d');
-            let particles = [];
-            const particleCount = 80;
-            const linkDistance = 150; 
-            const particleColor = 'rgba(0, 191, 255, 0.5)'; // Semi-transparent Electric Blue
-            const lineColor = 'rgba(51, 255, 204, 0.2)'; // Very subtle Mint/Cyan lines
+        gsap.registerPlugin(ScrollTrigger);
 
-            function resizeCanvas() {
-                canvas.width = window.innerWidth;
-                canvas.height = document.body.scrollHeight; 
+        // --- Three.js Setup ---
+        const container = document.getElementById('canvas-container');
+        const scene = new THREE.Scene();
+        scene.fog = new THREE.FogExp2(0x050505, 0.02);
+
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.z = 20;
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        container.appendChild(renderer.domElement);
+
+        // --- Objects ---
+
+        // 1. The Core (Icosahedron) - Hero
+        const coreGeo = new THREE.IcosahedronGeometry(3, 1);
+        const coreMat = new THREE.MeshBasicMaterial({ color: 0x00BFFF, wireframe: true });
+        const core = new THREE.Mesh(coreGeo, coreMat);
+        scene.add(core);
+
+        const coreGlow = new THREE.Mesh(
+            new THREE.IcosahedronGeometry(2.5, 0),
+            new THREE.MeshBasicMaterial({ color: 0x33FFCC, transparent: true, opacity: 0.2, blending: THREE.AdditiveBlending })
+        );
+        core.add(coreGlow);
+
+        // 2. DNA Helix - Vision
+        const helixGroup = new THREE.Group();
+        const helixPoints = 40;
+        for (let i = 0; i < helixPoints; i++) {
+            const y = (i - helixPoints / 2) * 0.5;
+            const theta = i * 0.5;
+
+            // Strand 1
+            const p1 = new THREE.Mesh(new THREE.SphereGeometry(0.2), new THREE.MeshBasicMaterial({ color: 0xFFD700 }));
+            p1.position.set(Math.cos(theta) * 2, y, Math.sin(theta) * 2);
+            helixGroup.add(p1);
+
+            // Strand 2
+            const p2 = new THREE.Mesh(new THREE.SphereGeometry(0.2), new THREE.MeshBasicMaterial({ color: 0x00BFFF }));
+            p2.position.set(Math.cos(theta + Math.PI) * 2, y, Math.sin(theta + Math.PI) * 2);
+            helixGroup.add(p2);
+
+            // Connector
+            if (i % 2 === 0) {
+                const lineGeo = new THREE.BufferGeometry().setFromPoints([p1.position, p2.position]);
+                const line = new THREE.Line(lineGeo, new THREE.LineBasicMaterial({ color: 0xFFFFFF, transparent: true, opacity: 0.3 }));
+                helixGroup.add(line);
             }
-            window.addEventListener('resize', resizeCanvas);
-            resizeCanvas();
+        }
+        helixGroup.position.x = 10; // Start off-screen
+        helixGroup.visible = false;
+        scene.add(helixGroup);
 
-            class Particle {
-                constructor() {
-                    this.x = Math.random() * canvas.width;
-                    this.y = Math.random() * canvas.height;
-                    this.radius = Math.random() * 1 + 0.5;
-                    this.velocity = {
-                        x: (Math.random() - 0.5) * 0.4, 
-                        y: (Math.random() - 0.5) * 0.4
-                    };
-                    this.color = particleColor;
-                }
+        // 3. Resource Shapes - Resources
+        const shapesGroup = new THREE.Group();
 
-                update() {
-                    // Reverse direction when hitting edges
-                    if (this.x + this.radius > canvas.width || this.x - this.radius < 0) {
-                        this.velocity.x = -this.velocity.x;
-                    }
-                    if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
-                        this.velocity.y = -this.velocity.y;
-                    }
+        const shape1 = new THREE.Mesh(new THREE.TetrahedronGeometry(1.5), new THREE.MeshBasicMaterial({ color: 0xFF0055, wireframe: true }));
+        shape1.position.x = -6;
 
-                    this.x += this.velocity.x;
-                    this.y += this.velocity.y;
-                }
+        const shape2 = new THREE.Mesh(new THREE.BoxGeometry(2, 2, 2), new THREE.MeshBasicMaterial({ color: 0x33FFCC, wireframe: true }));
+        shape2.position.x = 0;
 
-                draw() {
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                    ctx.fillStyle = this.color;
-                    ctx.fill();
-                }
-            }
+        const shape3 = new THREE.Mesh(new THREE.OctahedronGeometry(1.5), new THREE.MeshBasicMaterial({ color: 0xFFD700, wireframe: true }));
+        shape3.position.x = 6;
 
-            function init() {
-                for (let i = 0; i < particleCount; i++) {
-                    particles.push(new Particle());
-                }
-            }
+        shapesGroup.add(shape1, shape2, shape3);
+        shapesGroup.position.y = -20; // Start off screen
+        scene.add(shapesGroup);
 
-            function connectParticles() {
-                for (let a = 0; a < particles.length; a++) {
-                    for (let b = a; b < particles.length; b++) {
-                        const distance = Math.hypot(particles[a].x - particles[b].x, particles[a].y - particles[b].y);
 
-                        if (distance < linkDistance) {
-                            const opacityValue = 1 - (distance / linkDistance);
+        // 4. Starfield
+        const starGeo = new THREE.BufferGeometry();
+        const starCount = 3000;
+        const starPos = [];
+        for (let i = 0; i < starCount; i++) {
+            starPos.push((Math.random() - 0.5) * 200, (Math.random() - 0.5) * 200, (Math.random() - 0.5) * 200);
+        }
+        starGeo.setAttribute('position', new THREE.Float32BufferAttribute(starPos, 3));
+        const starMat = new THREE.PointsMaterial({ color: 0xffffff, size: 0.1, transparent: true });
+        const stars = new THREE.Points(starGeo, starMat);
+        scene.add(stars);
 
-                            ctx.strokeStyle = lineColor; 
-                            ctx.lineWidth = opacityValue * 0.5;
-                            
-                            ctx.beginPath();
-                            ctx.moveTo(particles[a].x, particles[a].y);
-                            ctx.lineTo(particles[b].x, particles[b].y);
-                            ctx.stroke();
-                        }
-                    }
-                }
-            }
 
-            function animate() {
-                ctx.fillStyle = 'rgba(26, 31, 38, 0.4)'; // Slightly opaque clear to reduce trails and maintain dark background
-                ctx.fillRect(0, 0, canvas.width, canvas.height); 
+        // --- Light ---
+        const ambient = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambient);
 
-                connectParticles();
-                particles.forEach(p => {
-                    p.update();
-                    p.draw();
-                });
-                requestAnimationFrame(animate);
-            }
+        // --- Animation Loop ---
+        function animate() {
+            requestAnimationFrame(animate);
 
-            init();
-            animate();
+            // Constant Rotations
+            core.rotation.y += 0.005;
+            core.rotation.z += 0.002;
+
+            helixGroup.rotation.y += 0.01;
+
+            shape1.rotation.x += 0.01;
+            shape2.rotation.y += 0.01;
+            shape3.rotation.z += 0.01;
+
+            starMat.opacity = 0.5 + Math.sin(Date.now() * 0.001) * 0.2;
+
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // --- Resizer ---
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
         });
-    </script>
-    <script>
-        // Contact form handler: show confirmation and open mail client with prefilled subject/body
-        function sendEmail(event){
-            event.preventDefault();
-            const nameVal = document.getElementById('name').value || '';
-            const fromVal = document.getElementById('email').value || '';
-            const messageVal = document.getElementById('message').value || '';
-            const subject = encodeURIComponent('Website message from ' + (nameVal || fromVal || 'Visitor'));
-            const body = encodeURIComponent('Name: ' + nameVal + '\nEmail: ' + fromVal + '\n\n' + messageVal);
-            const mailto = `mailto:yassoalaa822@gmail.com?subject=${subject}&body=${body}`;
 
-            // Hide contact card and show confirmation message
-            const card = document.getElementById('contact-card');
-            const confirm = document.getElementById('contact-confirmation');
-            if (card) card.classList.add('hidden');
-            if (confirm) confirm.classList.remove('hidden');
 
-            // Try to open the user's mail client (may be blocked by some browsers)
-            try {
-                window.open(mailto);
-            } catch (e) {
-                // Fallback: change location
-                window.location.href = mailto;
+        // --- SCROLL ANIMATIONS (GSAP) ---
+
+        // 1. Initial Load
+        const tlLoad = gsap.timeline();
+        tlLoad.to('#loader', { opacity: 0, duration: 1, onComplete: () => document.getElementById('loader').style.display = 'none' })
+            .from('.gsap-hero-title', { y: 50, opacity: 0, duration: 1, ease: 'power3.out' }, "-=0.5");
+
+        // 2. Scroll Trigger
+
+        // Phase 1: Hero -> Vision
+        // Move core left, Bring in Helix from right
+        const tlVision = gsap.timeline({
+            scrollTrigger: {
+                trigger: '#vision',
+                start: 'top bottom',
+                end: 'center center',
+                scrub: 1
             }
+        });
+
+        tlVision.to(camera.position, { z: 15, x: -5 }, 0) // Move camera left
+            .to(core.position, { x: -10, opacity: 0 }, 0) // Move core out
+            .to(helixGroup.position, { x: 5 }, 0)     // Bring Helix in
+            .to(helixGroup, {
+                onStart: () => helixGroup.visible = true,
+                onReverseComplete: () => helixGroup.visible = false
+            }, 0);
+
+
+        // Phase 2: Vision -> Resources
+        // Move Helix out, Bring in Shapes grid
+        const tlResources = gsap.timeline({
+            scrollTrigger: {
+                trigger: '#resources',
+                start: "top bottom",
+                end: "center center",
+                scrub: 1
+            }
+        });
+
+        tlResources.to(camera.position, { x: 0, y: 0, z: 25 }, 0)
+            .to(helixGroup.position, { y: 20 }, 0) // Helix goes up
+            .to(shapesGroup.position, { y: 0 }, 0); // Shapes come up
+
+
+        // Phase 3: Resources -> Contact
+        // Zoom into stars
+        const tlContact = gsap.timeline({
+            scrollTrigger: {
+                trigger: '#contact',
+                start: "top bottom",
+                end: "center center",
+                scrub: 1
+            }
+        });
+
+        tlContact.to(shapesGroup.position, { z: 50, opacity: 0 }, 0) // Fly shapes past camera
+            .to(camera.position, { z: 10 }, 0);
+
+
+        // --- Handle Entry ---
+        window.handleJoin = function (e) {
+            e.preventDefault();
+
+            // --- 0. Send Email (Fixed Functionality) ---
+            const form = document.getElementById('contact-form');
+            // Check if the event triggered from the form (not the FAB)
+            const isFormSubmission = e.target === form || (form && form.contains(e.target));
+
+            if (isFormSubmission && form) {
+                const inputs = form.querySelectorAll('input, textarea');
+                const name = inputs[0]?.value || 'Visitor';
+                const email = inputs[1]?.value || 'No Email';
+                const message = inputs[2]?.value || 'No Message';
+
+                // Only trigger mailto if user actually entered data
+                if (inputs[0]?.value && inputs[2]?.value) {
+                    const subject = encodeURIComponent('Stemawy Join Request: ' + name);
+                    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
+                    const mailto = `mailto:yassoalaa822@gmail.com?subject=${subject}&body=${body}`;
+
+                    // Create hidden link to click (more reliable than window.open for mailto)
+                    const mailLink = document.createElement('a');
+                    mailLink.href = mailto;
+                    mailLink.style.display = 'none';
+                    document.body.appendChild(mailLink);
+                    mailLink.click();
+                    setTimeout(() => mailLink.remove(), 100);
+                }
+            }
+
+            // --- 1. Meteor Title Animation ---
+            // Clone the title to animate freely without affecting layout flow immediately
+            const originalTitle = document.querySelector('.gsap-hero-title');
+            const rect = originalTitle.getBoundingClientRect();
+
+            // Create a clone for the animation
+            const flyingTitle = originalTitle.cloneNode(true);
+            document.body.appendChild(flyingTitle);
+
+            // Set initial position to match exactly where it is now
+            Object.assign(flyingTitle.style, {
+                position: 'fixed',
+                top: rect.top + 'px',
+                left: rect.left + 'px',
+                width: rect.width + 'px',
+                margin: 0,
+                zIndex: 10000,
+                pointerEvents: 'none'
+            });
+
+            // --- 0. Shockwave Effect ---
+            const shockwave = document.createElement('div');
+            Object.assign(shockwave.style, {
+                position: 'fixed',
+                top: (rect.top + rect.height / 2 - 50) + 'px',
+                left: (rect.left + rect.width / 2 - 50) + 'px',
+                width: '100px',
+                height: '100px',
+                borderRadius: '50%',
+                border: '2px solid #00BFFF',
+                boxShadow: '0 0 20px #00BFFF',
+                zIndex: 9998,
+                pointerEvents: 'none',
+                animation: 'shockwave 0.8s ease-out forwards'
+            });
+            document.body.appendChild(shockwave);
+            setTimeout(() => shockwave.remove(), 1000);
+
+            // Hide original
+            gsap.set(originalTitle, { opacity: 0 });
+
+            // Animate to top-left (Dashboard Logo position approx 20px, 20px)
+            gsap.to(flyingTitle, {
+                top: '20px',
+                left: '20px',
+                scale: 0.4, // Shrink to logo size
+                color: '#ffffff', // Ensure it's white/bright
+                textShadow: '0 0 20px #00BFFF, 0 0 40px #33FFCC', // Intense glow trail
+                duration: 1.2,
+                ease: 'power4.in',
+                onUpdate: function () {
+                    // Create a trailing particle effect
+                    if (Math.random() > 0.5) {
+                        const tail = document.createElement('div');
+                        const tRect = flyingTitle.getBoundingClientRect();
+                        Object.assign(tail.style, {
+                            position: 'fixed',
+                            top: (tRect.top + tRect.height / 2) + 'px',
+                            left: (tRect.left + tRect.width / 2) + 'px',
+                            width: '4px',
+                            height: '4px',
+                            background: '#33FFCC',
+                            borderRadius: '50%',
+                            zIndex: 9999
+                        });
+                        document.body.appendChild(tail);
+                        gsap.to(tail, {
+                            opacity: 0,
+                            x: (Math.random() - 0.5) * 20,
+                            y: (Math.random() - 0.5) * 20,
+                            duration: 0.5,
+                            onComplete: () => tail.remove()
+                        });
+                    }
+                }
+            });
+
+            // --- 2. Warp Effect (Existing) ---
+            gsap.to(camera.position, {
+                z: -100,
+                duration: 2,
+                ease: 'expo.in'
+            });
+
+            // Stretch stars
+            gsap.to(stars.scale, {
+                z: 20,
+                duration: 2,
+                ease: 'expo.in'
+            });
+
+            // Flash White
+            const flash = document.createElement('div');
+            Object.assign(flash.style, {
+                position: 'fixed', top: 0, left: 0, width: '100%', height: '100%',
+                backgroundColor: 'white', opacity: 0, zIndex: 9000, pointerEvents: 'none'
+            });
+            document.body.appendChild(flash);
+
+            gsap.to(flash, {
+                opacity: 1,
+                duration: 0.5,
+                delay: 1.3, // Wait slightly for meteor to hit
+                onComplete: () => window.location.href = './stemawy/index.html'
+            });
 
             return false;
         }
+
+        // Attach handler to the FAB button as well
+        document.querySelector('.dashboard-fab').addEventListener('click', window.handleJoin);
+
     </script>
 </body>
+
 </html>

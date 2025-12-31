@@ -7,6 +7,8 @@
     <title>Biology Checkpoints — First Semester</title>
     <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Anime.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
     <!-- Load Inter Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
 
@@ -60,6 +62,16 @@
             animation-duration: 8s;
         }
 
+        /* Default (Dark) Theme Variables - Ensures no white flash */
+        :root {
+            --tech-bg: #1A1F26;
+            --tech-dark-alt: #2C333F;
+            --tech-light: #E0E6F0;
+            --tech-primary: #00BFFF;
+            --tech-secondary: #33FFCC;
+            --border-color: rgba(51, 255, 204, 0.3);
+        }
+
         /* Light theme variables */
         :root[data-theme="light"] {
             --tech-bg: #ffffff;
@@ -78,6 +90,36 @@
             --tech-primary: #00BFFF;
             --tech-secondary: #33FFCC;
             --border-color: rgba(51, 255, 204, 0.3);
+        }
+
+        /* Space Theme Variables */
+        :root[data-theme="space"] {
+            --tech-bg: #050505;
+            --tech-dark-alt: #0F1218;
+            --tech-light: #ffffff;
+            --tech-primary: #00BFFF;
+            --tech-secondary: #33FFCC;
+            --border-color: rgba(0, 191, 255, 0.3);
+        }
+
+        /* Midnight Synth Theme */
+        :root[data-theme="midnight"] {
+            --tech-bg: #1e1b4b;
+            --tech-dark-alt: #312e81;
+            --tech-light: #e0e7ff;
+            --tech-primary: #f472b6;
+            --tech-secondary: #818cf8;
+            --border-color: rgba(244, 114, 182, 0.4);
+        }
+
+        /* Christmas Theme */
+        :root[data-theme="christmas"] {
+            --tech-bg: #2C0412;
+            --tech-dark-alt: #460B1C;
+            --tech-light: #FEEBC8;
+            --tech-primary: #D4AF37;
+            --tech-secondary: #228B22;
+            --border-color: rgba(212, 175, 55, 0.4);
         }
 
         body {
@@ -143,8 +185,246 @@
         details[open] summary .arrow-icon {
             transform: rotate(90deg);
         }
-    </style>
 
+        /* Enforce CSS Variables for Theme Switching (Overrides hardcoded Tailwind config) */
+        .bg-tech-bg {
+            background-color: var(--tech-bg) !important;
+        }
+
+        .bg-tech-dark-alt {
+            background-color: var(--tech-dark-alt) !important;
+        }
+
+        .text-tech-light {
+            color: var(--tech-light) !important;
+        }
+
+        .text-tech-primary {
+            color: var(--tech-primary) !important;
+        }
+
+        .text-tech-secondary {
+            color: var(--tech-secondary) !important;
+        }
+
+        .border-tech-primary {
+            border-color: var(--tech-primary) !important;
+        }
+
+        .border-tech-secondary {
+            border-color: var(--tech-secondary) !important;
+        }
+
+        /* Christmas Theme Variables - Warm & Elegant */
+        :root[data-theme="christmas"] {
+            --tech-bg: #2C0412;
+            --tech-dark-alt: #460B1C;
+            --tech-light: #FDF5E6;
+            --tech-primary: #FFD700;
+            --tech-secondary: #006400;
+            --border-color: rgba(255, 215, 0, 0.4);
+        }
+
+        /* Snow Effect */
+        #snow-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+            display: none;
+        }
+
+        :root[data-theme="christmas"] #snow-container {
+            display: block;
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh);
+            }
+        }
+
+        /* RTL Support */
+        [dir="rtl"] {
+            font-family: 'Tajawal', 'Inter', sans-serif;
+        }
+
+        [dir="rtl"] .text-right-rtl {
+            text-align: right;
+        }
+
+        [dir="rtl"] #sidebar {
+            border-left: 1px solid var(--tech-primary);
+            border-right: none;
+            margin-left: 1.5rem;
+            margin-right: 0;
+        }
+
+        #settings-modal {
+            backdrop-filter: blur(5px);
+        }
+
+        /* --- Dark Neon Dynamic Background --- */
+        .cyber-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+            display: none;
+        }
+
+        /* Only show in Dark Theme */
+        :root[data-theme="dark"] .cyber-wrapper {
+            display: block;
+        }
+
+        .cyber-grid {
+            position: absolute;
+            width: 200vw;
+            height: 200vh;
+            top: -50%;
+            left: -50%;
+            background-image:
+                linear-gradient(rgba(0, 191, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 191, 255, 0.05) 1px, transparent 1px);
+            background-size: 60px 60px;
+            transform: perspective(500px) rotateX(60deg);
+            animation: grid-move 20s linear infinite;
+        }
+
+        @keyframes grid-move {
+            0% {
+                transform: perspective(500px) rotateX(60deg) translateY(0);
+            }
+
+            100% {
+                transform: perspective(500px) rotateX(60deg) translateY(60px);
+            }
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+            animation: float-orb 20s infinite ease-in-out;
+        }
+
+        .orb-1 {
+            top: 20%;
+            left: 20%;
+            width: 300px;
+            height: 300px;
+            background: rgba(0, 191, 255, 0.3);
+            animation-duration: 25s;
+        }
+
+        .orb-2 {
+            bottom: 20%;
+            right: 20%;
+            width: 400px;
+            height: 400px;
+            background: rgba(51, 255, 204, 0.2);
+            animation-duration: 30s;
+            animation-delay: -5s;
+        }
+
+        .orb-3 {
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            height: 200px;
+            background: rgba(138, 43, 226, 0.15);
+            animation-duration: 20s;
+            animation-delay: -10s;
+        }
+
+        @keyframes float-orb {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            33% {
+                transform: translate(40px, -60px);
+            }
+
+            66% {
+                transform: translate(-30px, 30px);
+            }
+        }
+
+        /* Breathing Glow for Cards in Dark Mode */
+        :root[data-theme="dark"] .subject-card,
+        :root[data-theme="dark"] .comp-card,
+        :root[data-theme="dark"] .lo-item,
+        :root[data-theme="dark"] details {
+            animation: breathing-glow 5s ease-in-out infinite;
+        }
+
+        :root[data-theme="dark"] .subject-card:hover,
+        :root[data-theme="dark"] .comp-card:hover,
+        :root[data-theme="dark"] .lo-item:hover,
+        :root[data-theme="dark"] details[open] {
+            animation: none;
+        }
+
+        @keyframes breathing-glow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 5px rgba(0, 191, 255, 0.05);
+                border-color: rgba(0, 191, 255, 0.1);
+            }
+
+            50% {
+                box-shadow: 0 0 15px rgba(51, 255, 204, 0.15);
+                border-color: rgba(51, 255, 204, 0.3);
+            }
+        }
+
+        /* Space Theme Variables */
+        :root[data-theme="space"] {
+            --tech-bg: #050505;
+            --tech-dark-alt: #0F1218;
+            --tech-light: #ffffff;
+            --tech-primary: #00BFFF;
+            --tech-secondary: #33FFCC;
+            --border-color: rgba(0, 191, 255, 0.3);
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+
+    <script>
+        window.onerror = function (msg, url, line, col, error) {
+            // alert("Error: " + msg + "\nLine: " + line); // Optional: Uncomment for alert
+            console.error("Global Error:", msg, url, line, col, error);
+            // Safely try to show on screen if body exists
+            if (document.body) {
+                const errDiv = document.createElement('div');
+                errDiv.style.cssText = 'position:fixed;top:0;left:0;width:100%;z-index:9999;background:red;color:white;padding:20px;font-size:20px;';
+                errDiv.textContent = 'Critical Error: ' + msg + ' at line ' + line;
+                document.body.prepend(errDiv);
+            }
+        };
+    </script>
     <script>
         // Tailwind Configuration with Modern Tech Palette
         tailwind.config = {
@@ -351,7 +631,7 @@
             "Bl.1.02 PDF (2).pdf": "https://drive.google.com/file/d/1AWP-UXLp1pbb84V98DZ2pqtyeV1_gtYK/view?usp=drivesdk",
             "BIO Presentation.pdf": "https://drive.google.com/file/d/19lGDXcgK1Ah__dCp5UQp-yMdjE7XcR-v/view?usp=drivesdk",
             "Explanation G10 - LO2 (1) (1).pdf": "https://drive.google.com/file/d/1c31T8c1C7tSB8ugAcZLrvQOjjPggMqj1/view?usp=drivesdk",
-            "L O 2.docx": "https://docs.google.com/document/d/1K9O9A5UUhk_tybJOTgUvfTijKxI86N79/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true", // Inferred or missing in CSV snippet, checking... CSV line 280 had LO2 files but L O 2.docx wasn't explicitly there? Ah, wait. checking.
+            "L O 2.docx": "https://docs.google.com/document/d/1-wS6tKyLl6gx4Q8MYInUtiRZ5CjuQkb-/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
 
             // LO3
             "L O 3.docx": "https://docs.google.com/document/d/1K9O9A5UUhk_tybJOTgUvfTijKxI86N79/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
@@ -363,25 +643,25 @@
             "Grade 10 lo.4 part 1.pdf": "https://drive.google.com/file/d/1Svq2VbY9TUBICtxS2xNtmMhOlPS8yqoT/view?usp=drivesdk",
 
             // LO5
-            "L O 5.docx": "https://docs.google.com/document/d/1K9O9A5UUhk_tybJOTgUvfTijKxI86N79/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true", // Placeholder/Check
-            "LO 5 G10 part 1.pdf": "https://drive.google.com/file/d/1K9O9A5UUhk_tybJOTgUvfTijKxI86N79/view?usp=drivesdk", // Placeholder/Check
-            "LO 5 G10 part 2.pdf": "https://drive.google.com/file/d/1K9O9A5UUhk_tybJOTgUvfTijKxI86N79/view?usp=drivesdk", // Placeholder/Check
+            "L O 5.docx": "https://docs.google.com/document/d/1lu3i4gchhB5qQbfmgxWehF6mEldy3jQ5/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "LO 5 G10 part 1.pdf": "https://drive.google.com/file/d/1MPY4-IAdH8tAZGlIVn_azlz2lEFdD73P/view?usp=drivesdk",
+            "LO 5 G10 part 2.pdf": "https://drive.google.com/file/d/1auyp4d4DoS2nJe-TWbdRYQbKqh5zMqsN/view?usp=drivesdk",
 
             // LO6
-            "L O 6.docx": "https://docs.google.com/document/d/1K9O9A5UUhk_tybJOTgUvfTijKxI86N79/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true", // Placeholder
+            "L O 6.docx": "https://docs.google.com/document/d/1vqDXKVASilmske0NyqlFEfQA6zLPP_nb/edit?usp=drivesdk&rtpof=true&sd=true",
             "LO 6 G10 Part 1.pdf": "https://drive.google.com/file/d/1fE7nR1dsTUK8ghKZ7jVp0bwrzA7Zaio7/view?usp=drivesdk",
-            "LO6 G10 part 2.pdf": "https://drive.google.com/file/d/1fE7nR1dsTUK8ghKZ7jVp0bwrzA7Zaio7/view?usp=drivesdk", // Placeholder
+            "LO6 G10 part 2.pdf": "https://drive.google.com/file/d/1-1lLF1qeEhhLPqTEocTEzJHXrz8tYblA/view?usp=drivesdk",
 
             // LO7
-            "LO 7 G10 Part 2.pdf": "https://drive.google.com/file/d/1fE7nR1dsTUK8ghKZ7jVp0bwrzA7Zaio7/view?usp=drivesdk", // Placeholder
-            "LO7 G10 Part 1.pdf": "https://drive.google.com/file/d/1fE7nR1dsTUK8ghKZ7jVp0bwrzA7Zaio7/view?usp=drivesdk", // Placeholder
-            "STEM cell specializing.pdf": "https://drive.google.com/file/d/1fE7nR1dsTUK8ghKZ7jVp0bwrzA7Zaio7/view?usp=drivesdk", // Placeholder
+            "LO 7 G10 Part 2.pdf": "https://drive.google.com/file/d/1sW5w9T4zS5V4Ag1jYEwjnCC2Xh0LZk4r/view?usp=drivesdk",
+            "LO7 G10 Part 1.pdf": "https://drive.google.com/file/d/16VaAEcfofkRJxe9VOmABxCT1mESCOlBz/view?usp=drivesdk",
+            "STEM cell specializing.pdf": "https://drive.google.com/file/d/1bgysoXRV3mGo0abHAGufur_SHZucOuVQ/view?usp=drivesdk",
 
             // LO8
-            "BI 1.08 part 1.pdf": "https://drive.google.com/file/d/1aJgKkZ3qM2mE3p3X5lG2y5x0V0c1b4n8/view?usp=drivesdk",
-            "BI 1.08 part 2.pdf": "https://drive.google.com/file/d/1bJgKkZ3qM2mE3p3X5lG2y5x0V0c1b4n8/view?usp=drivesdk",
-            "L O 8.docx": "https://docs.google.com/document/d/1K9O9A5UUhk_tybJOTgUvfTijKxI86N79/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
-            "LO.8.pptx": "https://docs.google.com/presentation/d/1K9O9A5UUhk_tybJOTgUvfTijKxI86N79/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "BI 1.08 part 1.pdf": "https://drive.google.com/file/d/1nPWpI8aHRljaSvw8Lmj8SYaVmpy9v-k2/view?usp=drivesdk",
+            "BI 1.08 part 2.pdf": "https://drive.google.com/file/d/1MYtESsSz7ZlvwW3ZbBc8TrdIkPA8p0qc/view?usp=drivesdk",
+            "L O 8.docx": "https://docs.google.com/document/d/1ftn55imv1uq1Inke69xfWGrdE04uJDY6/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "LO.8.pptx": "https://docs.google.com/presentation/d/1nVUbpJ-FWR6D0gen0AxZSVkvdocoxbLV/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
 
             // Test Banks
             "BI 1.06 test bank part 2.pdf": "https://drive.google.com/file/d/1W1zO0ZUa54VpKXcNLEwnkpPH0T4pFHp-/view?usp=drivesdk",
@@ -401,10 +681,10 @@
             "_BI 1.06 test bank.pdf": "https://drive.google.com/file/d/1W1zO0ZUa54VpKXcNLEwnkpPH0T4pFHp-/view?usp=drivesdk",
 
             // Revisions
-            "12_Lecture_Presentation.ppt": "https://docs.google.com/presentation/d/1K9O9A5UUhk_tybJOTgUvfTijKxI86N79/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
-            "All DISEASES.pdf": "https://drive.google.com/file/d/1K9O9A5UUhk_tybJOTgUvfTijKxI86N79/view?usp=drivesdk",
-            "Biology-1.pptx": "https://docs.google.com/presentation/d/1K9O9A5UUhk_tybJOTgUvfTijKxI86N79/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
-            "Revision-Biology 5-8.pptx": "https://docs.google.com/presentation/d/1K9O9A5UUhk_tybJOTgUvfTijKxI86N79/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "12_Lecture_Presentation.ppt": "https://docs.google.com/presentation/d/1SwA1Q-yXk1UQ4pdKkN571BDJL4NdR35s/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "All DISEASES.pdf": "https://drive.google.com/file/d/17LytXLw_VFKEmvV0PP6oflh2bkXCHN49/view?usp=drivesdk",
+            "Biology-1.pptx": "https://docs.google.com/presentation/d/1hLRN0Xpk8ZwvAJ_61MC0eP5LpElzeMFN/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "Revision-Biology 5-8.pptx": "https://docs.google.com/presentation/d/12v4-U-ZzAnN3Yok8SNVTrGNSvfFIs0hG/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
 
             // Additional References
             "Reading Essentials for Biology.pdf": "https://drive.google.com/file/d/1Q0Yk_2eFIm_PduWcyguTKz2QrtQRTTl9/view?usp=drivesdk",
@@ -513,7 +793,7 @@
 
             let html = `
                 <h2 class="text-3xl font-extrabold mb-6 text-tech-primary border-b border-tech-secondary/50 pb-2">Test Banks</h2>
-                <div class="p-4 bg-tech-bg/80 rounded-lg border border-tech-dark-alt">
+                <div class="p-4 bg-tech-dark-alt rounded-lg border border-tech-dark-alt">
                     <ul class="space-y-3">
             `;
 
@@ -534,7 +814,7 @@
 
             let html = `
                 <h2 class="text-3xl font-extrabold mb-6 text-tech-primary border-b border-tech-secondary/50 pb-2">Revisions</h2>
-                <div class="p-4 bg-tech-bg/80 rounded-lg border border-tech-dark-alt">
+                <div class="p-4 bg-tech-dark-alt rounded-lg border border-tech-dark-alt">
                     <ul class="space-y-3">
             `;
 
@@ -558,7 +838,7 @@
             }
 
             let html = `
-                <div class="mt-2 p-3 bg-tech-bg/80 rounded-lg border border-tech-dark-alt">
+                <div class="mt-2 p-3 bg-tech-dark-alt rounded-lg border border-tech-dark-alt">
                     <h4 class="text-md font-bold text-tech-secondary mb-2">Videos</h4>
                     <ul class="list-disc list-inside space-y-2">
             `;
@@ -585,7 +865,7 @@
                         <svg class="w-5 h-5 ml-2 transition-transform duration-300 arrow-icon flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
                     </summary>
                     <div class="px-4 pb-4 pt-2 border-t border-tech-primary/30 space-y-4">
-                        <div class="bg-tech-bg/80 p-3 rounded-lg border border-tech-dark-alt">
+                        <div class="bg-tech-dark-alt p-3 rounded-lg border border-tech-dark-alt">
                             <h4 class="text-md font-bold text-tech-secondary mb-1">Concept Description</h4>
                             <p class="text-tech-light/90 text-sm">${description}</p>
                         </div>
@@ -606,23 +886,25 @@
             const summaryLinks = lo['LO summerized'] || [];
             if (summaryLinks.length) {
                 html += `
-                    <div class="mb-6 p-4 bg-tech-bg/80 rounded-lg border border-tech-dark-alt">
+                    <div class="mb-6 p-4 bg-tech-dark-alt rounded-lg border border-tech-dark-alt">
                         <h3 class="text-xl font-semibold text-tech-secondary mb-2">LO summarized</h3>
                         <ul class="list-disc list-inside space-y-2">
                             ${summaryLinks.map(s => `<li><a href="${s}" target="_blank" rel="noopener noreferrer" class="text-tech-secondary hover:text-tech-primary underline">Watch summary video</a></li>`).join('')}
                         </ul>
                     </div>
                 `;
-                html += renderFilesForLO(loKey);
             }
 
             loData.concepts.forEach(concept => {
                 html += renderConcept(concept, loKey);
             });
 
+            // ADD: Render Files here
+            html += renderFilesForLO(loKey);
+
             // Small CTA to open the centralized Test Banks sidebar
             html += `
-                <div class="mt-8 p-4 bg-tech-bg/80 rounded-lg border border-tech-dark-alt">
+                <div class="mt-8 p-4 bg-tech-dark-alt rounded-lg border border-tech-dark-alt">
                     <p class="text-tech-light/80 mb-3">Looking for practice tests? Check the centralized Test Banks section.</p>
                     <button onclick="handleNavigationClick('test-banks')" class="px-3 py-2 bg-tech-primary text-tech-bg rounded-md font-semibold hover:bg-tech-secondary transition duration-200">Open Test Banks</button>
                 </div>
@@ -644,7 +926,7 @@
             if (!presentations.length && !loTestBankUrl && matchingTestBanks.length === 0) return '';
 
             let html = `
-                <div class="mt-8 p-4 bg-tech-bg/60 rounded-lg border border-tech-dark-alt">
+                <div class="mt-8 p-4 bg-tech-dark-alt rounded-lg border border-tech-dark-alt">
                     <h3 class="text-2xl font-bold text-tech-secondary mb-3">Files</h3>
             `;
 
@@ -694,11 +976,11 @@
             const files = resourceFiles.references || [];
             let html = `
                 <h2 class="text-3xl font-extrabold mb-6 text-tech-primary border-b border-tech-secondary/50 pb-2">Additional References</h2>
-                <div class="p-6 bg-tech-dark-alt rounded-xl border border-tech-secondary/50 shadow-subtle-glow">
-                    <p class="text-xl font-medium text-tech-light mb-6">
-                        Download these files if you want to study deeper in references:
-                    </p>
-            `;
+                        <div class="p-6 bg-tech-dark-alt rounded-xl border border-tech-secondary/50 shadow-subtle-glow">
+                            <p class="text-xl font-medium text-tech-light mb-6">
+                                Download these files if you want to study deeper in references:
+                            </p>
+                            `;
 
             const groups = resourceFiles.references || {};
             if (Object.keys(groups).length === 0) {
@@ -760,20 +1042,81 @@
             document.getElementById('content-area').scrollTop = 0;
         }
 
+        // Translations
+        const translations = {
+            en: { "settings": "Settings", "language": "Language", "theme": "Theme", "close": "Close", "footer_contact": "If you have any comments please text me", "additional_references": "Resources" },
+            ar: { "settings": "الإعدادات", "language": "اللغة", "theme": "السمة", "close": "إغلاق", "footer_contact": "إذا كان لديك أي تعليقات يرجى مراسلتي", "additional_references": "المصادر" }
+        };
+
+        function updateText(lang) {
+            const t = translations[lang];
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (t[key]) el.textContent = t[key];
+            });
+        }
+
+        function setLanguage(lang) {
+            document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+            document.documentElement.setAttribute('lang', lang);
+            localStorage.setItem('language', lang);
+            updateText(lang);
+        }
+
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+
+            // Update toggle icon
+            const themeToggleIcon = document.getElementById('theme-toggle-icon');
+            if (themeToggleIcon) {
+                if (theme === 'dark') {
+                    themeToggleIcon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+                } else {
+                    themeToggleIcon.innerHTML = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
+                }
+            }
+
+            // Use centralized effects if available
+            if (window.ThemeEffects) {
+                window.ThemeEffects.setEffect(theme);
+            } else {
+                if (theme === 'christmas') { startSnow(); } else { stopSnow(); }
+            }
+        }
+
+        function startSnow() {
+            const c = document.getElementById('snow-container'); if (!c) return; stopSnow();
+            window.snowInterval = setInterval(() => {
+                const s = document.createElement('div');
+                s.className = 'snowflake';
+                s.style.left = Math.random() * 100 + 'vw';
+                s.style.width = s.style.height = (Math.random() * 5 + 3) + 'px';
+                s.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                s.style.opacity = Math.random();
+                c.appendChild(s);
+                setTimeout(() => s.remove(), 5000);
+            }, 100);
+        }
+        function stopSnow() { if (window.snowInterval) clearInterval(window.snowInterval); const c = document.getElementById('snow-container'); if (c) c.innerHTML = ''; }
+
         // Initialize everything when the DOM is loaded
         document.addEventListener('DOMContentLoaded', () => {
+            // Initialize Settings FIRST to avoid ReferenceErrors
+            const savedLang = localStorage.getItem('language') || 'en';
+            const savedTheme = localStorage.getItem('theme') || 'dark';
             const loList = document.getElementById('lo-list');
 
             // Generate sidebar buttons for each LO
             Object.keys(learningObjectives).forEach(key => {
                 const isReference = key === 'references';
-                const displayText = isReference ? 'Additional References' : learningObjectives[key].title;
+                const displayText = isReference ? translations[savedLang].additional_references : learningObjectives[key].title;
 
                 const listItem = document.createElement('li');
                 listItem.innerHTML = `
-                    <button id="lo-${key}" 
-                        class="lo-item w-full text-left p-3 rounded-lg border-l-4 border-tech-dark-alt transition duration-200 
-                               hover:bg-tech-primary/10 hover:border-tech-primary font-medium text-sm sm:text-base"
+                    <button id="lo-${key}"
+                        class="lo-item w-full text-left p-3 rounded-lg border-l-4 border-tech-dark-alt transition duration-200
+                        hover:bg-tech-primary/10 hover:border-tech-primary font-medium text-sm sm:text-base"
                         data-lo-key="${key}">
                         <span class="truncate">${displayText}</span>
                     </button>
@@ -784,9 +1127,9 @@
             // Add Test Banks button to the sidebar
             const tbItem = document.createElement('li');
             tbItem.innerHTML = `
-                <button id="lo-test-banks" 
+                <button id="lo-test-banks"
                     class="lo-item w-full flex justify-between items-center text-left p-3 rounded-lg border-l-4 border-tech-dark-alt transition duration-200 
-                            hover:bg-tech-primary/10 hover:border-tech-primary font-medium text-sm sm:text-base"
+                    hover:bg-tech-primary/10 hover:border-tech-primary font-medium text-sm sm:text-base"
                     data-lo-key="test-banks">
                     <span class="truncate">Test Banks</span>
                 </button>
@@ -796,9 +1139,9 @@
             // Add Revisions button to the sidebar
             const revItem = document.createElement('li');
             revItem.innerHTML = `
-                <button id="lo-revisions" 
+                <button id="lo-revisions"
                     class="lo-item w-full flex justify-between items-center text-left p-3 rounded-lg border-l-4 border-tech-dark-alt transition duration-200 
-                            hover:bg-tech-primary/10 hover:border-tech-primary font-medium text-sm sm:text-base"
+                    hover:bg-tech-primary/10 hover:border-tech-primary font-medium text-sm sm:text-base"
                     data-lo-key="revisions">
                     <span class="truncate">Revisions</span>
                 </button>
@@ -821,36 +1164,62 @@
             const themeToggleBtn = document.getElementById('theme-toggle');
             const themeToggleIcon = document.getElementById('theme-toggle-icon');
 
-            function setTheme(theme) {
-                document.documentElement.setAttribute('data-theme', theme);
-                localStorage.setItem('theme', theme);
-                if (themeToggleIcon) {
-                    if (theme === 'dark') {
-                        themeToggleIcon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
-                    } else {
-                        themeToggleIcon.innerHTML = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
-                    }
-                }
-            }
+            // (Duplicate setTheme removed)
 
-            const saved = localStorage.getItem('theme');
-            if (saved) {
-                setTheme(saved);
-            } else {
-                setTheme('dark');
-            }
+            // (Duplicate snow functions removed)
 
-            if (themeToggleBtn) {
-                themeToggleBtn.addEventListener('click', () => {
+            // (Moved to top)
+
+            // (Duplicate handleNavigationClick removed)
+
+            // Initialize everything when the DOM is loaded
+            // Initialize everything (Merged from nested listener)
+            // Set initial state
+            setLanguage(savedLang);
+            setTheme(savedTheme);
+
+            // (Redundant init removed)
+
+            // (Redundant sidebar generation removed)
+
+            // Initial Settings
+            // (Initial settings moved to top of DOMContentLoaded)
+
+            // Listeners
+            document.getElementById('open-settings')?.addEventListener('click', (e) => { e.preventDefault(); document.getElementById('settings-modal').classList.remove('hidden'); });
+            document.getElementById('close-settings')?.addEventListener('click', () => document.getElementById('settings-modal').classList.add('hidden'));
+            document.getElementById('settings-modal')?.addEventListener('click', (e) => { if (e.target === document.getElementById('settings-modal')) document.getElementById('settings-modal').classList.add('hidden'); });
+
+            document.getElementById('lang-en')?.addEventListener('click', () => setLanguage('en'));
+            document.getElementById('lang-ar')?.addEventListener('click', () => setLanguage('ar'));
+
+            document.getElementById('theme-dark')?.addEventListener('click', () => setTheme('dark'));
+            document.getElementById('theme-midnight')?.addEventListener('click', () => setTheme('midnight'));
+            document.getElementById('theme-christmas')?.addEventListener('click', () => setTheme('christmas'));
+            document.getElementById('theme-space')?.addEventListener('click', () => setTheme('space'));
+
+            const legacyToggle = document.getElementById('theme-toggle');
+            if (legacyToggle) {
+                legacyToggle.addEventListener('click', () => {
                     const current = document.documentElement.getAttribute('data-theme') || 'dark';
-                    setTheme(current === 'dark' ? 'light' : 'dark');
+                    setTheme(current === 'dark' ? 'christmas' : 'dark');
                 });
             }
+
+            // Initial Render
+            handleNavigationClick('LO1');
         });
     </script>
 </head>
 
 <body class="bg-tech-bg text-tech-light min-h-screen flex flex-col">
+    <!-- Dark Neon Background Effects -->
+    <div class="cyber-wrapper">
+        <div class="cyber-grid"></div>
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
 
     <!-- Header -->
     <header
@@ -923,12 +1292,78 @@
     </main>
 
     <!-- Footer -->
-    <footer class="w-full bg-tech-dark-alt p-4 mt-auto border-t border-tech-primary/30">
-        <div class="text-center text-sm text-tech-light/70">
-            If you have any comments please text me <a href="mailto:yassoalaa822@gmail.com"
-                class="text-tech-secondary hover:text-tech-primary transition duration-200">yassoalaa822@gmail.com</a>
+    <footer class="w-full bg-tech-dark-alt p-4 mt-auto border-t border-tech-primary/30 relative z-20">
+        <div class="section-container flex flex-col sm:flex-row justify-between items-center text-sm">
+            <div class="text-center sm:text-left order-2 sm:order-1 mt-4 sm:mt-0">
+                <span data-i18n="footer_contact">If you have any comments please text me</span> <a
+                    href="mailto:yassoalaa822@gmail.com"
+                    class="text-tech-secondary hover:text-tech-primary transition duration-200">yassoalaa822@gmail.com</a>
+            </div>
+
+            <div class="space-x-4 order-1 sm:order-2">
+                <a href="#" id="open-settings" class="hover:text-tech-primary transition duration-200"
+                    data-i18n="settings">Settings</a>
+            </div>
         </div>
     </footer>
+
+    <!-- Snow Container -->
+    <div id="snow-container"></div>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+        <div
+            class="bg-tech-dark-alt rounded-2xl border border-tech-secondary/50 shadow-2xl p-6 w-full max-w-sm transform transition-all scale-100">
+            <div class="flex justify-between items-center mb-6 border-b border-tech-primary/20 pb-4">
+                <h3 class="text-2xl font-bold text-tech-primary" data-i18n="settings">Settings</h3>
+                <button id="close-settings" class="text-tech-light hover:text-tech-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="mb-6">
+                <h4 class="text-sm font-semibold text-tech-secondary uppercase tracking-wider mb-3"
+                    data-i18n="language">Language</h4>
+                <div class="grid grid-cols-2 gap-3">
+                    <button id="lang-en"
+                        class="p-2 rounded-lg border border-tech-primary/30 hover:bg-tech-primary/10 text-center transition">English</button>
+                    <button id="lang-ar"
+                        class="p-2 rounded-lg border border-tech-primary/30 hover:bg-tech-primary/10 text-center transition font-['Tajawal']">العربية</button>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <h4 class="text-sm font-semibold text-tech-secondary uppercase tracking-wider mb-3" data-i18n="theme">
+                    Theme</h4>
+                <div class="grid grid-cols-2 gap-3">
+                    <button id="theme-dark"
+                        class="p-2 rounded-lg border border-tech-primary/30 hover:bg-tech-primary/10 text-center transition">Dark
+                        Neon</button>
+                    <button id="theme-midnight"
+                        class="p-2 rounded-lg border border-pink-500/50 hover:bg-pink-500/10 text-center transition text-pink-300">Midnight
+                        🌆</button>
+                    <button id="theme-christmas"
+                        class="p-2 rounded-lg border border-red-500/50 hover:bg-red-500/10 text-center transition text-red-300">Christmas
+                        🎄</button>
+                    <button id="theme-space"
+                        class="p-2 rounded-lg border border-tech-primary/30 hover:bg-tech-primary/10 text-center transition text-tech-primary"
+                        data-i18n="theme_space">Space 🚀</button>
+                </div>
+            </div>
+
+            <button onclick="document.getElementById('settings-modal').classList.add('hidden')"
+                class="w-full py-2 bg-tech-primary text-tech-bg font-bold rounded-lg hover:bg-tech-secondary transition"
+                data-i18n="close">
+                Close
+            </button>
+        </div>
+    </div>
+    <script src="../space-theme.js"></script>
+    <script src="../theme-effects.js"></script>
 </body>
 
 </html>

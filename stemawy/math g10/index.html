@@ -9,6 +9,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Load Inter Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 
     <style>
         /* Apply Inter font family and smooth scrolling */
@@ -78,6 +79,36 @@
             --tech-primary: #00BFFF;
             --tech-secondary: #33FFCC;
             --border-color: rgba(51, 255, 204, 0.3);
+        }
+
+        /* Space Theme Variables */
+        :root[data-theme="space"] {
+            --tech-bg: #050505;
+            --tech-dark-alt: #0F1218;
+            --tech-light: #ffffff;
+            --tech-primary: #00BFFF;
+            --tech-secondary: #33FFCC;
+            --border-color: rgba(0, 191, 255, 0.3);
+        }
+
+        /* Midnight Synth Theme */
+        :root[data-theme="midnight"] {
+            --tech-bg: #1e1b4b;
+            --tech-dark-alt: #312e81;
+            --tech-light: #e0e7ff;
+            --tech-primary: #f472b6;
+            --tech-secondary: #818cf8;
+            --border-color: rgba(244, 114, 182, 0.4);
+        }
+
+        /* Christmas Theme */
+        :root[data-theme="christmas"] {
+            --tech-bg: #2C0412;
+            --tech-dark-alt: #460B1C;
+            --tech-light: #FEEBC8;
+            --tech-primary: #D4AF37;
+            --tech-secondary: #228B22;
+            --border-color: rgba(212, 175, 55, 0.4);
         }
 
         body {
@@ -152,11 +183,277 @@
             color: var(--tech-light);
         }
 
+        .gradient-h3 {
+            background-image: linear-gradient(to right, #00BFFF, #33FFCC, #00BFFF, #33FFCC);
+            animation-duration: 6s;
+        }
+
+        /* Enforce CSS Variables for Theme Switching (Overrides hardcoded Tailwind config) */
+        .bg-tech-dark-alt {
+            background-color: var(--tech-bg) !important;
+        }
+
+        .bg-tech-dark-alt {
+            background-color: var(--tech-dark-alt) !important;
+        }
+
+        .text-tech-light {
+            color: var(--tech-light) !important;
+        }
+
+        .text-tech-primary {
+            color: var(--tech-primary) !important;
+        }
+
+        .text-tech-secondary {
+            color: var(--tech-secondary) !important;
+        }
+
+        .border-tech-primary {
+            border-color: var(--tech-primary) !important;
+        }
+
+        .border-tech-secondary {
+            border-color: var(--tech-secondary) !important;
+        }
+
         .theme-toggle:hover {
             background-color: var(--tech-primary);
             color: var(--tech-bg);
         }
+
+        /* Christmas Theme Variables */
+        :root[data-theme="christmas"] {
+            /* Deep Burgundy/Wine Red & Gold Palette */
+            --tech-bg: #2C0412;
+            /* Deep Wine Red */
+            --tech-dark-alt: #460B1C;
+            /* Lighter Burgundy */
+            --tech-light: #FDF5E6;
+            /* Old Lace / Warm White */
+            --tech-primary: #FFD700;
+            /* Rich Gold */
+            --tech-secondary: #006400;
+            /* Deep Forest Green (Accent only) */
+            --border-color: rgba(255, 215, 0, 0.4);
+            /* Gold Border */
+        }
+
+        /* Space Theme Variables */
+        :root[data-theme="space"] {
+            --tech-bg: #050505;
+            --tech-dark-alt: #0F1218;
+            --tech-light: #ffffff;
+            --tech-primary: #00BFFF;
+            --tech-secondary: #33FFCC;
+            --border-color: rgba(0, 191, 255, 0.3);
+        }
+
+        /* Midnight Synth Theme */
+        :root[data-theme="midnight"] {
+            --tech-bg: #1e1b4b;
+            --tech-dark-alt: #312e81;
+            --tech-light: #e0e7ff;
+            --tech-primary: #f472b6;
+            --tech-secondary: #818cf8;
+            --border-color: rgba(244, 114, 182, 0.4);
+        }
+
+        /* Snow Effect */
+        #snow-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+            /* Above background, below some UI */
+            display: none;
+        }
+
+        :root[data-theme="christmas"] #snow-container {
+            display: block;
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh);
+            }
+        }
+
+        /* RTL Support */
+        [dir="rtl"] {
+            font-family: 'Tajawal', 'Inter', sans-serif;
+            /* Use Arabic-friendly font if available, fallback to Inter */
+        }
+
+        [dir="rtl"] .lo-item {
+            border-left: none;
+            border-right-width: 4px;
+            text-align: right;
+        }
+
+        [dir="rtl"] .border-l-4 {
+            border-left-width: 0;
+            border-right-width: 4px;
+        }
+
+        [dir="rtl"] .ml-auto {
+            margin-left: 0;
+            margin-right: auto;
+        }
+
+        [dir="rtl"] .space-x-4> :not([hidden])~ :not([hidden]) {
+            margin-right: calc(1rem * var(--space-x-reverse));
+            margin-left: 0;
+        }
+
+        [dir="rtl"] .mr-6 {
+            margin-right: 0;
+            margin-left: 1.5rem;
+        }
+
+        /* Modal Styles */
+        #settings-modal {
+            backdrop-filter: blur(5px);
+        }
+
+        /* --- Dark Neon Dynamic Background --- */
+        .cyber-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+            display: none;
+        }
+
+        /* Only show in Dark Theme */
+        :root[data-theme="dark"] .cyber-wrapper {
+            display: block;
+        }
+
+        .cyber-grid {
+            position: absolute;
+            width: 200vw;
+            height: 200vh;
+            top: -50%;
+            left: -50%;
+            background-image:
+                linear-gradient(rgba(0, 191, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 191, 255, 0.05) 1px, transparent 1px);
+            background-size: 60px 60px;
+            transform: perspective(500px) rotateX(60deg);
+            animation: grid-move 20s linear infinite;
+        }
+
+        @keyframes grid-move {
+            0% {
+                transform: perspective(500px) rotateX(60deg) translateY(0);
+            }
+
+            100% {
+                transform: perspective(500px) rotateX(60deg) translateY(60px);
+            }
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+            animation: float-orb 20s infinite ease-in-out;
+        }
+
+        .orb-1 {
+            top: 20%;
+            left: 20%;
+            width: 300px;
+            height: 300px;
+            background: rgba(0, 191, 255, 0.3);
+            animation-duration: 25s;
+        }
+
+        .orb-2 {
+            bottom: 20%;
+            right: 20%;
+            width: 400px;
+            height: 400px;
+            background: rgba(51, 255, 204, 0.2);
+            animation-duration: 30s;
+            animation-delay: -5s;
+        }
+
+        .orb-3 {
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            height: 200px;
+            background: rgba(138, 43, 226, 0.15);
+            animation-duration: 20s;
+            animation-delay: -10s;
+        }
+
+        @keyframes float-orb {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            33% {
+                transform: translate(40px, -60px);
+            }
+
+            66% {
+                transform: translate(-30px, 30px);
+            }
+        }
+
+        /* Breathing Glow for Cards in Dark Mode */
+        :root[data-theme="dark"] .subject-card,
+        :root[data-theme="dark"] .comp-card,
+        :root[data-theme="dark"] .lo-item,
+        :root[data-theme="dark"] details {
+            animation: breathing-glow 5s ease-in-out infinite;
+        }
+
+        :root[data-theme="dark"] .subject-card:hover,
+        :root[data-theme="dark"] .comp-card:hover,
+        :root[data-theme="dark"] .lo-item:hover,
+        :root[data-theme="dark"] details[open] {
+            animation: none;
+        }
+
+        @keyframes breathing-glow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 5px rgba(0, 191, 255, 0.05);
+                border-color: rgba(0, 191, 255, 0.1);
+            }
+
+            50% {
+                box-shadow: 0 0 15px rgba(51, 255, 204, 0.15);
+                border-color: rgba(51, 255, 204, 0.3);
+            }
+        }
     </style>
+    <!-- Load Tajawal font for Arabic -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
 
     <script>
         // Tailwind Configuration with Modern Tech Palette
@@ -298,11 +595,37 @@
             "Translation of linear function": ["https://youtu.be/rgvysb9emcQ?si=g3Y__YZoONFkPC9O"]
         };
 
+
+        const loSummaryVideos = {
+            LO1: [
+                "https://youtu.be/Uq6OsIPhqzw?si=j7wGJnem-EHPmhr5",
+                "https://youtu.be/2trG5-1w5KE?si=0kkz7eiBc8YcmBmq"
+            ],
+            LO2: [
+                "https://youtu.be/dUBxHP0zBdc?si=bUJ8PHb4rSeuMZW-",
+                "https://youtu.be/gNCI5EHKenw?si=b98hXHMt593mX_ee"
+            ],
+            LO3: ["https://youtu.be/q2SQPztYaQQ?si=fZvPiR_t927FIc3I"],
+            LO4: ["https://youtu.be/gd377CI_uZY?si=DiDl_H1ugYVYDSiP"],
+            LO5: ["https://youtu.be/q2SQPztYaQQ?si=bpXGAUgjn--uEdAF"],
+            LO6: ["https://youtu.be/7oUir6R9x2w?si=j0X3o2n91Hr0Hp1s"]
+        };
+
+        const revisionVideos = {
+            midterm: [
+                "https://youtu.be/eBdw_2tLabg?si=nv8PoczibR6B0z3Z",
+                "https://youtu.be/O92lj_P9Pes?si=X2u17Sc9vKJKhIvG",
+                "https://youtu.be/4UQ7JMbpWig?si=fte2M9m859FWXt-h"
+            ],
+            final: ["https://youtu.be/yNszOrjbDSg?si=5jwp5SYOTlSIC4TV"]
+        };
+
+
         // Function to create a single downloadable link block
         function createLinkBlock(title, placeholderText) {
             const mockDownloadLink = "javascript:void(0)";
             return `
-                <div class="mt-3 p-3 bg-tech-bg/50 rounded-lg border border-tech-dark-alt">
+                <div class="mt-3 p-3 bg-tech-dark-alt/50 rounded-lg border border-tech-dark-alt">
                     <h4 class="text-md font-bold text-tech-secondary mb-1">${title}</h4>
                     <p class="text-sm text-tech-light/70 italic mb-2">${placeholderText}</p>
                 </div>
@@ -313,11 +636,26 @@
         const resourceFiles = {
             LO1: [
                 'first semester/LO1/LO 1.pptx',
-                'first semester/LO1/MA 1.01 Trignometry.pptx'
+                'first semester/LO1/LO 1 MATH.pptx',
+                'first semester/LO1/MA 1.01.1 Modeling with trigonometric functions.pptx',
+                'first semester/LO1/Trig 7 sin=cos (2).pptx',
+                'first semester/LO1/2a lesson 3.4 .6 .7.pdf',
+                'first semester/LO1/LAW OF SINES AND COSINES.pdf',
+                'first semester/LO1/1 st trigonometric functions.pptx',
+                'first semester/LO1/2nd  Follow trigonometric functions.pptx',
+                'first semester/LO1/4th trig sin and cos law.pptx',
+                'first semester/LO1/3rd trig identities.pptx',
+                'first semester/LO1/6th cross section and rotaion (1).pptx',
+                'first semester/LO1/5th trig angl elevation annd depretion.pptx',
+                'first semester/LO1/Trig Functions and Identities.pdf',
+                'first semester/LO1/Trig 8  Sum and Difference of two angles  Formulas.ppt',
+                'first semester/LO1/Trig 1The Unit Circle.ppt',
+                'first semester/LO1/trig 3 starting and ending points for sin and  functions.ppt'
             ],
             LO2: [
+                'first semester/LO2/G10 S3.pdf',
                 'first semester/LO2/LO 2.pptx',
-                'first semester/LO2/MA 1.02 Statistics.pptx'
+                'first semester/LO2/MA 1.02.1.pptx'
             ],
             LO3: [
                 'first semester/LO3/LO 3.pptx',
@@ -329,8 +667,8 @@
             ],
             LO5: [
                 'first semester/LO5/LO 5.pptx',
-                'first semester/LO5/MA 1.05 Cone.pptx',
-                'first semester/LO5/MA 1.05 pyramid.pptx'
+                'first semester/LO5/MA 1.05 pyramid.pptx',
+                'first semester/LO5/MA 1.05 Cone.pptx'
             ],
             LO6: [
                 'first semester/LO6/LO 6.pptx',
@@ -356,23 +694,46 @@
 
         // Mapping filename -> shareUrl (math files)
         const shareMap = {
-            "LO 1.pptx": "https://docs.google.com/presentation/d/1FdGqo-21V3Y1qt_4VNDsXwkosi4Sh4Kn/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
-            "LO 1 MATH.pptx": "https://docs.google.com/presentation/d/1Giim5RVOhLFSQkffCrksDPWHL1KbwluB/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
-            "MA 1.01.1 Modeling with trigonometric functions.pptx": "https://docs.google.com/presentation/d/1IRpwXNJFlpn_ueYcSSj0-6KZAXoyeggX/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
-            "Trig Functions and Identities.pdf": "https://drive.google.com/file/d/1iGaaBTxBLLht5G7XmpnmhqVMYbhC6tWj/view?usp=drivesdk",
-            "MA 1.06 functions.pptx": "https://docs.google.com/presentation/d/1rc--v8LmNy01hf8uHNckGnRBS1wRoQ3N/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
-            "MA 1.06 functions.2pptx.pptx": "https://docs.google.com/presentation/d/1P9LMRGyUHFKl3WSGhl0bchCvx2d2zQ59/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
-            "LO 1 exercise.pptx": "https://docs.google.com/presentation/d/1puJGrzFAprcef2YJW7hy9ghe5rcHUgY-/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
-            "LO 2 exercise.pptx": "https://docs.google.com/presentation/d/1-B1tG1NuihTAEKeYFK9Lye13hbfwI1x6/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
-            "LO 3 exercise.pptx": "https://docs.google.com/presentation/d/11IWafbzqF9oEPj5d2xinV_k0EfmdmsZb/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
-            "LO 4 exercise.pptx": "https://docs.google.com/presentation/d/17zoQd9lky3Yud5XsScnFFqwuPa-m0f-w/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
-            "LO 5 exercise.pdf": "https://drive.google.com/file/d/1KSbcP-83rHE76eOkgY_Mj_kJEW0mOrOf/view?usp=drivesdk",
-            "5B Honors Quiz Review final.pdf": "https://drive.google.com/file/d/1zJfftm-ZsOiCbbLm7-JbvHyfmw91Q99v/view?usp=drivesdk",
-            "Revision L.O.5 & 6.pdf": "https://drive.google.com/file/d/15mfxDc76f540OAGRiOHphT99foENSDvE/view?usp=drivesdk",
-            "First term revision.pptx": "https://docs.google.com/presentation/d/1N5igRHMtf580lzgam1nfMVg_Jra2xCOR/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
-            "First term revision2.pptx": "https://docs.google.com/presentation/d/1O1A6NAb2CkrDN19MIbfHcAT2GCw0DbfU/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
-            "final revision on maths for grade 10 first semester 2017.pdf": "https://drive.google.com/file/d/19SH4HOs4s8iteLiisGZc9pxHdtd4IfI5/view?usp=drivesdk",
-            "pure math 1st term .docx": "https://docs.google.com/document/d/1bFyCBSzKntzZh6wRwJ5eOX57sVE9FgYG/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true"
+            "LO 1.pptx": "https://docs.google.com/presentation/d/1FdGqo-21V3Y1qt_4VNDsXwkosi4Sh4Kn/edit?usp=sharing",
+            "LO 1 MATH.pptx": "https://docs.google.com/presentation/d/1Giim5RVOhLFSQkffCrksDPWHL1KbwluB/edit?usp=sharing",
+            "MA 1.01.1 Modeling with trigonometric functions.pptx": "https://docs.google.com/presentation/d/1IRpwXNJFlpn_ueYcSSj0-6KZAXoyeggX/edit?usp=sharing",
+            "Trig Functions and Identities.pdf": "https://drive.google.com/file/d/1iGaaBTxBLLht5G7XmpnmhqVMYbhC6tWj/view?usp=sharing",
+            "MA 1.06 functions.pptx": "https://docs.google.com/presentation/d/1rc--v8LmNy01hf8uHNckGnRBS1wRoQ3N/edit?usp=sharing",
+            "MA 1.06 functions.2pptx.pptx": "https://docs.google.com/presentation/d/1P9LMRGyUHFKl3WSGhl0bchCvx2d2zQ59/edit?usp=sharing",
+            "LO 1 exercise.pptx": "https://docs.google.com/presentation/d/1puJGrzFAprcef2YJW7hy9ghe5rcHUgY-/edit?usp=sharing",
+            "LO 2 exercise.pptx": "https://docs.google.com/presentation/d/1-B1tG1NuihTAEKeYFK9Lye13hbfwI1x6/edit?usp=sharing",
+            "LO 3 exercise.pptx": "https://docs.google.com/presentation/d/11IWafbzqF9oEPj5d2xinV_k0EfmdmsZb/edit?usp=sharing",
+            "LO 4 exercise.pptx": "https://docs.google.com/presentation/d/17zoQd9lky3Yud5XsScnFFqwuPa-m0f-w/edit?usp=sharing",
+            "LO 5 exercise.pdf": "https://drive.google.com/file/d/1KSbcP-83rHE76eOkgY_Mj_kJEW0mOrOf/view?usp=sharing",
+            "5B Honors Quiz Review final.pdf": "https://drive.google.com/file/d/1zJfftm-ZsOiCbbLm7-JbvHyfmw91Q99v/view?usp=sharing",
+            "Revision L.O.5 & 6.pdf": "https://drive.google.com/file/d/15mfxDc76f540OAGRiOHphT99foENSDvE/view?usp=sharing",
+            "First term revision.pptx": "https://docs.google.com/presentation/d/1N5igRHMtf580lzgam1nfMVg_Jra2xCOR/edit?usp=sharing",
+            "First term revision2.pptx": "https://docs.google.com/presentation/d/1O1A6NAb2CkrDN19MIbfHcAT2GCw0DbfU/edit?usp=sharing",
+            "final revision on maths for grade 10 first semester 2017.pdf": "https://drive.google.com/file/d/19SH4HOs4s8iteLiisGZc9pxHdtd4IfI5/view?usp=sharing",
+            "pure math 1st term .docx": "https://docs.google.com/document/d/1bFyCBSzKntzZh6wRwJ5eOX57sVE9FgYG/edit?usp=sharing",
+            "LO 6.pptx": "https://docs.google.com/presentation/d/12Rau-6JGJlENAtrc8uQaxJ9dGdfCbGnK/edit?usp=sharing",
+            "LO 5.pptx": "https://docs.google.com/presentation/d/1L-7THfGCXlq1jEW4VTlXVi9MaOczVFbK/edit?usp=sharing",
+            "MA 1.05 pyramid.pptx": "https://docs.google.com/presentation/d/16oCUdRawsz3FqHuZKs4bynzn5gVQ0hM5/edit?usp=sharing",
+            "MA 1.05 Cone.pptx": "https://docs.google.com/presentation/d/1TKd3WwBkg82qxw3pk66WTAYhVpr-9OLo/edit?usp=sharing",
+            "LO 4.pptx": "https://docs.google.com/presentation/d/1QnoaIKLj73Ry20X7YhrLAaOvEU2_fHaU/edit?usp=sharing",
+            "MA 1.04 Similarity.pptx": "https://docs.google.com/presentation/d/1009nneJgOCiIXt24EbC-kRs2pSRDkwGb/edit?usp=sharing",
+            "LO 3.pptx": "https://docs.google.com/presentation/d/1qv_X-Qy2g23OFh7C_5_AJR1za9zd1BVX/edit?usp=sharing",
+            "MA 1.03 Modeling with geometry.pptx": "https://docs.google.com/presentation/d/1Q7drACLaLJ7TuMpUIfv4OYr-zKZl47Sk/edit?usp=sharing",
+            "G10 S3.pdf": "https://drive.google.com/file/d/1nIGGd8RheQvldM4NBU0I-rCFSVMUXU4L/view?usp=sharing",
+            "LO 2.pptx": "https://docs.google.com/presentation/d/1Iby_kKYJO1s67smbDMpctB27c6sZBVqz/edit?usp=sharing",
+            "MA 1.02.1.pptx": "https://docs.google.com/presentation/d/1-Pfn178Ftqx10PgS4g-IKYgP_AE314B9/edit?usp=sharing",
+            "Trig 7 sin=cos (2).pptx": "https://docs.google.com/presentation/d/1qxj4B5Jr0i6j1ZePOd6Fxkzy6UPRqTnO/edit?usp=sharing",
+            "2a lesson 3.4 .6 .7.pdf": "https://drive.google.com/file/d/1-XFnVMn0pNgp9P6WzdeTFKFNgz43xN0p/view?usp=sharing",
+            "LAW OF SINES AND COSINES.pdf": "https://drive.google.com/file/d/1TamSbaOWXzbv5FeHlM_YqdkeJrdxbRgg/view?usp=sharing",
+            "1 st trigonometric functions.pptx": "https://docs.google.com/presentation/d/1ppQLnIf0Ua8170_qiCN2eC2CyK1dWbI4/edit?usp=sharing",
+            "2nd  Follow trigonometric functions.pptx": "https://docs.google.com/presentation/d/1W85ypvrele1Pw2SuRRJ9d02nvWgL9LTM/edit?usp=sharing",
+            "4th trig sin and cos law.pptx": "https://docs.google.com/presentation/d/1pJkBs9DwpPS2IVKCAYAG1nOBb592TKbY/edit?usp=sharing",
+            "3rd trig identities.pptx": "https://docs.google.com/presentation/d/1Sz8Tl2Xuody6RU_w7ndw8lnq3I1bS8VU/edit?usp=sharing",
+            "6th cross section and rotaion (1).pptx": "https://docs.google.com/presentation/d/1-omYi-veGVHMSvP3PfS4J5aE80ctmbSF/edit?usp=sharing",
+            "5th trig angl elevation annd depretion.pptx": "https://docs.google.com/presentation/d/11LbVV8IKX4Q6raG372xVwCX2AaIppTtY/edit?usp=sharing",
+            "Trig 8  Sum and Difference of two angles  Formulas.ppt": "https://docs.google.com/presentation/d/1TWDCXlAY7Xc-4G0aXSNjEp5UW5R5ZKaL/edit?usp=sharing",
+            "Trig 1The Unit Circle.ppt": "https://docs.google.com/presentation/d/1WcdMeDQQ-syeLhAUMSBrYNi9xZVFCh9l/edit?usp=sharing",
+            "trig 3 starting and ending points for sin and  functions.ppt": "https://docs.google.com/presentation/d/1Se6sJV-o_e78JB9yUW5hSumiWCzvuRMn/edit?usp=sharing"
         };
 
         // Function to create a presentation links block
@@ -381,7 +742,7 @@
             if (!files.length) return '';
 
             let html = `
-                <div class="mt-3 p-3 bg-tech-bg/50 rounded-lg border border-tech-dark-alt">
+                <div class="mt-3 p-3 bg-tech-dark-alt/50 rounded-lg border border-tech-dark-alt">
                     <h4 class="text-md font-bold text-tech-secondary mb-2">Presentations & Files</h4>
                     <ul class="list-disc list-inside space-y-2">
             `;
@@ -429,25 +790,58 @@
 
         // Function to render revisions list
         function renderRevisions() {
-            const files = resourceFiles.revisions || [];
-            if (!files.length) return `<h3 class="text-xl text-tech-secondary">No revision files available.</h3>`;
-
             let html = `
                 <h2 class="text-3xl font-extrabold mb-6 text-tech-primary border-b border-tech-secondary/50 pb-2">Revisions</h2>
-                <div class="p-4 bg-tech-dark-alt rounded-xl border border-tech-secondary/50 shadow-subtle-glow">
-                    <p class="text-xl font-medium text-tech-light mb-6">
-                        Review your knowledge with these revision materials:
-                    </p>
-                    <ul class="space-y-3">
             `;
 
-            files.forEach(f => {
-                const name = f.split('/').pop();
-                const url = shareMap[name] || f;
-                html += `<li><a href="${url}" target="_blank" rel="noopener noreferrer" class="text-tech-secondary hover:text-tech-primary transition duration-200 underline">${name}</a></li>`;
-            });
+            // Helper for video sections
+            const renderVidSection = (title, vids) => {
+                if (!vids || !vids.length) return '';
+                let block = `
+                    <div class="mb-6">
+                        <h3 class="text-2xl font-bold text-tech-light mb-4">${title}</h3>
+                        <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                `;
+                vids.forEach((v, idx) => {
+                    block += `
+                        <a href="${v}" target="_blank" class="block p-4 bg-tech-dark-alt rounded-lg border border-tech-primary/30 hover:border-tech-secondary hover:shadow-subtle-glow transition group">
+                            <div class="flex items-center space-x-3">
+                                <svg class="w-8 h-8 text-red-500 group-hover:text-red-400 transition" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
+                                </svg>
+                                <span class="font-semibold text-tech-light group-hover:text-tech-primary">Watch Video ${idx + 1}</span>
+                            </div>
+                        </a>
+                    `;
+                });
+                block += `</div></div>`;
+                return block;
+            }
 
-            html += `</ul></div>`;
+            html += renderVidSection('Midterm Revision', revisionVideos.midterm);
+            html += renderVidSection('Final Revision', revisionVideos.final);
+
+            const files = resourceFiles.revisions || [];
+            if (!files.length && !revisionVideos.midterm && !revisionVideos.final) {
+                return `<h3 class="text-xl text-tech-secondary">No revision materials available.</h3>`;
+            }
+
+            if (files.length) {
+                html += `
+                    <div class="p-4 bg-tech-dark-alt rounded-xl border border-tech-secondary/50 shadow-subtle-glow mt-6">
+                        <p class="text-xl font-medium text-tech-light mb-6">
+                            Review your knowledge with these revision materials:
+                        </p>
+                        <ul class="space-y-3">
+                `;
+                files.forEach(f => {
+                    const name = f.split('/').pop();
+                    const url = shareMap[name] || f;
+                    html += `<li><a href="${url}" target="_blank" rel="noopener noreferrer" class="text-tech-secondary hover:text-tech-primary transition duration-200 underline">${name}</a></li>`;
+                });
+                html += `</ul></div>`;
+            }
+
             return html;
         }
 
@@ -482,7 +876,6 @@
                 `<p class=\"text-tech-light/90 text-sm\">${description}</p>\n` +
                 `</div>\n` +
                 `${videoHtml}\n` +
-                `${createPresentationLinks(loKey)}\n` +
                 `</div>\n` +
                 `</details>\n`;
         }
@@ -493,15 +886,49 @@
                 <h2 class="text-3xl font-extrabold mb-6 text-tech-primary border-b border-tech-secondary/50 pb-2">${loData.title}</h2>
             `;
 
+            // Summary Videos
+            if (loSummaryVideos[loKey]) {
+                html += `
+                    <div class="mb-6 p-4 bg-tech-dark-alt/80 rounded-lg border border-tech-primary/30">
+                        <h3 class="text-xl font-bold text-tech-secondary mb-3">Summary Videos</h3>
+                        <div class="space-y-2">
+                `;
+                loSummaryVideos[loKey].forEach((vid, idx) => {
+                    html += `
+                        <a href="${vid}" target="_blank" class="flex items-center space-x-2 text-tech-light hover:text-tech-primary transition">
+                            <svg class="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
+                            <span class="underline">Watch Summary Video ${idx + 1}</span>
+                        </a>
+                     `;
+                });
+                html += `</div></div>`;
+            }
+
             loData.concepts.forEach(concept => {
                 html += renderConcept(concept, loKey);
             });
 
+            // Presentations/Files for this LO
+            html += createPresentationLinks(loKey);
+
+            // Test Banks CTA
+            html += `
+                <div class="mt-8 p-4 bg-tech-bg/80 rounded-lg border border-tech-dark-alt">
+                    <p class="text-tech-light/80 mb-3">Looking for practice tests? Check the Test Banks section.</p>
+                    <button onclick="handleNavigationClick('test-banks')" class="px-3 py-2 bg-tech-primary text-tech-bg rounded-md font-semibold hover:bg-tech-secondary transition duration-200">Open Test Banks</button>
+                </div>
+            `;
+
             return html;
         }
 
+        // State for re-rendering
+        let currentLOKey = 'LO1';
+
         // Function to handle navigation and content rendering
         function handleNavigationClick(loKey) {
+            currentLOKey = loKey; // Update state
+
             const contentArea = document.getElementById('dynamic-content');
             const defaultMessage = document.getElementById('default-message');
             const loItems = document.querySelectorAll('.lo-item');
@@ -588,16 +1015,165 @@
             const themeToggleBtn = document.getElementById('theme-toggle');
             const themeToggleIcon = document.getElementById('theme-toggle-icon');
 
+
+
+            // Dictionary for Translations
+            const translations = {
+                en: {
+                    "settings": "Settings",
+                    "language": "Language",
+                    "theme": "Theme",
+                    "close": "Close",
+                    "lo_title": "Learning Objectives",
+                    "default_msg": "Please choose your checkpoint",
+                    "test_banks": "Test Banks",
+                    "revisions": "Revisions",
+                    "back": "Back",
+                    "comments": "If you have any comments please text me",
+                    "practice_text": "Practice your knowledge with these test banks:",
+                    "revision_text": "Review your knowledge with these revision materials:",
+                    "videos": "Videos",
+                    "presentations": "Presentations & Files",
+                    "concept_desc": "Concept Description",
+                    "open_test_banks": "Open Test Banks",
+                    "looking_for": "Looking for practice tests? Check the Test Banks section.",
+                    "watch_youtube": "Watch on YouTube",
+                    "concept_intro": "This section covers the fundamental principles of",
+                    "concept_outro": "Understanding this concept is crucial for mastering mathematics.",
+                    "no_test_banks": "No test banks available.",
+                    "no_revisions": "No revision files available.",
+                    "theme_dark": "Dark Neon",
+                    "theme_christmas": "Chresmas 🎄"
+                },
+                ar: {
+                    "settings": "الإعدادات",
+                    "language": "اللغة",
+                    "theme": "السمة",
+                    "close": "إغلاق",
+                    "lo_title": "أهداف التعلم",
+                    "default_msg": "يرجى اختيار نقطة التفتيش الخاصة بك",
+                    "test_banks": "بنك الأسئلة",
+                    "revisions": "المراجعات",
+                    "back": "رجوع",
+                    "comments": "إذا كان لديك أي تعليقات يرجى مراسلتي",
+                    "practice_text": "تدرّب على معرفتك مع بنوك الأسئلة هذه:",
+                    "revision_text": "راجع معلوماتك مع مواد المراجعة هذه:",
+                    "videos": "فيديوهات",
+                    "presentations": "العروض التقديمية والملفات",
+                    "concept_desc": "وصف المفهوم",
+                    "open_test_banks": "فتح بنك الأسئلة",
+                    "looking_for": "تبحث عن اختبارات تدريبية؟ تحقق من قسم بنك الأسئلة.",
+                    "watch_youtube": "شاهد على يوتيوب",
+                    "concept_intro": "يغطي هذا القسم المبادئ الأساسية لـ",
+                    "concept_outro": "فهم هذا المفهوم ضروري لإتقان الرياضيات.",
+                    "no_test_banks": "لا يوجد بنوك أسئلة متاحة.",
+                    "no_revisions": "لا توجد ملفات مراجعة متاحة.",
+                    "theme_dark": "نيون داكن",
+                    "theme_christmas": "كريسماس 🎄"
+                }
+            };
+
+            function updateText(lang) {
+                const t = translations[lang];
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (t[key]) el.textContent = t[key];
+                });
+
+                // Update Sidebar Text
+                document.querySelectorAll('.lo-item').forEach(btn => {
+                    const key = btn.getAttribute('data-lo-key');
+                    if (key === 'test-banks') {
+                        btn.querySelector('span').textContent = t['test_banks'];
+                    } else if (key === 'revisions') {
+                        btn.querySelector('span').textContent = t['revisions'];
+                    } else if (learningObjectives[key]) {
+                        const title = (lang === 'ar' && learningObjectives[key].ar_title)
+                            ? learningObjectives[key].ar_title
+                            : learningObjectives[key].title;
+                        btn.querySelector('span').textContent = title;
+                    }
+                });
+
+                // Re-render Main Content
+                handleNavigationClick(currentLOKey);
+            }
+
+            function setLanguage(lang) {
+                document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+                document.documentElement.setAttribute('lang', lang);
+                localStorage.setItem('language', lang);
+                updateText(lang);
+
+                // Re-render sidebar to apply RTL classes if needed (CSS mostly handles it)
+            }
+
             function setTheme(theme) {
                 document.documentElement.setAttribute('data-theme', theme);
                 localStorage.setItem('theme', theme);
+
+                // Use centralized effects
+                if (window.ThemeEffects) {
+                    window.ThemeEffects.setEffect(theme);
+                } else {
+                    if (theme === 'christmas') {
+                        startSnow();
+                    } else {
+                        stopSnow();
+                    }
+                }
+
                 if (themeToggleIcon) {
                     if (theme === 'dark') {
                         themeToggleIcon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
-                    } else {
+                    } else if (theme === 'light') {
                         themeToggleIcon.innerHTML = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
+                    } else if (theme === 'christmas') {
+                        themeToggleIcon.innerHTML = '<path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"></path>'; // Star
                     }
                 }
+
+                // Anime.js Stagger Effect on Sidebar
+                if (window.anime) {
+                    const items = document.querySelectorAll('#lo-list li');
+                    anime({
+                        targets: items,
+                        translateX: [-20, 0],
+                        opacity: [0, 1],
+                        delay: anime.stagger(100),
+                        easing: 'easeOutQuad',
+                        duration: 800
+                    });
+                }
+            }
+
+            // Snow Animation Logic
+            let snowInterval;
+            function startSnow() {
+                const container = document.getElementById('snow-container');
+                if (!container) return;
+                stopSnow(); // Clear existing
+                snowInterval = setInterval(() => {
+                    const snowflake = document.createElement('div');
+                    snowflake.classList.add('snowflake');
+                    snowflake.style.left = Math.random() * 100 + 'vw';
+                    snowflake.style.width = snowflake.style.height = (Math.random() * 5 + 3) + 'px'; // 3-8px
+                    snowflake.style.animationDuration = (Math.random() * 3 + 2) + 's'; // 2-5s
+                    snowflake.style.opacity = Math.random();
+
+                    container.appendChild(snowflake);
+
+                    // Cleanup
+                    setTimeout(() => {
+                        snowflake.remove();
+                    }, 5000);
+                }, 100);
+            }
+
+            function stopSnow() {
+                if (snowInterval) clearInterval(snowInterval);
+                const container = document.getElementById('snow-container');
+                if (container) container.innerHTML = '';
             }
 
             const saved = localStorage.getItem('theme');
@@ -609,10 +1185,38 @@
 
             if (themeToggleBtn) {
                 themeToggleBtn.addEventListener('click', () => {
-                    const current = document.documentElement.getAttribute('data-theme') || 'dark';
-                    setTheme(current === 'dark' ? 'light' : 'dark');
+                    document.getElementById('settings-modal').classList.remove('hidden');
                 });
             }
+
+
+            // Load Saved Language
+            const savedLang = localStorage.getItem('language') || 'en';
+            setLanguage(savedLang);
+
+            // Modal Logic
+            const settingsModal = document.getElementById('settings-modal');
+            const closeSettings = document.getElementById('close-settings');
+
+            closeSettings.addEventListener('click', () => {
+                settingsModal.classList.add('hidden');
+            });
+
+            // Close on outside click
+            settingsModal.addEventListener('click', (e) => {
+                if (e.target === settingsModal) {
+                    settingsModal.classList.add('hidden');
+                }
+            });
+
+            // Lang Buttons
+            document.getElementById('lang-en')?.addEventListener('click', () => setLanguage('en'));
+            document.getElementById('lang-ar')?.addEventListener('click', () => setLanguage('ar'));
+
+            // Theme Buttons
+            document.getElementById('theme-dark').addEventListener('click', () => setTheme('dark'));
+            document.getElementById('theme-midnight')?.addEventListener('click', () => setTheme('midnight'));
+            document.getElementById('theme-christmas').addEventListener('click', () => setTheme('christmas'));
 
             // Initialize with LO1
             handleNavigationClick('LO1');
@@ -621,6 +1225,13 @@
 </head>
 
 <body class="bg-tech-bg text-tech-light min-h-screen flex flex-col">
+    <!-- Dark Neon Background Effects -->
+    <div class="cyber-wrapper">
+        <div class="cyber-grid"></div>
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
 
     <!-- Header -->
     <header
@@ -670,8 +1281,8 @@
         <!-- Left Sidebar (LO Navigation) -->
         <nav id="sidebar"
             class="w-full sm:w-64 bg-tech-dark-alt rounded-xl p-4 mr-6 flex-shrink-0 border border-tech-primary/20 h-full overflow-y-auto">
-            <h2
-                class="text-lg font-bold mb-4 text-tech-secondary uppercase tracking-wider border-b border-tech-secondary/30 pb-2">
+            <h2 class="text-lg font-bold mb-4 text-tech-secondary uppercase tracking-wider border-b border-tech-secondary/30 pb-2"
+                data-i18n="lo_title">
                 Learning Objectives</h2>
             <ul id="lo-list" class="space-y-2">
                 <!-- LO items will be generated here -->
@@ -684,7 +1295,8 @@
             <div id="dynamic-content" class="h-full">
                 <!-- Default State -->
                 <div id="default-message"
-                    class="flex items-center justify-center h-full text-3xl font-light text-tech-light/50">
+                    class="flex items-center justify-center h-full text-3xl font-light text-tech-light/50"
+                    data-i18n="default_msg">
                     Please choose your checkpoint
                 </div>
                 <!-- Dynamic content will be rendered here -->
@@ -693,12 +1305,82 @@
     </main>
 
     <!-- Footer -->
-    <footer class="w-full bg-tech-dark-alt p-4 mt-auto border-t border-tech-primary/30">
-        <div class="text-center text-sm text-tech-light/70">
-            If you have any comments please text me <a href="mailto:yassoalaa822@gmail.com"
-                class="text-tech-secondary hover:text-tech-primary transition duration-200">yassoalaa822@gmail.com</a>
+    <footer class="w-full bg-tech-dark-alt p-4 mt-auto border-t border-tech-primary/30 relative z-20">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
+            <div class="text-center text-sm text-tech-light/70 mb-4 md:mb-0">
+                <span data-i18n="comments">If you have any comments please text me</span>
+                <a href="mailto:yassoalaa822@gmail.com"
+                    class="text-tech-secondary hover:text-tech-primary transition duration-200">yassoalaa822@gmail.com</a>
+            </div>
+            <button onclick="document.getElementById('settings-modal').classList.remove('hidden')"
+                class="px-4 py-2 bg-tech-bg border border-tech-primary/30 rounded-lg text-tech-primary hover:bg-tech-primary hover:text-tech-bg transition"
+                data-i18n="settings">
+                Settings
+            </button>
         </div>
     </footer>
+
+    <!-- Snow Container -->
+    <div id="snow-container"></div>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+        <div
+            class="bg-tech-dark-alt rounded-2xl border border-tech-secondary/50 shadow-2xl p-6 w-full max-w-sm transform transition-all scale-100">
+            <div class="flex justify-between items-center mb-6 border-b border-tech-primary/20 pb-4">
+                <h3 class="text-2xl font-bold text-tech-primary" data-i18n="settings">Settings</h3>
+                <button id="close-settings" class="text-tech-light hover:text-tech-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+
+
+
+            <div class="mb-6">
+                <h4 class="text-sm font-semibold text-tech-secondary uppercase tracking-wider mb-3"
+                    data-i18n="language">Language</h4>
+                <div class="grid grid-cols-2 gap-3">
+                    <button id="lang-en"
+                        class="p-2 rounded-lg border border-tech-primary/30 hover:bg-tech-primary/10 text-center transition">English</button>
+                    <button id="lang-ar"
+                        class="p-2 rounded-lg border border-tech-primary/30 hover:bg-tech-primary/10 text-center transition font-['Tajawal']">العربية</button>
+                </div>
+            </div>
+
+            <!-- Theme Section -->
+            <div class="mb-6">
+                <h4 class="text-sm font-semibold text-tech-secondary uppercase tracking-wider mb-3" data-i18n="theme">
+                    Theme</h4>
+                <div class="grid grid-cols-2 gap-3">
+                    <button id="theme-dark"
+                        class="p-2 rounded-lg border border-tech-primary/30 hover:bg-tech-primary/10 text-center transition"
+                        data-i18n="theme_dark">Dark
+                        Neon</button>
+                    <button id="theme-midnight"
+                        class="p-2 rounded-lg border border-pink-500/50 hover:bg-pink-500/10 text-center transition text-pink-300">Midnight
+                        🌆</button>
+                    <button id="theme-christmas"
+                        class="p-2 rounded-lg border border-red-500/50 hover:bg-red-500/10 text-center transition text-red-300"
+                        data-i18n="theme_christmas">Christmas 🎄</button>
+                    <button id="theme-space"
+                        class="p-2 rounded-lg border border-tech-primary/30 hover:bg-tech-primary/10 text-center transition text-tech-primary"
+                        data-i18n="theme_space">Space 🚀</button>
+                </div>
+            </div>
+
+            <button onclick="document.getElementById('settings-modal').classList.add('hidden')"
+                class="w-full py-2 bg-tech-primary text-tech-bg font-bold rounded-lg hover:bg-tech-secondary transition"
+                data-i18n="close">
+                Close
+            </button>
+        </div>
+    </div>
+    <script src="../space-theme.js"></script>
+    <script src="../theme-effects.js"></script>
 </body>
 
 </html>

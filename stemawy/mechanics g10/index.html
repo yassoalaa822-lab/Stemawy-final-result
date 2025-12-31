@@ -7,6 +7,8 @@
     <title>Mechanics Checkpoints — First Semester</title>
     <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Anime.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
     <!-- Load Inter Font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
 
@@ -100,6 +102,15 @@
         }
 
         /* Theme variables for dark and light modes */
+        :root[data-theme="dark"] {
+            --tech-bg: #1A1F26;
+            --tech-dark-alt: #2C333F;
+            --tech-light: #E0E6F0;
+            --tech-primary: #00BFFF;
+            --tech-secondary: #33FFCC;
+            --border-color: rgba(51, 255, 204, 0.3);
+        }
+
         :root[data-theme="light"] {
             --tech-bg: #ffffff;
             --tech-dark-alt: #f3f4f6;
@@ -109,13 +120,50 @@
             --border-color: rgba(2, 132, 199, 0.3);
         }
 
-        :root[data-theme="dark"] {
-            --tech-bg: #1A1F26;
-            --tech-dark-alt: #2C333F;
-            --tech-light: #E0E6F0;
+
+
+        /* Midnight Synth Theme */
+        :root[data-theme="midnight"] {
+            --tech-bg: #1a0b2e;
+            --tech-dark-alt: #2d1b4e;
+            --tech-light: #e0f7fa;
+            --tech-primary: #ff00ff;
+            --tech-secondary: #00ffff;
+            --border-color: rgba(255, 0, 255, 0.3);
+        }
+
+        /* Space Theme Variables */
+        :root[data-theme="space"] {
+            --tech-bg: #050505;
+            --tech-dark-alt: #0F1218;
+            --tech-light: #ffffff;
             --tech-primary: #00BFFF;
             --tech-secondary: #33FFCC;
-            --border-color: rgba(51, 255, 204, 0.3);
+            --border-color: rgba(0, 191, 255, 0.3);
+        }
+
+        /* Christmas Theme */
+        :root[data-theme="christmas"] {
+            --tech-bg: #2C0412;
+            --tech-dark-alt: #460B1C;
+            --tech-light: #FEEBC8;
+            --tech-primary: #D4AF37;
+            --tech-secondary: #228B22;
+            --border-color: rgba(212, 175, 55, 0.4);
+        }
+
+        /* Theme toggle button styles */
+        .theme-toggle {
+            padding: 0.5rem;
+            border-radius: 9999px;
+            transition: all 0.3s ease;
+            color: var(--tech-light);
+            background-color: transparent;
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--tech-primary);
+            color: var(--tech-bg);
         }
 
         /* Apply theme variables to page background and text so toggle is visible */
@@ -143,7 +191,222 @@
         .text-tech-secondary {
             color: var(--tech-secondary) !important;
         }
+
+        /* Enforce CSS Variables */
+        .bg-tech-bg {
+            background-color: var(--tech-bg) !important;
+        }
+
+        .bg-tech-dark-alt {
+            background-color: var(--tech-dark-alt) !important;
+        }
+
+        .text-tech-light {
+            color: var(--tech-light) !important;
+        }
+
+        .text-tech-primary {
+            color: var(--tech-primary) !important;
+        }
+
+        .text-tech-secondary {
+            color: var(--tech-secondary) !important;
+        }
+
+        .border-tech-primary {
+            border-color: var(--tech-primary) !important;
+        }
+
+        .border-tech-secondary {
+            border-color: var(--tech-secondary) !important;
+        }
+
+        /* Christmas Theme */
+        :root[data-theme="christmas"] {
+            --tech-bg: #2C0412;
+            --tech-dark-alt: #460B1C;
+            --tech-light: #FDF5E6;
+            --tech-primary: #FFD700;
+            --tech-secondary: #006400;
+            --border-color: rgba(255, 215, 0, 0.4);
+        }
+
+        /* Snow */
+        #snow-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+            display: none;
+        }
+
+        :root[data-theme="christmas"] #snow-container {
+            display: block;
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh);
+            }
+        }
+
+        /* RTL */
+        [dir="rtl"] {
+            font-family: 'Tajawal', 'Inter', sans-serif;
+        }
+
+        [dir="rtl"] .text-right-rtl {
+            text-align: right;
+        }
+
+        [dir="rtl"] #sidebar {
+            border-left: 1px solid var(--tech-primary);
+            border-right: none;
+            margin-left: 1.5rem;
+            margin-right: 0;
+        }
+
+        #settings-modal {
+            backdrop-filter: blur(5px);
+        }
+
+        /* --- Dark Neon Dynamic Background --- */
+        .cyber-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+            display: none;
+        }
+
+        /* Only show in Dark Theme */
+        :root[data-theme="dark"] .cyber-wrapper {
+            display: block;
+        }
+
+        .cyber-grid {
+            position: absolute;
+            width: 200vw;
+            height: 200vh;
+            top: -50%;
+            left: -50%;
+            background-image:
+                linear-gradient(rgba(0, 191, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 191, 255, 0.05) 1px, transparent 1px);
+            background-size: 60px 60px;
+            transform: perspective(500px) rotateX(60deg);
+            animation: grid-move 20s linear infinite;
+        }
+
+        @keyframes grid-move {
+            0% {
+                transform: perspective(500px) rotateX(60deg) translateY(0);
+            }
+
+            100% {
+                transform: perspective(500px) rotateX(60deg) translateY(60px);
+            }
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+            animation: float-orb 20s infinite ease-in-out;
+        }
+
+        .orb-1 {
+            top: 20%;
+            left: 20%;
+            width: 300px;
+            height: 300px;
+            background: rgba(0, 191, 255, 0.3);
+            animation-duration: 25s;
+        }
+
+        .orb-2 {
+            bottom: 20%;
+            right: 20%;
+            width: 400px;
+            height: 400px;
+            background: rgba(51, 255, 204, 0.2);
+            animation-duration: 30s;
+            animation-delay: -5s;
+        }
+
+        .orb-3 {
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            height: 200px;
+            background: rgba(138, 43, 226, 0.15);
+            animation-duration: 20s;
+            animation-delay: -10s;
+        }
+
+        @keyframes float-orb {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            33% {
+                transform: translate(40px, -60px);
+            }
+
+            66% {
+                transform: translate(-30px, 30px);
+            }
+        }
+
+        /* Breathing Glow for Cards in Dark Mode */
+        :root[data-theme="dark"] .subject-card,
+        :root[data-theme="dark"] .comp-card,
+        :root[data-theme="dark"] .lo-item,
+        :root[data-theme="dark"] details {
+            animation: breathing-glow 5s ease-in-out infinite;
+        }
+
+        :root[data-theme="dark"] .subject-card:hover,
+        :root[data-theme="dark"] .comp-card:hover,
+        :root[data-theme="dark"] .lo-item:hover,
+        :root[data-theme="dark"] details[open] {
+            animation: none;
+        }
+
+        @keyframes breathing-glow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 5px rgba(0, 191, 255, 0.05);
+                border-color: rgba(0, 191, 255, 0.1);
+            }
+
+            50% {
+                box-shadow: 0 0 15px rgba(51, 255, 204, 0.15);
+                border-color: rgba(51, 255, 204, 0.3);
+            }
+        }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
 
     <script>
         // Tailwind Configuration with Modern Tech Palette
@@ -208,6 +471,34 @@
             // Note: 'references' removed. We'll provide dedicated 'revisions' and 'test-banks' sections
         };
 
+        const loSummaryVideos = {
+            LO1: [
+                "https://youtu.be/CfdjX3EXbSQ?si=9j-PLLyA1z0cVs92",
+                "https://youtu.be/qVVslgaq7qI?si=L-VOoBh_NFppK5YU"
+            ],
+            LO2: [
+                "https://youtu.be/KOUUgZejJKo?si=Sd1OTepQ6diW3Kxg"
+            ],
+            LO3: [
+                "https://youtu.be/OefU3LHLARE?si=sPUmNgKBx8Ziy0hQ"
+            ],
+            LO4: [
+                "https://youtu.be/OefU3LHLARE?si=sPUmNgKBx8Ziy0hQ"
+            ]
+        };
+
+        const revisionVideos = {
+            midterm: [
+                "https://youtu.be/EqxS3-22rLw?si=8CTIG9Z6YfA0dXZr",
+                "https://youtu.be/Go2f_918TSw?si=kdakt5ChkGuKxDcG",
+                "https://youtu.be/eYApRDE8fuk?si=OpLI1uvuG27A8VUm"
+            ],
+            final: [
+                "https://youtu.be/nrOsxeMj_VM?si=OfGgnTBq2FbsB8sR",
+                "https://youtu.be/v9kytyiDPyg?si=PbHZ-FsGjWfH-L_9"
+            ]
+        };
+
         // Resource files gathered from the 'first semester' folder. These are used to populate
         // LO sections, Test Banks and Revision pages. Paths are relative to the HTML file.
         const resourceFiles = {
@@ -264,21 +555,63 @@
 
         // Mapping filename -> shareUrl for Mechanics files (subset)
         const shareMap = {
+            // Test Banks
+            "TestBank (1).pdf": "https://drive.google.com/file/d/1FhqK4rnObR1ZIwVHhseFWXikfgkXuo14/view?usp=drivesdk",
+            "Quiz Mechanics NO.1.pdf": "https://drive.google.com/file/d/1vMeVCsGqrmFlvKF5fZQiFW8s0ysm12Gt/view?usp=drivesdk",
+            "LO 1 exercise.pptx": "https://docs.google.com/presentation/d/18MVH11tjMexi8WYU6Tror_ir6UaRUqDD/edit?usp=drivesdk&rtpof=true&sd=true",
+            "Final revision on Mechanics with Answer.pdf": "https://drive.google.com/file/d/1aU60gW_uYmPcSaLGA289vTZ30NlyfrS6/view?usp=drivesdk",
+            "final+revision+on+mechanics+for+grade+10+first+semester+2017.pdf": "https://drive.google.com/file/d/1w4vGVFtJoOfPVwZxzAlzCSx_tbfY7m5b/view?usp=drivesdk",
+
+            // LO1
+            "ME 1.01.pptx": "https://docs.google.com/presentation/d/1uy824Y3C5VfU1aQ5EwN2mjgvT-J21prS/edit?usp=drivesdk&rtpof=true&sd=true",
+            "ME 1.01.3 (2).pptx": "https://docs.google.com/presentation/d/1dk-lHXH1bLPEGpbNk8YvqVpHs6p8U9ja/edit?usp=drivesdk&rtpof=true&sd=true",
+            "ME 1.01.4.pptx": "https://docs.google.com/presentation/d/1utM0KVsNJSudvcsqcswTKW0YD6iDBxtv/edit?usp=drivesdk&rtpof=true&sd=true",
             "1 Displacement time graph.pptx": "https://docs.google.com/presentation/d/1lVQzs5DZjlgfhMnVr7VPHpawLl9157jK/edit?usp=drivesdk&rtpof=true&sd=true",
-            "2 velocity time graph.pptx": "https://docs.google.com/presentation/d/1gaL-F6jrxfT4QfdEBouJF5ypQCtYHXjN/edit?usp=drivesdk&rtpof=true&sd=true",
             "3 acceleration time graph.pptx": "https://docs.google.com/presentation/d/1KnVv3-b-N1AkElBPkNZ6P2AypydebknQ/edit?usp=drivesdk&rtpof=true&sd=true",
+            "2 velocity time graph.pptx": "https://docs.google.com/presentation/d/1gaL-F6jrxfT4QfdEBouJF5ypQCtYHXjN/edit?usp=drivesdk&rtpof=true&sd=true",
+            // LO1 versions (default keys)
+            "4 relative velocity averrage velocity.pptx": "https://docs.google.com/presentation/d/1ZNBJs1km10rYssXlDYN-OJ8r1nNrYW1C/edit?usp=drivesdk&rtpof=true&sd=true",
             "relative velocity.pdf": "https://drive.google.com/file/d/1C8sXIF2OvV0s5RCX3CXqPYwd1lN8YsL7/view?usp=drivesdk",
             "LO 1 ME.pptx": "https://docs.google.com/presentation/d/1PEFE62wGIVaK5XRJwcJr88JXaTmjiF40/edit?usp=drivesdk&rtpof=true&sd=true",
-            "Final revision on Mechanics with Answer.pdf": "https://drive.google.com/file/d/1aU60gW_uYmPcSaLGA289vTZ30NlyfrS6/view?usp=drivesdk",
-            "Quiz Mechanics NO.1.pdf": "https://drive.google.com/file/d/1vMeVCsGqrmFlvKF5fZQiFW8s0ysm12Gt/view?usp=drivesdk",
-            "TestBank (1).pdf": "https://drive.google.com/file/d/1FhqK4rnObR1ZIwVHhseFWXikfgkXuo14/view?usp=drivesdk"
+
+            // LO2
+            "ME 1.02.3.pptx": "https://docs.google.com/presentation/d/1iSdg9W5v2X2WZzkFrnpP9jzZvw16aQEz/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "Area under the curve.pptx": "https://docs.google.com/presentation/d/1warUiW0KsrhodQEDrSH-eUHcTkYAOZJJ/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "3-Free Fall.pptx": "https://docs.google.com/presentation/d/1eEVNEb9Cc6lsqQ2BznV6feI2DoeCdFRr/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "2-kinematic equation.pptx": "https://docs.google.com/presentation/d/1L-r27XABW9fvzz46aufMMg2m4otG1Lbm/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "1-under graph.pptx": "https://docs.google.com/presentation/d/1TGN2dzg0CwiFjqrbJGajmj0UMrQZ4EwE/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "session 6.pptx": "https://docs.google.com/presentation/d/13po_BTMx3s6ZRIhtYyBazLq0ycdw9lBW/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "5th free fall motion.pptx": "https://docs.google.com/presentation/d/19hSpyfPj6JeiXFdIYmWD0fnaYtJRL2-E/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "Mechanics-7.pptx": "https://docs.google.com/presentation/d/1E6v-xKnQ7ekUnxWg5wPDSG72188hSPyY/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "Mechanics-6.pptx": "https://docs.google.com/presentation/d/16VOCVck5GVHEpa3k4fZzXFnFxFpc4Nrk/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "Mechanics-5.pptx": "https://docs.google.com/presentation/d/1uMRK68mEIX7IyDX88ltFuE76TjKTXH5t/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+
+            // Revision
+            "Mechanics Revision LO 1,2.pptx": "https://docs.google.com/presentation/d/1ZDu3qU0N2idbNVbP_hzUTD8G6lCoJbtQ/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "Mechanics 1st term.pdf": "https://drive.google.com/file/d/1Vrd7yE0TbPbBgVay-rgxJxI9MmFv2CjM/view?usp=drivesdk",
+            "Vectors Revision.pdf": "https://drive.google.com/file/d/1j1CAAXjJt8Sn7u8oYJ5QJrAy4tyM9aNT/view?usp=drivesdk",
+
+            // LO4
+            "ME 1.04 Vectors.pptx": "https://docs.google.com/presentation/d/1JjNwkkdWCT9s50xmyp2D95PY5AHTgqws/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "4th suvat equations.pptx": "https://docs.google.com/presentation/d/1z8nY1jfLO3Xmk-CF1BDLXNfx3dl5fXyp/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "vector3.pptx": "https://docs.google.com/presentation/d/1-2XH34aCd8UfWUnmIvz3Nz_IaGJKGjcu/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "vector 1.pptx": "https://docs.google.com/presentation/d/1RdXrkqJFyKw4ec4AdYCehlsDido6oLl0/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "vector 2.pptx": "https://docs.google.com/presentation/d/1TEMvqii-TkSeby24jSE3V5KTnn2w_8WN/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "Conservation of Momentum -Collision.pptx": "https://docs.google.com/presentation/d/1B0YIajut-zeJx88sJ5i0JnusBMgdu-tU/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "Mathematical-Vector-Addition-Packet3.pdf": "https://drive.google.com/file/d/1oqINNjzrbkJp20uPdTOgXWNMUKp59GNy/view?usp=drivesdk",
+
+            // LO3
+            "ME 1.03 collision linear momentum conservation.pptx": "https://docs.google.com/presentation/d/1EcsA-zSbyRRPB42QyyR5qsew4xVb80qW/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            // LO3 specific versions (duplicate filenames, so using full path keys)
+            "first semester/LO3/4 relative velocity averrage velocity.pptx": "https://docs.google.com/presentation/d/1OjqOb1GeyPs8gPfosj9aK1Slp5faBs6l/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "first semester/LO3/relative velocity.pdf": "https://drive.google.com/file/d/1Yt2UcFcuJnIDAgJVtxtPWfcnTEL3jfDn/view?usp=drivesdk"
         };
 
         // Function to create a single downloadable link block
         function createLinkBlock(title, placeholderText) {
             const mockDownloadLink = "javascript:void(0)";
             return `
-                <div class="mt-3 p-3 bg-tech-bg/50 rounded-lg border border-tech-dark-alt">
+                <div class="mt-3 p-3 bg-tech-dark-alt rounded-lg border border-tech-dark-alt">
                     <h4 class="text-md font-bold text-tech-secondary mb-1">${title}</h4>
                     <p class="text-sm text-tech-light/70 italic mb-2">${placeholderText}</p>
                 </div>
@@ -296,7 +629,7 @@
                         <svg class="w-5 h-5 ml-2 transition-transform duration-300 arrow-icon flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
                     </summary>
                     <div class="px-4 pb-4 pt-2 border-t border-tech-primary/30 space-y-4">
-                        <div class="bg-tech-bg/80 p-3 rounded-lg border border-tech-dark-alt">
+                        <div class="bg-tech-dark-alt p-3 rounded-lg border border-tech-dark-alt">
                             <h4 class="text-md font-bold text-tech-secondary mb-1">Concept Description</h4>
                             <p class="text-tech-light/90 text-sm">${description}</p>
                         </div>
@@ -313,11 +646,12 @@
             let html = `<ul class="space-y-2">`;
             files.forEach(f => {
                 const filename = f.split('/').pop();
-                const url = shareMap[filename] || f;
+                // Check for full-path key first (for duplicates), then filename key, then fallback to original path
+                const url = shareMap[f] || shareMap[filename] || f;
                 html += `<li><a href="${url}" target="_blank" rel="noopener noreferrer" class="text-tech-primary underline hover:text-tech-secondary">${filename}</a></li>`;
             });
             html += `</ul>`;
-            return `<div class="mt-6 p-4 bg-tech-bg/60 rounded-lg border border-tech-dark-alt">${html}</div>`;
+            return `<div class="mt-6 p-4 bg-tech-dark-alt rounded-lg border border-tech-dark-alt">${html}</div>`;
         }
 
         // Function to render the LO content
@@ -326,6 +660,24 @@
                 <h2 class="text-3xl font-extrabold mb-6 text-tech-primary border-b border-tech-secondary/50 pb-2">${loData.title}</h2>
             `;
 
+            // Summary Videos
+            if (loSummaryVideos[loKey]) {
+                html += `
+                    <div class="mb-6 p-4 bg-tech-dark-alt/80 rounded-lg border border-tech-primary/30">
+                        <h3 class="text-xl font-bold text-tech-secondary mb-3">Summary Videos</h3>
+                        <div class="space-y-2">
+                `;
+                loSummaryVideos[loKey].forEach((vid, idx) => {
+                    html += `
+                        <a href="${vid}" target="_blank" class="flex items-center space-x-2 text-tech-light hover:text-tech-primary transition">
+                            <svg class="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
+                            <span class="underline">Watch Summary Video ${idx + 1}</span>
+                        </a>
+                     `;
+                });
+                html += `</div></div>`;
+            }
+
             loData.concepts.forEach(concept => {
                 html += renderConcept(concept);
             });
@@ -333,33 +685,63 @@
             // Render LO-specific resource files (if any)
             html += renderFilesList(resourceFiles[loKey]);
 
+            // Add Test Bank CTA
+            html += `
+                <div class="mt-8 pt-6 border-t border-tech-primary/30 text-center">
+                    <p class="mb-4 text-tech-light">Looking for more practice?</p>
+                    <button onclick="handleNavigationClick('test-banks')"
+                        class="px-6 py-3 bg-tech-primary text-white rounded-lg font-bold hover:bg-tech-secondary hover:text-tech-bg transition duration-300 shadow-subtle-glow">
+                        Open Test Banks
+                    </button>
+                </div>
+            `;
+
             return html;
         }
 
-        // Function to render the Additional References section
-        function renderAdditionalReferences() {
+        // Function to render revisions list
+        function renderRevisions() {
             let html = `
-                <h2 class="text-3xl font-extrabold mb-6 text-tech-primary border-b border-tech-secondary/50 pb-2">Additional References</h2>
-                <div class="p-6 bg-tech-dark-alt rounded-xl border border-tech-secondary/50 shadow-subtle-glow">
-                    <p class="text-xl font-medium text-tech-light mb-6">
-                        Download these files if you want to study deeper in references:
-                    </p>
+                <h2 class="text-3xl font-extrabold mb-6 text-tech-primary border-b border-tech-secondary/50 pb-2">Revisions</h2>
             `;
 
-            // Four placeholder links
-            for (let i = 1; i <= 4; i++) {
-                const linkTitle = `Advanced Mechanics Reference Material ${i}`;
-                html += `
-                    <div class="mb-4">
-                        <a href="javascript:void(0)" download="Reference_Material_${i}.pdf"
-                            class="text-tech-secondary hover:text-tech-primary transition duration-200 text-lg underline font-semibold">
-                            ${linkTitle}
-                        </a>
-                    </div>
+            // Helper for video sections
+            const renderVidSection = (title, vids) => {
+                if (!vids || !vids.length) return '';
+                let block = `
+                    <div class="mb-6">
+                        <h3 class="text-2xl font-bold text-tech-light mb-4">${title}</h3>
+                        <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                 `;
+                vids.forEach((v, idx) => {
+                    block += `
+                        <a href="${v}" target="_blank" class="block p-4 bg-tech-dark-alt rounded-lg border border-tech-primary/30 hover:border-tech-secondary hover:shadow-subtle-glow transition group">
+                            <div class="flex items-center space-x-3">
+                                <svg class="w-8 h-8 text-red-500 group-hover:text-red-400 transition" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
+                                </svg>
+                                <span class="font-semibold text-tech-light group-hover:text-tech-primary">Watch Video ${idx + 1}</span>
+                            </div>
+                        </a>
+                    `;
+                });
+                block += `</div></div>`;
+                return block;
             }
 
-            html += `</div>`;
+            html += renderVidSection('Midterm Revision', revisionVideos.midterm);
+            html += renderVidSection('Final Revision', revisionVideos.final);
+
+            const files = resourceFiles.revisions || [];
+            if (files.length) {
+                html += `
+                    <h3 class="text-2xl font-bold text-tech-light mt-8 mb-4">Revision Files</h3>
+                    ${renderFilesList(files)}
+                 `;
+            } else if (!revisionVideos.midterm && !revisionVideos.final) {
+                return `<h3 class="text-xl text-tech-secondary">No revision materials available.</h3>`;
+            }
+
             return html;
         }
 
@@ -379,10 +761,7 @@
 
             // Render appropriate content
             if (loKey === 'revisions') {
-                contentArea.innerHTML = `
-                    <h2 class="text-3xl font-extrabold mb-6 text-tech-primary border-b border-tech-secondary/50 pb-2">Revision Files</h2>
-                    ${renderFilesList(resourceFiles.revisions)}
-                `;
+                contentArea.innerHTML = renderRevisions();
             } else if (loKey === 'test-banks') {
                 contentArea.innerHTML = `
                     <h2 class="text-3xl font-extrabold mb-6 text-tech-primary border-b border-tech-secondary/50 pb-2">Test Banks</h2>
@@ -413,16 +792,13 @@
 
             // Generate sidebar buttons for each LO
             Object.keys(learningObjectives).forEach(key => {
-                const isReference = key === 'references';
-                const displayText = isReference ? 'Additional References' : learningObjectives[key].title;
-
                 const listItem = document.createElement('li');
                 listItem.innerHTML = `
                     <button id="lo-${key}" 
                         class="lo-item w-full text-left p-3 rounded-lg border-l-4 border-tech-dark-alt transition duration-200 
                                hover:bg-tech-primary/10 hover:border-tech-primary font-medium text-sm sm:text-base"
                         data-lo-key="${key}">
-                        <span class="truncate">${displayText}</span>
+                        <span class="truncate">${learningObjectives[key].title}</span>
                     </button>
                 `;
                 loList.appendChild(listItem);
@@ -456,14 +832,84 @@
                     themeIcon.innerHTML = '<circle cx="12" cy="12" r="3" fill="currentColor"></circle><path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 2v2M12 20v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M2 12h2M20 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" />';
                 }
             }
-            updateThemeIcon();
-            if (themeToggle) {
-                themeToggle.addEventListener('click', () => {
-                    const current = document.documentElement.getAttribute('data-theme') || 'dark';
-                    const next = current === 'dark' ? 'light' : 'dark';
-                    document.documentElement.setAttribute('data-theme', next);
-                    localStorage.setItem('site-theme', next);
-                    updateThemeIcon();
+            // Christmas / Language Logic
+            const translations = {
+                en: { "settings": "Settings", "language": "Language", "theme": "Theme", "close": "Close", "footer_contact": "If you have any comments please text me" },
+                ar: { "settings": "الإعدادات", "language": "اللغة", "theme": "السمة", "close": "إغلاق", "footer_contact": "إذا كان لديك أي تعليقات يرجى مراسلتي" }
+            };
+            function updateText(lang) {
+                const t = translations[lang];
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (t[key]) el.textContent = t[key];
+                });
+            }
+            function setLanguage(lang) {
+                document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+                document.documentElement.setAttribute('lang', lang);
+                localStorage.setItem('language', lang);
+                updateText(lang);
+            }
+            function setTheme(theme) {
+                document.documentElement.setAttribute('data-theme', theme);
+                localStorage.setItem('theme', theme);
+
+                // Use centralized effects
+                if (window.ThemeEffects) {
+                    window.ThemeEffects.setEffect(theme);
+                } else {
+                    if (theme === 'christmas') startSnow(); else stopSnow();
+                }
+
+                // Update icon if exists
+                if (typeof updateThemeIcon === 'function') updateThemeIcon();
+            }
+            // Snow
+            function startSnow() {
+                const c = document.getElementById('snow-container'); if (!c) return; stopSnow();
+                window.snowInterval = setInterval(() => {
+                    const s = document.createElement('div');
+                    s.className = 'snowflake';
+                    s.style.left = Math.random() * 100 + 'vw';
+                    s.style.width = s.style.height = (Math.random() * 5 + 3) + 'px';
+                    s.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                    s.style.opacity = Math.random();
+                    c.appendChild(s);
+                    setTimeout(() => s.remove(), 5000);
+                }, 100);
+            }
+            function stopSnow() { if (window.snowInterval) clearInterval(window.snowInterval); const c = document.getElementById('snow-container'); if (c) c.innerHTML = ''; }
+
+            // Init
+            setLanguage(localStorage.getItem('language') || 'en');
+            const saved = localStorage.getItem('theme');
+            if (saved) setTheme(saved); else setTheme('dark');
+
+            // Listeners
+            document.getElementById('open-settings')?.addEventListener('click', (e) => { e.preventDefault(); document.getElementById('settings-modal').classList.remove('hidden'); });
+            document.getElementById('close-settings')?.addEventListener('click', () => document.getElementById('settings-modal').classList.add('hidden'));
+            document.getElementById('settings-modal')?.addEventListener('click', (e) => { if (e.target === document.getElementById('settings-modal')) document.getElementById('settings-modal').classList.add('hidden'); });
+            document.getElementById('lang-en')?.addEventListener('click', () => setLanguage('en'));
+            document.getElementById('lang-ar')?.addEventListener('click', () => setLanguage('ar'));
+            document.getElementById('theme-dark')?.addEventListener('click', () => setTheme('dark'));
+            document.getElementById('theme-christmas')?.addEventListener('click', () => setTheme('christmas'));
+            document.getElementById('theme-midnight')?.addEventListener('click', () => setTheme('midnight'));
+            document.getElementById('theme-space')?.addEventListener('click', () => setTheme('space'));
+            document.getElementById('theme-midnight')?.addEventListener('click', () => setTheme('midnight'));
+            document.getElementById('theme-space')?.addEventListener('click', () => setTheme('space'));
+
+            // Legacy Toggle Listener
+            const legacyToggle = document.getElementById('theme-toggle');
+            if (legacyToggle) legacyToggle.addEventListener('click', () => { toggleTheme(); });
+
+            // Anime.js Stagger Effect for Sidebar
+            if (typeof anime !== 'undefined') {
+                anime({
+                    targets: '#lo-list li',
+                    opacity: [0, 1],
+                    translateX: [-20, 0],
+                    delay: anime.stagger(100),
+                    easing: 'easeOutQuad'
                 });
             }
         });
@@ -471,6 +917,13 @@
 </head>
 
 <body class="bg-tech-bg text-tech-light min-h-screen flex flex-col">
+    <!-- Dark Neon Background Effects -->
+    <div class="cyber-wrapper">
+        <div class="cyber-grid"></div>
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
 
     <!-- Header -->
     <header
@@ -478,7 +931,7 @@
         <div class="max-w-7xl mx-auto flex justify-between items-center">
             <!-- Left: Back Button & Logo -->
             <div class="flex items-center space-x-4">
-                <button onclick="history.back()" title="Back"
+                <button onclick="window.location.href='../index.html'" title="Back to Dashboard"
                     class="text-tech-light hover:text-tech-secondary transition duration-200 p-2 rounded-full hover:bg-tech-primary/20">
                     <!-- Back Arrow SVG Icon -->
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -502,17 +955,15 @@
                 </h1>
             </div>
 
-            <!-- Right: Theme toggle button -->
-            <div class="flex items-center space-x-3">
-                <button id="theme-toggle" title="Toggle theme"
-                    class="p-2 rounded bg-tech-primary text-tech-bg hover:opacity-90 inline-flex items-center justify-center"
-                    aria-label="Toggle theme">
-                    <svg id="theme-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"
-                        xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="currentColor" />
-                    </svg>
-                </button>
-            </div>
+            <!-- Right: Theme Toggle -->
+            <button id="theme-toggle" class="theme-toggle" title="Toggle Theme" onclick="toggleTheme()">
+                <svg id="theme-toggle-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </button>
+        </div>
         </div>
     </header>
 
@@ -545,12 +996,64 @@
     </main>
 
     <!-- Footer -->
-    <footer class="w-full bg-tech-dark-alt p-4 mt-auto border-t border-tech-primary/30">
-        <div class="text-center text-sm text-tech-light/70">
-            If you have any comments please text me <a href="mailto:yassoalaa822@gmail.com"
-                class="text-tech-secondary hover:text-tech-primary transition duration-200">yassoalaa822@gmail.com</a>
+    <footer class="w-full bg-tech-dark-alt p-4 mt-auto border-t border-tech-primary/30 relative z-20">
+        <div class="section-container flex flex-col sm:flex-row justify-between items-center text-sm">
+            <div class="text-center sm:text-left order-2 sm:order-1 mt-4 sm:mt-0">
+                <span data-i18n="footer_contact">If you have any comments please text me</span> <a
+                    href="mailto:yassoalaa822@gmail.com"
+                    class="text-tech-secondary hover:text-tech-primary transition duration-200">yassoalaa822@gmail.com</a>
+            </div>
+            <div class="space-x-4 order-1 sm:order-2">
+                <a href="#" id="open-settings" class="hover:text-tech-primary transition duration-200"
+                    data-i18n="settings">Settings</a>
+            </div>
         </div>
     </footer>
+    <div id="snow-container"></div>
+    <div id="settings-modal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+        <div
+            class="bg-tech-dark-alt rounded-2xl border border-tech-secondary/50 shadow-2xl p-6 w-full max-w-sm transform transition-all scale-100">
+            <div class="flex justify-between items-center mb-6 border-b border-tech-primary/20 pb-4">
+                <h3 class="text-2xl font-bold text-tech-primary" data-i18n="settings">Settings</h3>
+                <button id="close-settings" class="text-tech-light hover:text-tech-secondary"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg></button>
+            </div>
+            <div class="mb-6">
+                <h4 class="text-sm font-semibold text-tech-secondary uppercase tracking-wider mb-3"
+                    data-i18n="language">Language</h4>
+                <div class="grid grid-cols-2 gap-3"><button id="lang-en"
+                        class="p-2 rounded-lg border border-tech-primary/30 hover:bg-tech-primary/10 text-center transition">English</button><button
+                        id="lang-ar"
+                        class="p-2 rounded-lg border border-tech-primary/30 hover:bg-tech-primary/10 text-center transition font-['Tajawal']">العربية</button>
+                </div>
+            </div>
+            <div class="mb-6">
+                <h4 class="text-sm font-semibold text-tech-secondary uppercase tracking-wider mb-3" data-i18n="theme">
+                    Theme</h4>
+                <div class="grid grid-cols-2 gap-3"><button id="theme-dark"
+                        class="p-2 rounded-lg border border-tech-primary/30 hover:bg-tech-primary/10 text-center transition">Dark
+                        Neon</button><button id="theme-christmas"
+                        class="p-2 rounded-lg border border-red-500/50 hover:bg-red-500/10 text-center transition text-red-300">Christmas
+                        🎄</button>
+                    <button id="theme-midnight"
+                        class="p-2 rounded-lg border border-pink-500/50 hover:bg-pink-500/10 text-center transition text-pink-300">Midnight
+                        🌆</button>
+                    <button id="theme-space"
+                        class="p-2 rounded-lg border border-blue-500/50 hover:bg-blue-500/10 text-center transition text-blue-300">Space
+                        🚀</button>
+                </div>
+            </div>
+            <button onclick="document.getElementById('settings-modal').classList.add('hidden')"
+                class="w-full py-2 bg-tech-primary text-tech-bg font-bold rounded-lg hover:bg-tech-secondary transition"
+                data-i18n="close">Close</button>
+        </div>
+    </div>
+    <script src="../space-theme.js"></script>
+    <script src="../theme-effects.js"></script>
 </body>
 
 </html>

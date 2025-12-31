@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عربي — الصف العاشر الفصل الأول</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Anime.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <!-- Load Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+
+    <style>
+        /* Apply Inter font family and smooth scrolling */
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        /* --- Tech Aesthetic Colors and Glows --- */
+        .shadow-subtle-glow {
+            box-shadow: 0 4px 15px rgba(51, 255, 204, 0.25), 0 0 5px rgba(51, 255, 204, 0.1);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .hover\:shadow-subtle-glow-lg:hover {
+            box-shadow: 0 6px 20px rgba(51, 255, 204, 0.4), 0 0 8px rgba(51, 255, 204, 0.2);
+        }
+
+        /* Keyframes for continuous gradient shift */
+        @keyframes gradient-shift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Base class for the animated text effect */
+        .gradient-text-wrapper {
+            display: inline-block;
+            background-size: 300% 100%;
+            animation: gradient-shift 8s linear infinite;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            line-height: 1.2;
+            white-space: nowrap;
+        }
+
+        /* Style for the main header */
+        .gradient-h1 {
+            background-image: linear-gradient(to right, #00BFFF, #33FFCC, #00BFFF, #33FFCC);
+            animation-duration: 8s;
+        }
+
+        /* Default (Dark) Theme Variables - Ensures no white flash */
+        :root {
+            --tech-bg: #1A1F26;
+            --tech-dark-alt: #2C333F;
+            --tech-light: #E0E6F0;
+            --tech-primary: #00BFFF;
+            --tech-secondary: #33FFCC;
+            --border-color: rgba(51, 255, 204, 0.3);
+            /* Custom Scrollbar Colors */
+            --scrollbar-thumb: var(--tech-secondary);
+            --scrollbar-track: var(--tech-bg);
+        }
+
+        /* Light theme variables */
+        :root[data-theme="light"] {
+            --tech-bg: #ffffff;
+            --tech-dark-alt: #f3f4f6;
+            --tech-light: #111827;
+            --tech-primary: #0369a1;
+            --tech-secondary: #0e7490;
+            --border-color: rgba(2, 132, 199, 0.3);
+        }
+
+        /* Dark theme variables (default) */
+        :root[data-theme="dark"] {
+            --tech-bg: #1A1F26;
+            --tech-dark-alt: #2C333F;
+            --tech-light: #E0E6F0;
+            --tech-primary: #00BFFF;
+            --tech-secondary: #33FFCC;
+            --border-color: rgba(51, 255, 204, 0.3);
+        }
+
+        /* Space Theme Variables */
+        :root[data-theme="space"] {
+            --tech-bg: #050505;
+            --tech-dark-alt: #0F1218;
+            --tech-light: #ffffff;
+            --tech-primary: #00BFFF;
+            --tech-secondary: #33FFCC;
+            --border-color: rgba(0, 191, 255, 0.3);
+        }
+
+        /* Midnight Synth Theme (Blue Version per user request) */
+        :root[data-theme="midnight"] {
+            --tech-bg: #1A1F26;
+            --tech-dark-alt: #2C333F;
+            --tech-light: #E0E6F0;
+            --tech-primary: #00BFFF;
+            --tech-secondary: #33FFCC;
+            --border-color: rgba(51, 255, 204, 0.3);
+        }
+
+        /* Christmas Theme */
+        :root[data-theme="christmas"] {
+            --tech-bg: #2C0412;
+            --tech-dark-alt: #460B1C;
+            --tech-light: #FEEBC8;
+            --tech-primary: #D4AF37;
+            --tech-secondary: #228B22;
+            --border-color: rgba(212, 175, 55, 0.4);
+        }
+
+        /* Apply CSS variables */
+        body {
+            background-color: var(--tech-bg);
+            color: var(--tech-light);
+        }
+
+        .bg-tech-dark-alt {
+            background-color: var(--tech-bg) !important;
+        }
+
+        .bg-tech-dark-alt {
+            background-color: var(--tech-dark-alt) !important;
+        }
+
+        .text-tech-light {
+            color: var(--tech-light) !important;
+        }
+
+        .text-tech-primary {
+            color: var(--tech-primary) !important;
+        }
+
+        .text-tech-secondary {
+            color: var(--tech-secondary) !important;
+        }
+
+        .border-tech-primary\/30 {
+            border-color: var(--border-color) !important;
+        }
+
+        /* Theme toggle button styles */
+        .theme-toggle {
+            padding: 0.5rem;
+            border-radius: 9999px;
+            transition: all 0.3s ease;
+            color: var(--tech-light);
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--tech-primary);
+            color: var(--tech-bg);
+        }
+
+        /* Centered title container */
+        .centered-title {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+        }
+
+        /* Custom scrollbar style for the content area */
+        #content-area {
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #00BFFF #1A1F26;
+        }
+
+        #content-area::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #content-area::-webkit-scrollbar-thumb {
+            background-color: #00BFFF;
+            border-radius: 4px;
+        }
+
+        #content-area::-webkit-scrollbar-track {
+            background-color: #1A1F26;
+        }
+
+        /* Custom style for the LO button when active */
+        .lo-item.active {
+            background-color: #00BFFF33;
+            /* tech-primary with opacity */
+            border-right-color: #33FFCC;
+            /* tech-secondary (RTL uses right) */
+            box-shadow: 0 0 10px rgba(51, 255, 204, 0.3);
+        }
+
+        /* Details summary arrow rotation */
+        details summary .arrow-icon {
+            transform: rotate(0deg);
+            transition: transform 0.3s;
+        }
+
+        details[open] summary .arrow-icon {
+            transform: rotate(90deg);
+        }
+
+        /* Enforce CSS Variables */
+        .bg-tech-dark-alt {
+            background-color: var(--tech-bg) !important;
+        }
+
+        .bg-tech-dark-alt {
+            background-color: var(--tech-dark-alt) !important;
+        }
+
+        .text-tech-light {
+            color: var(--tech-light) !important;
+        }
+
+        .text-tech-primary {
+            color: var(--tech-primary) !important;
+        }
+
+        .text-tech-secondary {
+            color: var(--tech-secondary) !important;
+        }
+
+        .border-tech-primary {
+            border-color: var(--tech-primary) !important;
+        }
+
+        .border-tech-secondary {
+            border-color: var(--tech-secondary) !important;
+        }
+
+        /* Midnight Synth Theme */
+        :root[data-theme="midnight"] {
+            --tech-bg: #1a0b2e;
+            --tech-dark-alt: #2d1b4e;
+            --tech-light: #e0f7fa;
+            --tech-primary: #ff00ff;
+            --tech-secondary: #00ffff;
+            --border-color: rgba(255, 0, 255, 0.3);
+        }
+
+        /* Christmas Theme */
+        :root[data-theme="christmas"] {
+            --tech-bg: #2C0412;
+            --tech-dark-alt: #460B1C;
+            --tech-light: #FDF5E6;
+            --tech-primary: #FFD700;
+            --tech-secondary: #006400;
+            --border-color: rgba(255, 215, 0, 0.4);
+        }
+
+        /* Snow */
+        #snow-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+            display: none;
+        }
+
+        :root[data-theme="christmas"] #snow-container {
+            display: block;
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh);
+            }
+        }
+
+        /* RTL (Already present, but reinforcing sidebar logic if needed) */
+        [dir="rtl"] #sidebar {
+            border-left: 1px solid var(--tech-primary);
+            border-right: none;
+            margin-left: 1.5rem;
+            margin-right: 0;
+        }
+
+        #settings-modal {
+            backdrop-filter: blur(5px);
+        }
+
+        /* Ensure sidebar text aligns right for RTL */
+        .lo-item {
+            text-align: right;
+        }
+
+        /* --- Dark Neon Dynamic Background --- */
+        .cyber-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+            display: none;
+        }
+
+        /* Only show in Dark Theme */
+        :root[data-theme="dark"] .cyber-wrapper {
+            display: block;
+        }
+
+        .cyber-grid {
+            position: absolute;
+            width: 200vw;
+            height: 200vh;
+            top: -50%;
+            left: -50%;
+            background-image:
+                linear-gradient(rgba(0, 191, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 191, 255, 0.05) 1px, transparent 1px);
+            background-size: 60px 60px;
+            transform: perspective(500px) rotateX(60deg);
+            animation: grid-move 20s linear infinite;
+        }
+
+        @keyframes grid-move {
+            0% {
+                transform: perspective(500px) rotateX(60deg) translateY(0);
+            }
+
+            100% {
+                transform: perspective(500px) rotateX(60deg) translateY(60px);
+            }
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+            animation: float-orb 20s infinite ease-in-out;
+        }
+
+        .orb-1 {
+            top: 20%;
+            left: 20%;
+            width: 300px;
+            height: 300px;
+            background: rgba(0, 191, 255, 0.3);
+            animation-duration: 25s;
+        }
+
+        .orb-2 {
+            bottom: 20%;
+            right: 20%;
+            width: 400px;
+            height: 400px;
+            background: rgba(51, 255, 204, 0.2);
+            animation-duration: 30s;
+            animation-delay: -5s;
+        }
+
+        .orb-3 {
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            height: 200px;
+            background: rgba(138, 43, 226, 0.15);
+            animation-duration: 20s;
+            animation-delay: -10s;
+        }
+
+        @keyframes float-orb {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            33% {
+                transform: translate(40px, -60px);
+            }
+
+            66% {
+                transform: translate(-30px, 30px);
+            }
+        }
+
+        /* Breathing Glow for Cards in Dark Mode */
+        :root[data-theme="dark"] .subject-card,
+        :root[data-theme="dark"] .comp-card,
+        :root[data-theme="dark"] .lo-item,
+        :root[data-theme="dark"] details {
+            animation: breathing-glow 5s ease-in-out infinite;
+        }
+
+        :root[data-theme="dark"] .subject-card:hover,
+        :root[data-theme="dark"] .comp-card:hover,
+        :root[data-theme="dark"] .lo-item:hover,
+        :root[data-theme="dark"] details[open] {
+            animation: none;
+        }
+
+        @keyframes breathing-glow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 5px rgba(0, 191, 255, 0.05);
+                border-color: rgba(0, 191, 255, 0.1);
+            }
+
+            50% {
+                box-shadow: 0 0 15px rgba(51, 255, 204, 0.15);
+                border-color: rgba(51, 255, 204, 0.3);
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+
+    <script>
+        window.onerror = function (msg, url, line, col, error) {
+            console.error("Global Error:", msg, url, line, col, error);
+            if (document.body) {
+                const errDiv = document.createElement('div');
+                errDiv.style.cssText = 'position:fixed;top:0;left:0;width:100%;z-index:9999;background:red;color:white;padding:20px;font-size:20px;';
+                errDiv.textContent = 'Critical Error: ' + msg + ' at line ' + line;
+                document.body.prepend(errDiv);
+            }
+        };
+    </script>
+    <script>
+        // Tailwind Configuration with Modern Tech Palette
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'tech-bg': '#1A1F26',
+                        'tech-dark-alt': '#2C333F',
+                        'tech-light': '#E0E6F0',
+                        'tech-primary': '#00BFFF',
+                        'tech-secondary': '#33FFCC',
+                    }
+                }
+            }
+        }
+
+        // Theme switching functionality
+        function toggleTheme() {
+            const root = document.documentElement;
+            const currentTheme = root.getAttribute('data-theme') || 'dark';
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+            root.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+
+            // Update the toggle button icon
+            const toggleIcon = document.getElementById('theme-toggle-icon');
+            toggleIcon.innerHTML = newTheme === 'dark' ?
+                '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>' :
+                '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
+        }
+
+        // Christmas / Language Logic
+        const translations = {
+            en: { "settings": "Settings", "language": "Language", "theme": "Theme", "close": "Close", "footer_contact": "If you have any comments please text me" },
+            ar: { "settings": "الإعدادات", "language": "اللغة", "theme": "السمة", "close": "إغلاق", "footer_contact": "إذا كان لديك أي تعليقات يرجى مراسلتي" }
+        };
+        function updateText(lang) {
+            const t = translations[lang];
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (t[key]) el.textContent = t[key];
+            });
+        }
+        function setLanguage(lang) {
+            document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+            document.documentElement.setAttribute('lang', lang);
+            localStorage.setItem('language', lang);
+            updateText(lang);
+        }
+        // Learning objectives in Arabic (LO1..LO7)
+        const learningObjectives = {
+            LO1: {
+                title: "النحو",
+                concepts: [
+                    { title: "اسم الفاعل", file: "اسم الفاعل.doc", video: "https://youtu.be/RYbANdWqI5k?si=gHt_ba70wrOCPmqx" },
+                    { title: "اسم المفعول و طريقة صوغه", file: "اسم المفعول و طريقة صوغه.docx", video: "https://youtu.be/2Mos9f8DRaQ?si=umxAWLVQO_jMTmt2" },
+                    { title: "اسم المفعول", file: "اسم المفعول.doc", video: "https://youtu.be/QjoL7_LQybs?si=ETlIkElqw9tvmrQH" },
+                    { title: "أفعال المقاربة والرجاء والشروع", file: "أفعال المقاربة والرجاء والشروع.doc", video: "https://youtu.be/t0LiYcxcAqE?si=yA0KnVA4ER_lYTXi" },
+                    { title: "أفعال تعمل عمل كان إثرائية نحو", file: "أفعال تعمل عمل كان إثرائية نحو.docx", video: "https://youtu.be/7NsVX5tWXaY?si=fcrQglh9D031Q2CJ" },
+                    { title: "الأفعال الناقصة و التامة", file: "الأفعال الناقصة و التامة.doc", video: "https://youtu.be/psoQc1D4KhU?si=PjOg7v3Nrj0oagkN" },
+                    { title: "صيغ المبالغة", file: "صيغ المبالغة.doc", video: "https://youtu.be/6Zg2jhmRxjw?si=PlKFTIIWhKNb1pHo" },
+                    { title: "قواعد إعرابية هامة", file: "قواعد إعرابية هامة.doc" },
+                    { title: "كيف تجيب على سؤال النحو؟", file: "كيف تجيب على سؤال النحو ؟.doc" }
+                ]
+            },
+            LO2: {
+                title: "الأدب",
+                concepts: [
+                    { title: "الأدب في العصر الأموي", file: "الأدب في العصر الأموي.doc", video: "https://youtu.be/FOZ5kfLQ9Gw?si=HZy7kSHSGMdec3S0" },
+                    { title: "الأدب في العصر الجاهلي", file: "الأدب في العصر الجاهلي.doc", video: "https://youtu.be/DpUWGmTEhuA?si=RlERjgqX4SOSv4oL" },
+                    { title: "الأدب في عصر صدر الإسلام", file: "الأدب في عصر صدر الإسلام.doc", video: "https://youtu.be/uLVthsWpEws?si=Yl4M-2C71NCrGzxG" }
+                ]
+            },
+            LO3: {
+                title: "القصة",
+                concepts: [
+                    {
+                        title: "الفصل الأول: مغني القافلة",
+                        file: "الفصل الأول مغني القافلة.doc",
+                        video: "https://youtu.be/9di-w7niVVY?si=PmS-tcNVqxRAw2t_"
+                    },
+                    {
+                        title: "الفصل الثاني: الطل الثائر",
+                        file: "الفصل الثاني الطل الثائر.doc",
+                        video: "https://youtu.be/iP5qns-ZZ9g?si=F9DqmNcLSxbDvCkH"
+                    },
+                    {
+                        title: "الفصل الثالث: الطريق إلى الحقيقة",
+                        file: "الفصل الثالث الطريق إلى الحقيقة.doc",
+                        video: "https://youtu.be/i05Rb41DsR4?si=PGQYzy1r61ucM62q"
+                    },
+                    {
+                        title: "الفصل الرابع: حوار ساخن",
+                        file: "الفصل الرابع حوار ساخن.doc",
+                        video: "https://youtu.be/DC0aTI9u-Og?si=V3iRhMsPD3foQ250"
+                    },
+                    {
+                        title: "الفصل الخامس: خطبة عبلة",
+                        file: "الفصل الخامس خطبة عبلة.doc",
+                        video: "https://youtu.be/_VEAON2r_KE?si=D2SV-IFqdYSLadqL"
+                    },
+                    {
+                        title: "الفصل السادس: البطل الحر",
+                        file: "الفصل السادس البطل الحر.doc",
+                        video: "https://youtu.be/SE2bhunTha0?si=YoSqgB2NebDlsUbu"
+                    },
+                    {
+                        title: "الفصل السابع: انتصار",
+                        file: "الفصل السابع انتصار.doc",
+                        video: "https://youtu.be/sGcnYHAllLY?si=4SHdTI8C9vtFL7fR"
+                    },
+                    {
+                        title: "الفصل الثامن: علاقة قلقة",
+                        file: "الفصـل الثامن  علاقة قلقة.doc",
+                        video: "https://youtu.be/zk9aJFnopBs?si=huh1eIfvTzwHDzHJ"
+                    }
+                ],
+                bookFile: "أبو الفوارس عنترة.pdf"
+            },
+            LO4: {
+                title: "القراءة",
+                concepts: [
+                    { title: "تكنولوجيا المعلومات", file: "تكنولوجيا المعلومات.doc", video: "https://youtu.be/9KFi6C1hZQk?si=BQ3ULKQfzGh87b-3" },
+                    { title: "قيم اجتماعية", file: "قيم اجتماعية.doc", video: "https://youtu.be/oDFDCoIvqzM?si=dMAFX7b5iZkxSk6z" },
+                    { title: "مكارم الأخلاق وحاتم الطائي", file: "مكارم الأخلاق وحاتم الطائي.doc", video: "https://youtu.be/w0rLmu6276g?si=a-o_NRdkIK4hSL6O" }
+                ]
+            },
+            LO5: {
+                title: "النصوص",
+                concepts: [
+                    { title: "ابدأ بنفسك", file: "ابدأ بنفسك.doc", video: "https://youtu.be/xCl5aFIVwlg?si=q2B0JpkSpJcoUU3A" },
+                    { title: "آداب صناعة الكتّاب", file: "آداب صناعة الكتّاب.doc", video: "https://youtu.be/L137MCnIipc?si=Ny-Akxy64goFovdI" },
+                    { title: "العفو مأمول", file: "العفو  مأمول.doc", video: "https://youtu.be/lzykn98Wtw4?si=qPAHKnZHOEXvCpy6" },
+                    { title: "شباب تسامى للعلا", file: "شباب تسامى للعلا.doc", video: "https://youtu.be/1M0d2CL4gl8?si=oiwX23WvkihAFCuD" },
+                    { title: "قيم الحياة الزوجية", file: "قيم الحياة الزوجية.doc", video: "https://youtu.be/UIVFczuX01s?si=SYyac6xT0bjPxbAS" },
+                    { title: "من أجل حياة كريمة", file: "من أجل حياة كريمة.doc", video: "https://youtu.be/_POhjvNbNkU?si=tb2PdNhjEw-UUHKg" }
+                ]
+            },
+            LO6: {
+                title: "البلاغة",
+                concepts: [
+                    { title: "الاستعارة", file: "الاستعارة.doc", video: "https://youtu.be/oCD6JjsjcT0?si=T0qPBYr32KyVxsiU" },
+                    { title: "التشبيه", file: "التشبيه.doc", video: "https://youtu.be/C-Jmj4uYFxo?si=1SGMrtXvbylIraNf" },
+                    { title: "التعبير الحقيقي والتعبير المجازي", file: "التعبير الحقيقي والتعبير المجازي.doc", video: "https://youtu.be/oOW8nlidADo?si=anuTZYCKDygspPaA" }
+                ]
+            },
+            LO7: {
+                title: "كتب المنهج",
+                bookGroups: [
+                    {
+                        title: "كتب المنهج الأساسية",
+                        books: [
+                            {
+                                title: "كتاب اللغة العربية الأساسي",
+                                file: "اللغة العربية  الصف الأول الثانوي.pdf",
+                                description: "الكتاب الرئيسي للمنهج"
+                            },
+                            {
+                                title: "كتاب المنهج - الفصل الأول",
+                                file: "كتاب اللغة العربية الصف الأول الثانوى ف1 مرفق 69.pdf",
+                                description: "النسخة المحدثة للفصل الدراسي الأول"
+                            },
+                            {
+                                title: "كتاب الأضواء",
+                                file: "كتاب الأضواء عربي اولى ثانوي الترم الأول pdf-1.pdf",
+                                description: "كتاب الأضواء للفصل الدراسي الأول"
+                            }
+                        ]
+                    },
+                    {
+                        title: "كتب المراجعة والتدريبات",
+                        books: [
+                            {
+                                title: "كتاب الامتحان",
+                                file: "كتاب الامتحان .pdf",
+                                description: "تدريبات وأسئلة شاملة لكل أقسام المنهج"
+                            }
+                        ]
+                    },
+                    {
+                        title: "نسخ إضافية من المنهج",
+                        books: [
+                            {
+                                title: "نسخة 2017 - الجزء الأول",
+                                file: "كتاب 1 ث  نت - 2017- 1.pdf",
+                                description: "النسخة الشبكية - الفصل الأول"
+                            },
+                            {
+                                title: "نسخة 2017 - الجزء الثاني",
+                                file: "كتاب  1ث - 2017- ت 2.pdf",
+                                description: "النسخة الشبكية - الفصل الثاني"
+                            }
+                        ]
+                    },
+                    {
+                        title: "كتب القصة",
+                        books: [
+                            {
+                                title: "قصة أبو الفوارس عنترة",
+                                file: "أبو الفوارس عنترة.pdf",
+                                description: "القصة المقررة كاملة"
+                            }
+                        ]
+                    }
+                ]
+            },
+            'references': {
+                title: "كتب المنهج",
+                concepts: []
+            }
+        };
+
+        // Map of filename -> Google Drive share URL (from CSV)
+        const shareMap = {
+            // Grammar (النحو)
+            "( ستون تدريبًا نحويًا طبقأ لمنهج 2 ث الحديث 2015 ).doc": "https://docs.google.com/document/d/1W7KuOKqmUOavQ44L4RIfXuF2vCpzDF6M/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "تدريب نحو.docx": "https://docs.google.com/document/d/1vDrF5pIV_Bb6eyw42GI2VFqsLDx-kFHC/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "اختبار نحو كاد وأخواتها.docx": "https://docs.google.com/document/d/1QPfp_IIMFSHIVqIOKYVTT4Vuk3zV5rf3/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "تدريب نحوي.docx": "https://docs.google.com/document/d/1Ok1Svz0OrncUy3ARm8uq0uDEvNxsWMsp/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "كيف تجيب على سؤال النحو ؟.doc": "https://docs.google.com/document/d/1WHklIMU7raXtyB3HPsIO-eV659hrBsQw/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "اسم الفاعل.doc": "https://docs.google.com/document/d/1miXMrHqXNAzW3xpo_1En_KOJPrSHKPuK/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "اسم المفعول.doc": "https://docs.google.com/document/d/1T7ob5TgTg1IdeG9Bl-8IgdlzVJkOLfG3/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "صيغ المبالغة.doc": "https://docs.google.com/document/d/11-J8V16oVPKJBpxnlTY5xQZ-Rbb4uLAm/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "قواعد إعرابية هامة.doc": "https://docs.google.com/document/d/1MOqur5TU7ooAYt0t7IK2dx4yuAsbRe8N/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "أفعال المقاربة والرجاء والشروع.doc": "https://docs.google.com/document/d/1Ty6fm91sVZ6f39GpZ6-OWQkETXJPL8XZ/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "الأفعال الناقصة و التامة.doc": "https://docs.google.com/document/d/1_X1flpzSZD7t9eURXND4L2iOCh3CHtoc/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "أفعال تعمل عمل كان إثرائية نحو.docx": "https://docs.google.com/document/d/1Du9wOia2DRWp0uhxf1amDUAZuCj7TOtk/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "اسم المفعول و طريقة صوغه.docx": "https://docs.google.com/document/d/1prjDXRcn5wyVKLDIQhvtlqtU5-aiZ0AS/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+
+            // Texts (النصوص)
+            "من أجل حياة كريمة.doc": "https://docs.google.com/document/d/1oX32wbEubJbuUBGucNG9aIV6qBpyeEJ5/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "قيم الحياة الزوجية.doc": "https://docs.google.com/document/d/1u_-carQZKOnTW8DRRxSF5hihWjjUyxsY/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "ابدأ بنفسك.doc": "https://docs.google.com/document/d/1v4W_5-AliyY5QBSD1lso3zm8JJvnVdFq/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "العفو  مأمول.doc": "https://docs.google.com/document/d/1STmGL1syFfUvMFcXzwsgGCgAiozo6iRW/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "شباب تسامى للعلا.doc": "https://docs.google.com/document/d/1V-IBX52UTrniY0nRGe8WUKLhS2qM4l6P/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "آداب صناعة الكتّاب.doc": "https://docs.google.com/document/d/14KZ91eQIgtYuNXYHuJG_L_gvgr_d69hp/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+
+            // Rhetoric (البلاغة)
+            "الاستعارة.doc": "https://docs.google.com/document/d/1u98Yz1GqEhsKBg17yVrSAFkJFjpFoNil/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "التشبيه.doc": "https://docs.google.com/document/d/1REEcXArIVEBQ6G_ehMTVDleC2FIZc-NE/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "التعبير الحقيقي والتعبير المجازي.doc": "https://docs.google.com/document/d/1_L0XPygn-uETNE4nj7rg48O9Y7sNfeZE/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+
+            // Story (القصة)
+            "الفصل الثالث الطريق إلى الحقيقة.doc": "https://docs.google.com/document/d/1HCDDziCjYzszo-yNIeeI1oyXrYc0BO-2/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "الفصل الثاني الطل الثائر.doc": "https://docs.google.com/document/d/1JBaGCWGRQISX3Plne1hDYVaBarY84iDn/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "الفصـل الثامن  علاقة قلقة.doc": "https://docs.google.com/document/d/1Kb-Z_X9zRP7pfzdRj14XvhmUuUEOzR3c/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "الفصل الخامس خطبة عبلة.doc": "https://docs.google.com/document/d/1LBAsP-ZpBKk4aW7jsieCTZq51xN1yxam/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "الفصل الرابع حوار ساخن.doc": "https://docs.google.com/document/d/1MrXghipnsyd-msKHEl57AV70GIjpBDaL/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "الفصل السادس البطل الحر.doc": "https://docs.google.com/document/d/1cICvQF2zqbVB5PUeZKojQi9zsmpKBFcg/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "الفصل الأول مغني القافلة.doc": "https://docs.google.com/document/d/1lqfyPfXqQovciqwlj9LpsdtHROuTNTGy/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "الفصل السابع انتصار.doc": "https://docs.google.com/document/d/1wqazkODUczfMIFRLXT_Gk4_kUyXxX9ZE/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "أبو الفوارس عنترة.pdf": "https://drive.google.com/file/d/1F2LbvysohN9qYk_MNnmSzc4wQjdil0SI/view?usp=drivesdk",
+            "تلخيص الفصل الأول من قصة - عنترة بن شداد - للصف الأول الثانوي نظام جديد لغة عربية مع السيد فريد.mp4": "https://drive.google.com/file/d/1Fs5yZxrImrJSOKIRt7COOUe4cpEWrqgj/view?usp=drivesdk",
+            "تلخيص الفصل الثاني من قصة - عنترة بن شداد - للصف الأول الثانوي مع السيد فريد نظام جديد.mp4": "https://drive.google.com/file/d/1UANlTbGffSBdT4o58gSLWMz_sJ-qfqOQ/view?usp=drivesdk",
+
+            // Literature (الأدب)
+            "الأدب في العصر الأموي.doc": "https://docs.google.com/document/d/1R4nKkK2U0q-27EwGTP7LN0hlOAVjs5QA/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "الأدب في العصر الجاهلي.doc": "https://docs.google.com/document/d/1_-FGHqIlv_wOugQnnrfVZESNv6MIjgd2/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+            "الأدب في عصر صدر الإسلام.doc": "https://docs.google.com/document/d/16bXn8s-x6GksShHHLQGHBGfTXwdC0nDg/edit?usp=drivesdk&ouid=101563598129890605704&rtpof=true&sd=true",
+
+            // Books (كتب)
+            "كتاب الأضواء عربي اولى ثانوي الترم الأول pdf-1.pdf": "https://drive.google.com/file/d/1WCUPWR3QCZpQUA-cs7ws4U85TsV5B6bm/view?usp=drivesdk",
+            "كتاب اللغة العربية الصف الأول الثانوى ف1 مرفق 69.pdf": "https://drive.google.com/file/d/17C19Xkg_uZZxJ7yqn_GdGCdkMI-0q2qx/view?usp=drivesdk",
+            "كتاب 1 ث  نت - 2017- 1.pdf": "https://drive.google.com/file/d/1gn0qYRfI5A2XjkNgXY-7jYTINBqJ3xpc/view?usp=drivesdk",
+            "اللغة العربية  الصف الأول الثانوي.pdf": "https://drive.google.com/file/d/1EsUDgqNwC9Qq32jSjpFnZKShwpfAoZzG/view?usp=drivesdk",
+            "كتاب  1ث - 2017- ت 2.pdf": "https://drive.google.com/file/d/1PgFCYgbGl99Nb-aXNb6RSJmx4vqsVYPQ/view?usp=drivesdk",
+            "كتاب الامتحان .pdf": "https://drive.google.com/file/d/1Bhy-FjQfIG9QkU9StfUXaPTToJJiUwoV/view?usp=drivesdk",
+
+            // Reading (القراءة)
+            "مكارم الأخلاق وحاتم الطائي.doc": "https://docs.google.com/document/d/1-PKoLnFFv92bPFCUUTNYpVbkdJ-5z76_/edit?usp=drivesdk&rtpof=true&sd=true",
+            "تكنولوجيا المعلومات.doc": "https://docs.google.com/document/d/13BB0bAv9C_dAcDDsFcfoXU0txQycjfK_/edit?usp=drivesdk&rtpof=true&sd=true",
+            "قيم اجتماعية.doc": "https://docs.google.com/document/d/1pbJOhcHxKbTlkUcp7akwPg-fJ7MXfE3X/edit?usp=drivesdk&rtpof=true&sd=true"
+        };
+
+        // Create link block (Arabic placeholders)
+        function createLinkBlock(title, placeholderText) {
+            return `
+                <div class="mt-3 p-3 bg-tech-dark-alt/50 rounded-lg border border-tech-dark-alt">
+                    <h4 class="text-md font-bold text-tech-secondary mb-1">${title}</h4>
+                    <p class="text-sm text-tech-light/70 italic mb-2">${placeholderText}</p>
+                </div>
+            `;
+        }
+
+        // Render concept with Arabic description and video only (Files moved to separate section)
+        function renderConcept(concept, loKey) {
+            const title = typeof concept === 'object' ? concept.title : concept;
+            const description = `هذا القسم يتناول المبادئ الأساسية لـ «${title}». فهم هذا المفهوم يساعد على الإلمام بالمادة.`;
+
+            return `
+                <details class="mb-4 bg-tech-dark-alt rounded-xl border border-tech-primary/30 shadow-lg overflow-hidden">
+                    <summary class="flex items-center justify-between p-4 cursor-pointer text-lg font-semibold text-tech-light hover:bg-tech-primary/20 transition duration-300">
+                        <span class="truncate">${title}</span>
+                        <svg class="w-5 h-5 ml-2 transition-transform duration-300 arrow-icon flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                    </summary>
+                    <div class="px-4 pb-4 pt-2 border-t border-tech-primary/30 space-y-4">
+                        <div class="bg-tech-dark-alt/80 p-3 rounded-lg border border-tech-dark-alt">
+                            <h4 class="text-md font-bold text-tech-secondary mb-1">وصف</h4>
+                            <p class="text-tech-light/90 text-sm">${description}</p>
+                        </div>
+
+
+                        ${typeof concept === 'object' && concept.video ? `
+                            <div class="mt-3 p-3 bg-tech-dark-alt/50 rounded-lg border border-tech-dark-alt">
+                                <h4 class="text-md font-bold text-tech-secondary mb-1">فيديو تلخيص الفصل</h4>
+                                <p class="text-sm text-tech-light/70 italic mb-2">انقر لمشاهدة أو تنزيل فيديو التلخيص</p>
+                                ${concept.video && typeof concept.video === 'string' && concept.video.startsWith('http') ?
+                        `<a href="${concept.video}" target="_blank" rel="noopener noreferrer" class="text-tech-primary hover:text-tech-secondary transition duration-200 text-sm underline font-semibold">مشاهدة على يوتيوب</a>` :
+                        `<a href="${shareMap[concept.video] || `first semester/القصة/${concept.video}`}" target="_blank" rel="noopener noreferrer" class="text-tech-primary hover:text-tech-secondary transition duration-200 text-sm underline font-semibold">فتح الفيديو</a>`
+                    }
+                            </div>
+                        ` : ''}
+                    </div>
+                </details>
+            `;
+        }
+
+        // Render LO; special-case LO3 (القصة) test section
+        function renderLO(loKey, loData) {
+            let html = `
+                <h2 class="text-3xl font-extrabold mb-6 text-tech-primary border-b border-tech-secondary/50 pb-2">${loData.title}</h2>
+            `;
+
+            if (loKey === 'LO7' || loKey === 'references') {
+                // Handle books section with organized groups
+                if (loData.bookGroups) {
+                    html += `
+                        <div class="space-y-8">
+                    `;
+                    loData.bookGroups.forEach(group => {
+                        html += `
+                            <div class="p-6 bg-tech-dark-alt rounded-xl border border-tech-secondary/50 shadow-subtle-glow">
+                                <h3 class="text-2xl font-bold text-tech-secondary mb-4">${group.title}</h3>
+                                <div class="space-y-4">
+                        `;
+                        group.books.forEach(book => {
+                            html += `
+                                <div class="p-4 bg-tech-dark-alt rounded-lg border border-tech-primary/30 hover:border-tech-secondary transition duration-200">
+                                    <div class="flex flex-col">
+                                        <a href="${shareMap[book.file] || `first semester/كتب/${book.file}`}" target="_blank" rel="noopener noreferrer" class="text-tech-secondary hover:text-tech-primary transition duration-200 text-lg font-semibold mb-2">
+                                            ${book.title}
+                                        </a>
+                                        <p class="text-tech-light/70 text-sm">${book.description}</p>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                        html += `
+                                </div>
+                            </div>
+                        `;
+                    });
+                    html += `</div>`;
+                }
+            } else {
+                // Handle regular sections
+                loData.concepts.forEach(concept => {
+                    html += renderConcept(concept, loKey);
+                });
+
+                // Files Section (Moved from inside concepts)
+                let filesHtml = '';
+                loData.concepts.forEach(concept => {
+                    if (concept.file || concept.presentation) {
+                        const file = concept.file || concept.presentation;
+                        // Determine folder path based on LO
+                        let folder = '';
+                        if (loKey === 'LO1') folder = 'النحو';
+                        else if (loKey === 'LO2') folder = 'أدب';
+                        else if (loKey === 'LO3') folder = 'القصة';
+                        else if (loKey === 'LO4') folder = 'القراءة';
+                        else if (loKey === 'LO5') folder = 'النصوص';
+                        else folder = 'البلاغة';
+
+                        const url = shareMap[file] || `first semester/${folder}/${file}`;
+                        const displayTitle = concept.title || file;
+
+                        filesHtml += `
+                        <div class="mb-3 p-3 bg-tech-dark-alt rounded-lg border border-tech-primary/20 hover:border-tech-primary transition duration-200">
+                            <a href="${url}" target="_blank" rel="noopener noreferrer" class="flex items-center text-tech-secondary hover:text-tech-primary">
+                                <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                                <span class="font-semibold">${displayTitle}</span>
+                            </a>
+                        </div>
+                        `;
+                    }
+                });
+
+                if (filesHtml) {
+                    html += `
+                        <div class="mt-8 p-6 bg-tech-dark-alt rounded-xl border border-tech-secondary/50 shadow-subtle-glow">
+                            <h3 class="text-2xl font-bold text-tech-secondary mb-4">الملفات والمصادر</h3>
+                            <div class="space-y-4">
+                                ${filesHtml}
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // Sidebar Link (Test Bank placeholder if needed, though LO1 has custom test block below)
+            }
+
+
+            // Special handling for القصة (LO3) — story file & custom description
+            if (loKey === 'LO3') {
+                html += `
+                    <div class="mt-10 p-6 bg-tech-dark-alt rounded-xl border border-tech-secondary/50 shadow-subtle-glow">
+                        <h3 class="text-2xl font-bold text-tech-secondary mb-4">القصة كاملة</h3>
+                        <p class="text-tech-light/90 mb-4">لقراءة القصة كاملة، يمكنك تحميل ملف القصة:</p>
+                        <a href="${shareMap[loData.bookFile] || `first semester/القصة/${loData.bookFile}`}" target="_blank" rel="noopener noreferrer" class="inline-block px-4 py-2 bg-tech-primary text-tech-bg font-semibold rounded-lg hover:bg-tech-secondary transition duration-300 shadow-subtle-glow hover:shadow-subtle-glow-lg">
+                            تحميل قصة عنترة كاملة &rarr;
+                        </a>
+                        <p class="text-tech-light/70 mt-4">كل ملفات الفصول السابقة تحتوي على أسئلة وإجابات خاصة بكل فصل.</p>
+                    </div>
+                `;
+            } else if (loKey === 'references') {
+                // Just skip, handled by LO7
+            } else if (loKey !== 'LO7') {
+                // Default test bank block
+                if (loKey === 'LO1') {
+                    html += `
+                        <div class="mt-10 p-6 bg-tech-dark-alt rounded-xl border border-tech-secondary/50 shadow-subtle-glow">
+                            <h3 class="text-2xl font-bold text-tech-secondary mb-4">اختبر نفسك</h3>
+                            <p class="text-tech-light/80 mb-6">ملفات التدريب المتوفرة:</p>
+                            <div class="space-y-4">
+                                <a href="${shareMap['تدريب نحو.docx'] || 'first semester/حل حــــل حـــــــــــــل/نحو/تدريب نحو.docx'}" target="_blank" rel="noopener noreferrer" class="block px-4 py-3 bg-tech-dark-alt rounded-lg border border-tech-primary/30 hover:border-tech-secondary transition duration-200">
+                                    <span class="text-tech-secondary">تدريب نحو</span>
+                                </a>
+                                <a href="${shareMap['تدريب نحوي.docx'] || 'first semester/حل حــــل حـــــــــــــل/نحو/تدريب نحوي.docx'}" target="_blank" rel="noopener noreferrer" class="block px-4 py-3 bg-tech-dark-alt rounded-lg border border-tech-primary/30 hover:border-tech-secondary transition duration-200">
+                                    <span class="text-tech-secondary">تدريب نحوي</span>
+                                </a>
+                                <a href="${shareMap['اختبار نحو كاد وأخواتها.docx'] || 'first semester/حل حــــل حـــــــــــــل/نحو/اختبار نحو كاد وأخواتها.docx'}" target="_blank" rel="noopener noreferrer" class="block px-4 py-3 bg-tech-dark-alt rounded-lg border border-tech-primary/30 hover:border-tech-secondary transition duration-200">
+                                    <span class="text-tech-secondary">اختبار نحو كاد وأخواتها</span>
+                                </a>
+                                <a href="${shareMap['( ستون تدريبًا نحويًا طبقأ لمنهج 2 ث الحديث 2015 ).doc'] || 'first semester/حل حــــل حـــــــــــــل/نحو/( ستون تدريبًا نحويًا طبقأ لمنهج 2 ث الحديث 2015 ).doc'}" target="_blank" rel="noopener noreferrer"
+                                    class="block px-4 py-3 bg-tech-dark-alt rounded-lg border border-tech-primary/30 hover:border-tech-secondary transition duration-200">
+                                    <span class="text-tech-secondary">ستون تدريبًا نحويًا</span>
+                                </a>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    html += `
+                        <div class="mt-10 p-6 bg-tech-dark-alt rounded-xl border border-tech-secondary/50 shadow-subtle-glow">
+                            <h3 class="text-2xl font-bold text-tech-secondary mb-2">اختبر نفسك</h3>
+                            <p class="text-tech-light/80 mb-4">المراجعات والتدريبات متوفرة في قسم الكتب.</p>
+                            <button onclick="handleNavigationClick('LO7')" 
+                                class="text-tech-primary hover:text-tech-secondary transition duration-200 text-lg underline font-semibold">
+                                اذهب إلى قسم الكتب &larr;
+                            </button>
+                        </div>
+                    `;
+                }
+            }
+
+            return html;
+        }
+
+        // Render Additional References not used (we generate books inside renderLO for 'references')
+        function renderAdditionalReferences() {
+            let html = `
+                <h2 class="text-3xl font-extrabold mb-6 text-tech-primary border-b border-tech-secondary/50 pb-2">${learningObjectives['references'].title}</h2>
+                <div class="p-6 bg-tech-dark-alt rounded-xl border border-tech-secondary/50 shadow-subtle-glow">
+                    <p class="text-xl font-medium text-tech-light mb-6">روابط الكتب المنهجية:</p>
+            `;
+            for (let i = 1; i <= 5; i++) {
+                html += `
+                    <div class="mb-4">
+                        <a href="javascript:void(0)" download="Book_${i}.pdf" class="text-tech-secondary hover:text-tech-primary transition duration-200 text-lg underline font-semibold">كتاب المنهج ${i}</a>
+                    </div>
+                `;
+            }
+            html += `</div>`;
+            return html;
+        }
+
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+
+            // Use centralized effects
+            if (window.ThemeEffects) {
+                // Force 'dark' effect (Blue) even if Midnight is selected, to avoid purple grid
+                const effectTheme = theme === 'midnight' ? 'dark' : theme;
+                window.ThemeEffects.setEffect(effectTheme);
+            } else {
+                if (theme === 'christmas') startSnow(); else stopSnow();
+            }
+
+            // Update icon if exists
+            const toggleIcon = document.getElementById('theme-toggle-icon');
+            if (toggleIcon) {
+                if (theme === 'dark') {
+                    toggleIcon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+                } else if (theme === 'midnight') {
+                    toggleIcon.innerHTML = '<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>';
+                } else if (theme === 'christmas') {
+                    toggleIcon.innerHTML = '🎄';
+                } else if (theme === 'space') {
+                    toggleIcon.innerHTML = '🚀';
+                } else {
+                    toggleIcon.innerHTML = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
+                }
+            }
+        }
+
+        // Snow
+        function startSnow() {
+            const c = document.getElementById('snow-container'); if (!c) return; stopSnow();
+            window.snowInterval = setInterval(() => {
+                const s = document.createElement('div');
+                s.className = 'snowflake';
+                s.style.left = Math.random() * 100 + 'vw';
+                s.style.width = s.style.height = (Math.random() * 5 + 3) + 'px';
+                s.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                s.style.opacity = Math.random();
+                c.appendChild(s);
+                setTimeout(() => s.remove(), 5000);
+            }, 100);
+        }
+        function stopSnow() { if (window.snowInterval) clearInterval(window.snowInterval); const c = document.getElementById('snow-container'); if (c) c.innerHTML = ''; }
+
+        // (Init removed from here)
+
+        // Handle navigation clicks
+        function handleNavigationClick(loKey) {
+            const contentArea = document.getElementById('dynamic-content');
+            const defaultMessage = document.getElementById('default-message');
+            const loItems = document.querySelectorAll('.lo-item');
+
+            loItems.forEach(item => item.classList.remove('active'));
+            const target = document.getElementById(`lo-${loKey}`);
+            if (target) target.classList.add('active');
+
+            if (defaultMessage) defaultMessage.style.display = 'none';
+
+            if (learningObjectives[loKey]) {
+                contentArea.innerHTML = renderLO(loKey, learningObjectives[loKey]);
+            } else {
+                contentArea.innerHTML = `<h2 class="text-red-400">خطأ: لم يتم العثور على وحدة التعلم.</h2>`;
+            }
+
+            document.getElementById('content-area').scrollTop = 0;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Init Settings (Force Arabic for Arabic Subject/RTL)
+            setLanguage('ar');
+            // Init Theme from LocalStorage
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) setTheme(savedTheme); else setTheme('dark');
+
+            // Listeners
+            document.getElementById('open-settings')?.addEventListener('click', (e) => { e.preventDefault(); document.getElementById('settings-modal').classList.remove('hidden'); });
+            document.getElementById('close-settings')?.addEventListener('click', () => document.getElementById('settings-modal').classList.add('hidden'));
+            document.getElementById('settings-modal')?.addEventListener('click', (e) => { if (e.target === document.getElementById('settings-modal')) document.getElementById('settings-modal').classList.add('hidden'); });
+            document.getElementById('lang-en')?.addEventListener('click', () => setLanguage('en'));
+            document.getElementById('lang-ar')?.addEventListener('click', () => setLanguage('ar'));
+            document.getElementById('theme-dark')?.addEventListener('click', () => setTheme('dark'));
+            document.getElementById('theme-midnight')?.addEventListener('click', () => setTheme('midnight'));
+            document.getElementById('theme-christmas')?.addEventListener('click', () => setTheme('christmas'));
+            document.getElementById('theme-space')?.addEventListener('click', () => setTheme('space'));
+
+            const loList = document.getElementById('lo-list');
+
+            // Generate sidebar buttons in the requested order
+            const orderedKeys = ['LO1', 'LO2', 'LO3', 'LO4', 'LO5', 'LO6', 'LO7'];
+            orderedKeys.forEach(key => {
+                const displayText = learningObjectives[key] ? learningObjectives[key].title : key;
+
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `
+                    <button id="lo-${key}" 
+                        class="lo-item w-full text-right p-3 rounded-lg border-l-4 border-tech-dark-alt transition duration-200 
+                               hover:bg-tech-primary/10 hover:border-tech-primary font-medium text-sm sm:text-base"
+                        data-lo-key="${key}">
+                        <span class="truncate">${displayText}</span>
+                    </button>
+                `;
+                loList.appendChild(listItem);
+            });
+
+            loList.addEventListener('click', (event) => {
+                const button = event.target.closest('.lo-item');
+                if (button) {
+                    const loKey = button.getAttribute('data-lo-key');
+                    handleNavigationClick(loKey);
+                }
+            });
+
+            // Initialize first render to النحو (LO1)
+            handleNavigationClick('LO1');
+
+            // Anime.js Stagger Effect for Sidebar
+            if (typeof anime !== 'undefined') {
+                anime({
+                    targets: '#lo-list li',
+                    opacity: [0, 1],
+                    translateX: [20, 0], // RTL
+                    delay: anime.stagger(100),
+                    easing: 'easeOutQuad'
+                });
+            }
+        });
+    </script>
+</head>
+
+<body class="bg-tech-dark-alt text-tech-light min-h-screen flex flex-col">
+    <!-- Dark Neon Background Effects -->
+    <div class="cyber-wrapper">
+        <div class="cyber-grid"></div>
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Header -->
+    <header
+        class="w-full bg-tech-dark-alt p-4 shadow-xl shadow-tech-primary/10 border-b border-tech-primary/30 sticky top-0 z-10">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <!-- Left: Back Button & Logo (visually right in RTL) -->
+            <div class="flex items-center space-x-4">
+                <button onclick="window.location.href='../index.html'"
+                    class="text-tech-light hover:text-tech-secondary transition duration-200 p-2 rounded-full hover:bg-tech-primary/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 12H5" />
+                        <path d="m12 19-7-7 7-7" />
+                    </svg>
+                </button>
+                <a href="../index.html"
+                    class="flex items-center space-x-2 text-2xl font-extrabold transition duration-200 hover:opacity-80">
+                    <span class="gradient-text-wrapper gradient-h1">Stemawy</span>
+                </a>
+            </div>
+
+            <!-- Center: Title -->
+            <h1 class="centered-title text-4xl font-extrabold tracking-tight">
+                <span class="gradient-text-wrapper gradient-h1">عربي</span>
+            </h1>
+
+            <!-- Right: Theme Toggle -->
+            <button onclick="toggleTheme()" class="theme-toggle" title="تبديل السمة">
+                <svg id="theme-toggle-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex flex-1 overflow-hidden max-w-7xl mx-auto w-full p-4 sm:p-6">
+
+        <!-- Left Sidebar (LO Navigation) -->
+        <nav id="sidebar"
+            class="w-full sm:w-64 bg-tech-dark-alt rounded-xl p-4 ml-6 flex-shrink-0 border border-tech-primary/20 h-full overflow-y-auto">
+            <h2
+                class="text-lg font-bold mb-4 text-tech-secondary uppercase tracking-wider border-b border-tech-secondary/30 pb-2">
+                الوحدات</h2>
+            <ul id="lo-list" class="space-y-2">
+                <!-- LO items will be generated here -->
+            </ul>
+        </nav>
+
+        <!-- Right Content Area -->
+        <section id="content-area"
+            class="flex-1 bg-tech-dark-alt rounded-xl p-6 border border-tech-primary/50 shadow-subtle-glow">
+            <div id="dynamic-content" class="h-full">
+                <!-- Default State -->
+                <div id="default-message"
+                    class="flex items-center justify-center h-full text-3xl font-light text-tech-light/50">
+                    يرجى اختيار هدف التعلم
+                </div>
+                <!-- Dynamic content will be rendered here -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full bg-tech-dark-alt p-4 mt-auto border-t border-tech-primary/30 relative z-20">
+        <div class="section-container flex flex-col sm:flex-row justify-between items-center text-sm">
+            <div class="text-center sm:text-left order-2 sm:order-1 mt-4 sm:mt-0">
+                <span data-i18n="footer_contact">If you have any comments please text me</span> <a
+                    href="mailto:yassoalaa822@gmail.com"
+                    class="text-tech-secondary hover:text-tech-primary transition duration-200">yassoalaa822@gmail.com</a>
+            </div>
+            <div class="space-x-4 order-1 sm:order-2">
+                <a href="#" id="open-settings" class="hover:text-tech-primary transition duration-200"
+                    data-i18n="settings">Settings</a>
+            </div>
+        </div>
+    </footer>
+    <div id="snow-container"></div>
+    <div id="settings-modal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+        <div
+            class="bg-tech-dark-alt rounded-2xl border border-tech-secondary/50 shadow-2xl p-6 w-full max-w-sm transform transition-all scale-100">
+            <div class="flex justify-between items-center mb-6 border-b border-tech-primary/20 pb-4">
+                <h3 class="text-2xl font-bold text-tech-primary" data-i18n="settings">Settings</h3>
+                <button id="close-settings" class="text-tech-light hover:text-tech-secondary"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg></button>
+            </div>
+            <div class="mb-6">
+                <h4 class="text-sm font-semibold text-tech-secondary uppercase tracking-wider mb-3"
+                    data-i18n="language">Language</h4>
+                <div class="grid grid-cols-2 gap-3"><button id="lang-en"
+                        class="p-2 rounded-lg border border-tech-primary/30 hover:bg-tech-primary/10 text-center transition">English</button><button
+                        id="lang-ar"
+                        class="p-2 rounded-lg border border-tech-primary/30 hover:bg-tech-primary/10 text-center transition font-['Tajawal']">العربية</button>
+                </div>
+            </div>
+            <div class="mb-6">
+                <h4 class="text-sm font-semibold text-tech-secondary uppercase tracking-wider mb-3" data-i18n="theme">
+                    Theme</h4>
+                <div class="grid grid-cols-2 gap-3">
+                    <button id="theme-dark"
+                        class="p-2 rounded-lg border border-tech-primary/30 hover:bg-tech-primary/10 text-center transition">Dark
+                        Neon</button>
+                    <button id="theme-midnight"
+                        class="p-2 rounded-lg border border-pink-500/50 hover:bg-pink-500/10 text-center transition text-pink-300">Midnight
+                        🌆</button>
+                    <button id="theme-christmas"
+                        class="p-2 rounded-lg border border-red-500/50 hover:bg-red-500/10 text-center transition text-red-300">Christmas
+                        🎄</button>
+                    <button id="theme-space"
+                        class="p-2 rounded-lg border border-blue-500/50 hover:bg-blue-500/10 text-center transition text-blue-300">Space
+                        🚀</button>
+                </div>
+            </div>
+            <button onclick="document.getElementById('settings-modal').classList.add('hidden')"
+                class="w-full py-2 bg-tech-primary text-tech-bg font-bold rounded-lg hover:bg-tech-secondary transition"
+                data-i18n="close">Close</button>
+        </div>
+    </div>
+    <script src="../space-theme.js"></script>
+</body>
+
+</html>
