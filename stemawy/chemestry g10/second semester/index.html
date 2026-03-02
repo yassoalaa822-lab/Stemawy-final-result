@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chemistry Checkpoints</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+
+    <!-- No Firebase module needed anymore -->
+
+    <style>
+        /* Apply Inter font family and smooth scrolling */
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        /* --- Tech Aesthetic Colors and Glows --- */
+        .shadow-subtle-glow {
+            box-shadow: 0 4px 15px rgba(51, 255, 204, 0.25), 0 0 5px rgba(51, 255, 204, 0.1);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .hover\:shadow-subtle-glow-lg:hover {
+            box-shadow: 0 6px 20px rgba(51, 255, 204, 0.4), 0 0 8px rgba(51, 255, 204, 0.2);
+        }
+
+        /* Keyframes for continuous gradient shift */
+        @keyframes gradient-shift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Base class for the animated text effect */
+        .gradient-text-wrapper {
+            display: inline-block;
+            background-size: 300% 100%;
+            animation: gradient-shift 8s linear infinite;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            line-height: 1.2;
+            white-space: nowrap;
+        }
+
+        /* Style for the main header (Physics) */
+        .gradient-h1 {
+            background-image: linear-gradient(to right, #00BFFF, #33FFCC, #00BFFF, #33FFCC);
+            animation-duration: 8s;
+        }
+
+        /* Light theme variables */
+        :root[data-theme="light"] {
+            --tech-bg: #ffffff;
+            --tech-dark-alt: #f3f4f6;
+            --tech-light: #111827;
+            --tech-primary: #0369a1;
+            --tech-secondary: #0e7490;
+            --border-color: rgba(2, 132, 199, 0.3);
+        }
+
+        /* Dark theme variables (default) */
+        :root[data-theme="dark"] {
+            --tech-bg: #1A1F26;
+            --tech-dark-alt: #2C333F;
+            --tech-light: #E0E6F0;
+            --tech-primary: #00BFFF;
+            --tech-secondary: #33FFCC;
+            --border-color: rgba(51, 255, 204, 0.3);
+        }
+
+        /* Space Theme Variables */
+        :root[data-theme="space"] {
+            --tech-bg: #050505;
+            --tech-dark-alt: #0F1218;
+            --tech-light: #ffffff;
+            --tech-primary: #00BFFF;
+            --tech-secondary: #33FFCC;
+            --border-color: rgba(0, 191, 255, 0.3);
+        }
+
+        /* Midnight Synth Theme */
+        :root[data-theme="midnight"] {
+            --tech-bg: #1e1b4b;
+            --tech-dark-alt: #312e81;
+            --tech-light: #e0e7ff;
+            --tech-primary: #f472b6;
+            --tech-secondary: #818cf8;
+            --border-color: rgba(244, 114, 182, 0.4);
+        }
+
+        /* Christmas Theme */
+        :root[data-theme="christmas"] {
+            --tech-bg: #2C0412;
+            --tech-dark-alt: #460B1C;
+            --tech-light: #FEEBC8;
+            --tech-primary: #D4AF37;
+            --tech-secondary: #228B22;
+            --border-color: rgba(212, 175, 55, 0.4);
+        }
+
+        /* Helper classes to apply CSS variable values (overrides Tailwind utility colors) */
+        body {
+            background-color: var(--tech-bg);
+            color: var(--tech-light);
+        }
+
+        .bg-tech-bg {
+            background-color: var(--tech-bg) !important;
+        }
+
+        .bg-tech-dark-alt {
+            background-color: var(--tech-dark-alt) !important;
+        }
+
+        .text-tech-light {
+            color: var(--tech-light) !important;
+        }
+
+        .text-tech-primary {
+            color: var(--tech-primary) !important;
+        }
+
+        .text-tech-secondary {
+            color: var(--tech-secondary) !important;
+        }
+
+        .border-tech-primary\/30 {
+            border-color: var(--border-color) !important;
+        }
+
+        /* Custom scrollbar style for the content area */
+        #content-area {
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #00BFFF #1A1F26;
+        }
+
+        #content-area::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #content-area::-webkit-scrollbar-thumb {
+            background-color: #00BFFF;
+            border-radius: 4px;
+        }
+
+        #content-area::-webkit-scrollbar-track {
+            background-color: #1A1F26;
+        }
+
+        /* Custom style for the LO button when active */
+        .lo-item.active {
+            background-color: #00BFFF33;
+            /* tech-primary with opacity */
+            border-left-color: #33FFCC;
+            /* tech-secondary */
+            box-shadow: 0 0 10px rgba(51, 255, 204, 0.3);
+        }
+
+        /* Centered header title helper */
+        .header-inner {
+            position: relative;
+        }
+
+        .centered-title {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+        }
+
+        /* Theme toggle button */
+        .theme-toggle {
+            padding: 0.5rem;
+            border-radius: 9999px;
+            transition: all 0.3s ease;
+            color: var(--tech-light);
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--tech-primary);
+            color: var(--tech-bg);
+        }
+
+        /* Details summary arrow rotation */
+        details summary .arrow-icon {
+            transform: rotate(0deg);
+            transition: transform 0.3s;
+        }
+
+        details[open] summary .arrow-icon {
+            transform: rotate(90deg);
+        }
+
+        /* Enforce CSS Variables */
+        .bg-tech-bg {
+            background-color: var(--tech-bg) !important;
+        }
+
+        .bg-tech-dark-alt {
+            background-color: var(--tech-dark-alt) !important;
+        }
+
+        .text-tech-light {
+            color: var(--tech-light) !important;
+        }
+
+        .text-tech-primary {
+            color: var(--tech-primary) !important;
+        }
+
+        .text-tech-secondary {
+            color: var(--tech-secondary) !important;
+        }
+
+        .border-tech-primary {
+            border-color: var(--tech-primary) !important;
+        }
+
+        .border-tech-secondary {
+            border-color: var(--tech-secondary) !important;
+        }
+
+        /* Christmas Theme */
+        :root[data-theme="christmas"] {
+            --tech-bg: #2C0412;
+            --tech-dark-alt: #460B1C;
+            --tech-light: #FDF5E6;
+            --tech-primary: #FFD700;
+            --tech-secondary: #006400;
+            --border-color: rgba(255, 215, 0, 0.4);
+        }
+
+        /* Snow */
+        #snow-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+            display: none;
+        }
+
+        :root[data-theme="christmas"] #snow-container {
+            display: block;
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh);
+            }
+        }
+
+        /* RTL */
+        [dir="rtl"] {
+            font-family: 'Tajawal', 'Inter', sans-serif;
+        }
+
+        [dir="rtl"] .text-right-rtl {
+            text-align: right;
+        }
+
+        [dir="rtl"] #sidebar {
+            border-left: 1px solid var(--tech-primary);
+            border-right: none;
+            margin-left: 1.5rem;
+            margin-right: 0;
+        }
+
+        #settings-modal {
+            backdrop-filter: blur(5px);
+        }
+
+        /* --- Dark Neon Dynamic Background --- */
+        .cyber-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+            display: none;
+        }
+
+        /* Only show in Dark Theme */
+        :root[data-theme="dark"] .cyber-wrapper {
+            display: block;
+        }
+
+        .cyber-grid {
+            position: absolute;
+            width: 200vw;
+            height: 200vh;
+            top: -50%;
+            left: -50%;
+            background-image:
+                linear-gradient(rgba(0, 191, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 191, 255, 0.05) 1px, transparent 1px);
+            background-size: 60px 60px;
+            transform: perspective(500px) rotateX(60deg);
+            animation: grid-move 20s linear infinite;
+        }
+
+        @keyframes grid-move {
+            0% {
+                transform: perspective(500px) rotateX(60deg) translateY(0);
+            }
+
+            100% {
+                transform: perspective(500px) rotateX(60deg) translateY(60px);
+            }
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+            animation: float-orb 20s infinite ease-in-out;
+        }
+
+        .orb-1 {
+            top: 20%;
+            left: 20%;
+            width: 300px;
+            height: 300px;
+            background: rgba(0, 191, 255, 0.3);
+            animation-duration: 25s;
+        }
+
+        .orb-2 {
+            bottom: 20%;
+            right: 20%;
+            width: 400px;
+            height: 400px;
+            background: rgba(51, 255, 204, 0.2);
+            animation-duration: 30s;
+            animation-delay: -5s;
+        }
+
+        .orb-3 {
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            height: 200px;
+            background: rgba(138, 43, 226, 0.15);
+            animation-duration: 20s;
+            animation-delay: -10s;
+        }
+
+        @keyframes float-orb {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            33% {
+                transform: translate(40px, -60px);
+            }
+
+            66% {
+                transform: translate(-30px, 30px);
+            }
+        }
+
+        /* Breathing Glow for Cards in Dark Mode */
+        :root[data-theme="dark"] .subject-card,
+        :root[data-theme="dark"] .comp-card,
+        :root[data-theme="dark"] .lo-item,
+        :root[data-theme="dark"] details {
+            animation: breathing-glow 5s ease-in-out infinite;
+        }
+
+        :root[data-theme="dark"] .subject-card:hover,
+        :root[data-theme="dark"] .comp-card:hover,
+        :root[data-theme="dark"] .lo-item:hover,
+        :root[data-theme="dark"] details[open] {
+            animation: none;
+        }
+
+        @keyframes breathing-glow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 5px rgba(0, 191, 255, 0.05);
+                border-color: rgba(0, 191, 255, 0.1);
+            }
+
+            50% {
+                box-shadow: 0 0 15px rgba(51, 255, 204, 0.15);
+                border-color: rgba(51, 255, 204, 0.3);
+            }
+        }
+
+        /* Space Theme Variables */
+        :root[data-theme="space"] {
+            --tech-bg: #050505;
+            --tech-dark-alt: #0F1218;
+            --tech-light: #ffffff;
+            --tech-primary: #00BFFF;
+            --tech-secondary: #33FFCC;
+            --border-color: rgba(0, 191, 255, 0.3);
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+
+    <script>
+        // Tailwind Configuration with a Modern Tech Palette
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'tech-bg': '#1A1F26',
+                        'tech-dark-alt': '#2C333F',
+                        'tech-light': '#E0E6F0',
+                        'tech-primary': '#00BFFF',
+                        'tech-secondary': '#33FFCC',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-tech-bg text-tech-light min-h-screen flex flex-col">
+    <!-- Dark Neon Background Effects -->
+    <div class="cyber-wrapper">
+        <div class="cyber-grid"></div>
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Header -->
+    <header
+        class="w-full bg-tech-dark-alt p-4 shadow-xl shadow-tech-primary/10 border-b border-tech-primary/30 sticky top-0 z-10">
+        <div class="max-w-7xl mx-auto flex justify-between items-center header-inner">
+            <!-- Left: Back Button & Logo -->
+            <div class="flex items-center space-x-4">
+                <button onclick="window.location.href='../index.html'"
+                    class="text-tech-light hover:text-tech-secondary transition duration-200 p-2 rounded-full hover:bg-tech-primary/20">
+                    <!-- Back Arrow SVG Icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 12H5" />
+                        <path d="m12 19-7-7 7-7" />
+                    </svg>
+                </button>
+
+                <!-- NEW LOGO: "Stemawy" link -->
+                <a href="../index.html"
+                    class="flex items-center space-x-2 text-2xl font-extrabold transition duration-200 hover:opacity-80">
+                    <span class="gradient-text-wrapper gradient-h1">Stemawy</span>
+                </a>
+            </div>
+
+            <!-- Centered Title -->
+            <h1 class="centered-title text-4xl font-extrabold tracking-tight">
+                <span class="gradient-text-wrapper gradient-h1">CHEMISTRY</span>
+            </h1>
+
+            <!-- Right: Theme Toggle Button -->
+            <div class="flex items-center">
+                <button id="theme-toggle" class="theme-toggle" title="Toggle theme">
+                    <svg id="theme-toggle-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area: Sidebar and Main Section -->
+    <main class="flex flex-1 overflow-hidden max-w-7xl mx-auto w-full p-4 sm:p-6">
+
+        <!-- Left Sidebar (LO Navigation) -->
+        <nav id="sidebar"
+            class="w-full sm:w-64 bg-tech-dark-alt rounded-xl p-4 mr-6 flex-shrink-0 border border-tech-primary/20 h-full overflow-y-auto">
+            <h2
+                class="text-lg font-bold mb-4 text-tech-secondary uppercase tracking-wider border-b border-tech-secondary/30 pb-2">
+                Learning Objectives</h2>
+            <ul id="lo-list" class="space-y-2">
+                <!-- LO items will be generated here -->
+            </ul>
+        </nav>
+
+        <!-- Right Content Area -->
+        <section id="content-area"
+            class="flex-1 bg-tech-dark-alt rounded-xl p-6 border border-tech-primary/50 shadow-subtle-glow">
+            <div id="dynamic-content" class="h-full">
+                <!-- Default State -->
+                <div id="default-message"
+                    class="flex items-center justify-center h-full text-3xl font-light text-tech-light/50">
+                    Please choose your checkpoint
+                </div>
+                <!-- Content will be rendered here -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full bg-tech-dark-alt p-4 mt-auto border-t border-tech-primary/30 relative z-20">
+        <div class="section-container flex flex-col sm:flex-row justify-between items-center text-sm">
+            <div class="text-center sm:text-left order-2 sm:order-1 mt-4 sm:mt-0">
+                <span data-i18n="footer_contact">If you have any comments please text me</span> <a
+                    href="mailto:yassoalaa822@gmail.com"
+                    class="text-tech-secondary hover:text-tech-primary transition duration-200">yassoalaa822@gmail.com</a>
+            </div>
+            <div class="space-x-4 order-1 sm:order-2">
+                <a href="#" id="open-settings" class="hover:text-tech-primary transition duration-200"
+                    data-i18n="settings">Settings</a>
+            </div>
+        </div>
+    </footer>
+    <div id="snow-container"></div>
+    <div id="settings-modal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+        <div
+            class="bg-tech-dark-alt rounded-2xl border border-tech-secondary/50 shadow-2xl p-6 w-full max-w-sm transform transition-all scale-100">
+            <div class="flex justify-between items-center mb-6 border-b border-tech-primary/20 pb-4">
+                <h3 class="text-2xl font-bold text-tech-primary" data-i18n="settings">Settings</h3>
+                <button id="close-settings" class="text-tech-light hover:text-tech-secondary"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg></button>
+            </div>
+            <div class="mb-6">
+                <h4 class="text-sm font-semibold text-tech-secondary uppercase tracking-wider mb-3"
+                    data-i18n="language">Language</h4>
+                <div class="grid grid-cols-2 gap-3"><button id="lang-en"
+                        class="p-2 rounded-lg border border-tech-primary/30 hover:bg-tech-primary/10 text-center transition">English</button><button
+                        id="lang-ar"
+                        class="p-2 rounded-lg border border-tech-primary/30 hover:bg-tech-primary/10 text-center transition font-['Tajawal']">العربية</button>
+                </div>
+            </div>
+            <!-- Theme Section -->
+            <div class="mb-6">
+                <h4 class="text-sm font-semibold text-tech-secondary uppercase tracking-wider mb-3" data-i18n="theme">
+                    Theme</h4>
+                <div class="grid grid-cols-2 gap-3">
+                    <button id="theme-dark"
+                        class="p-2 rounded-lg border border-tech-primary/30 hover:bg-tech-primary/10 text-center transition">Dark
+                        Neon</button>
+                    <button id="theme-midnight"
+                        class="p-2 rounded-lg border border-pink-500/50 hover:bg-pink-500/10 text-center transition text-pink-300">Midnight
+                        🌆</button>
+                    <button id="theme-christmas"
+                        class="p-2 rounded-lg border border-red-500/50 hover:bg-red-500/10 text-center transition text-red-300">Christmas
+                        🎄</button>
+                    <button id="theme-space"
+                        class="p-2 rounded-lg border border-tech-primary/30 hover:bg-tech-primary/10 text-center transition text-tech-primary"
+                        data-i18n="theme_space">Space 🚀</button>
+                </div>
+            </div>
+
+            <button onclick="document.getElementById('settings-modal').classList.add('hidden')"
+                class="w-full py-2 bg-tech-primary text-tech-bg font-bold rounded-lg hover:bg-tech-secondary transition"
+                data-i18n="close">
+                Close
+            </button>
+        </div>
+    </div>
+    <script src="../space-theme.js"></script>
+    <script src="../theme-effects.js"></script>
+    <script>
+        // Define the data structure for all Learning Objectives and Concepts
+        const learningObjectives = {
+            LO8: {
+                title: "LO8",
+                concepts: [
+                    "Pure substance",
+                    "Solution",
+                    "Solute",
+                    "Solvent",
+                    "Colloid",
+                    "Tyndall Effect",
+                    "Suspension"
+                ]
+            },
+            LO9: {
+                title: "LO9",
+                concepts: [
+                    "Texture",
+                    "Uniformity",
+                    "Strength",
+                    "Elasticity",
+                    "Bounce",
+                    "Malleability"
+                ]
+            },
+            LO10: {
+                title: "LO10",
+                concepts: [
+                    "Stoichiometry",
+                    "Mole",
+                    "Molar mass",
+                    "Standard temperature and pressure (STP)",
+                    "Dimensional analysis (unit conversions)",
+                    "Percentage yield",
+                    "Limiting reagent"
+                ]
+            },
+            LO11: {
+                title: "LO11",
+                concepts: [
+                    "Synthesis reaction",
+                    "Decomposition reaction",
+                    "Single-replacement reaction",
+                    "Double-replacement reaction"
+                ]
+            },
+            LO12: {
+                title: "LO12",
+                concepts: [
+                    "Intermolecular forces",
+                    "London dispersion force",
+                    "Dipole-dipole force",
+                    "Electronegativity",
+                    "Polarity",
+                    "VESPR theory"
+                ]
+            },
+            LO13: {
+                title: "LO13",
+                concepts: [
+                    "Metals",
+                    "Oxidation-reduction (redox) reaction",
+                    "Oxidation",
+                    "Reduction"
+                ]
+            },
+            LO14: {
+                title: "LO14",
+                concepts: [
+                    "Oxidation-reduction (redox) reaction",
+                    "Half-reactions",
+                    "Electrochemical cell",
+                    "Galvanic cell",
+                    "Spectator ions"
+                ]
+            },
+            LO15: {
+                title: "LO15",
+                concepts: [
+                    "System",
+                    "Thermodynamic",
+                    "Kinetics",
+                    "Energy",
+                    "Heat",
+                    "Maximum work",
+                    "Law of conservation of energy",
+                    "Endothermic",
+                    "Exothermic",
+                    "Heat content",
+                    "Enthalpy change",
+                    "Energy diagram",
+                    "Activation energy",
+                    "Activated complex",
+                    "Entropy(S)",
+                    "Spontaneity",
+                    "Gibbs free energy",
+                    "Catalyst"
+                ]
+            },
+            LO16: {
+                title: "LO16",
+                concepts: [
+                    "Gas",
+                    "Natural law",
+                    "Pressure",
+                    "Atmosphere",
+                    "Barometers",
+                    "Boyle's Law",
+                    "Charles's Law",
+                    "Absolute Zero",
+                    "Kinetic Theory of Matter",
+                    "Idea Gas"
+                ]
+            },
+            LO17: {
+                title: "LO17",
+                concepts: [
+                    "Diffusion",
+                    "Effusion",
+                    "Graham's Law of Effusion"
+                ]
+            }
+        };
+
+        // Resource files found in the 'semester two' folders
+        const resourceFiles = {
+            LO8: [
+                "L.O:8",
+                "lo8 chemistry.pdf",
+                "CH.1.08.pdf",
+                "Copy of CH.1.08.pptx",
+                "LO.O8 mixtures with questions.pptx",
+                "LO 8 questions.pdf",
+                "LO 8 Part One Mahjoub.pptx.pdf",
+                "Chemistry LO8 (M.E.O) (1).pdf",
+                "G10 CHEM.08.pdf",
+            ],
+            LO9: [
+                "L.O:9",
+                "CH.1.09 .ppt",
+                "LO 9  Mahjoub.pptx.pdf",
+                "LO 9.pdf",
+                "LO.1.09 MR. Ayman Elkady.pdf",
+                "Chem LO9.pptx",
+                "G10 CHEM.09.pdf",
+            ],
+            LO10: [
+                "L.O:10",
+                "Chemistry Lo 10 M.E.O.pdf",
+                "Copy of CH.1.10.pptx",
+                "LO 10-3.pdf",
+                "LO 10-2.pdf",
+                "LO 10-1.pdf",
+                "G10 CHEM.10.pdf",
+            ],
+            LO11: [
+                "L.O:11",
+                "LO11.pptx",
+                "LO 11  Mahjoub.pdf",
+                "LO 11.pdf",
+
+                "G10 CHEM.11.pdf",
+
+            ],
+
+            LO12: [
+                "L.O:12",
+                "chem.. 12.pptx",
+                "CH.1.12.pptx",
+                "LO 12 Mahjoub.pptx.pdf",
+                "LO 12.pdf",
+                "G10 CHEM.12.pdf",
+            ],
+            LO13: [
+                "L.O:13",
+                "CH.1.13.pptx",
+                "LO 13 Mahjoub.pptx.pdf",
+                "LO13.pptx",
+                "G10 CHEM.13.pdf",
+            ],
+
+            LO14: [
+                "L.O:14",
+                "CH.1.14.pptx",
+                "LO 14-15.pdf",
+            ],
+
+            LO15: [
+                "L.O:15",
+                "CH.1.15.pptx",
+                "LO.15 Chem.pdf",
+                "LO 14-15.pdf",
+                "Chem LO.15.pptx",
+                "G10 CHEM.15.pdf",
+            ],
+
+            LO16: [
+                "L.O:16",
+                "CH.1.16.pptx",
+                "LO 16.pdf",
+                "chem ch16 IS.pptx",
+                "G10 CHEM.16.pdf",
+            ],
+
+            LO17: [
+                "L.O:17",
+                "CH.1.17.pptx",
+                "LO 17.pdf",
+                "LO 17 Mahjoub.pptx.pdf",
+                "chem lo17.pptx",
+                "G10 CHEM.17.pdf",
+            ],
+
+
+
+
+            references: [
+                "References Positions.pdf",
+                "Principles_of_General_Chemistry_by_Martin_Silberberg_z_lib_org.pdf",
+                "Principles of organic chemistry.pdf",
+                "Holt_Chemistry_Textbook.pdf",
+                "Active_Chemistry.PDF",
+                "Zumdahl Chemistry 9th c2014 solutions - Copy.pdf",
+                "References Positions.pdf",
+                "G10 CHEM.14.pdf",
+                "Chemistry practical for G10, G11 Second term Dr. baya.pdf",
+                "Chemistry practical.pdf",
+
+            ]
+        };
+
+        // Test banks folder files
+        resourceFiles.testBanks = [
+        ];
+
+        // Video links mapped to LO keys and concept titles
+        const videoLinks = {
+            LO8: {
+                "Pure substance": ["https://youtu.be/XuXg3fmuAFY?si=Z_KLg4dotiCPAZY2", "https://youtu.be/OHhnm2p5G3o?si=5kn_k1_wJiwo8KMY"],
+                "Solute, solved, solution": ["https://youtu.be/MDHlaTHbEgM?si=uRTp5RML0vb8FtXr"],
+                "Colloid": ["https://youtu.be/meZqm7HznZg?si=PWsrVxWBivq"],
+                "Tyndall Effect": ["https://youtu.be/OXoKZPLb6Qo?si=hRoP_YxmsDO8najn"]
+            },
+            LO9: {
+                "Texture": ["https://youtu.be/phcI22TWtuU?si=7MspQFuBySc-fJQ-"],
+                "Materials and their properties": ["https://youtu.be/340MmuY_osY?si=BGFjlEhxk6xYQ80K"],
+                "Homogeneous and Heterogeneous mixture": ["https://youtu.be/eI-tmv4DLEk"],
+                "Mechanical properties": ["https://youtu.be/mlQ8tu5VP4A?si=EHjhqKLoi6agJpWV"],
+                "Elasticity and Hooks law": ["https://youtu.be/HALbtyDUjp0?si=uDT_UhdWejVN1u2D"],
+                "Woobling, dropping and bouncing": ["https://youtu.be/i1okkh-c3Po?si=NAL89C2-lSFwVa5"],
+                "Malleability": ["https://youtu.be/08mGIgBcscI?si=-HDsR1VKDHLEn3cr"],
+                "Mechanical properties of materials": ["https://youtu.be/4val-DD3GAA?si=eVMee9zzwmfLgqhV"]
+            },
+            LO10: {
+                "Stoichiometry": ["https://youtu.be/bVRPVHhLuGA?si=VyK-S0-bm3qIn-2b"],
+                "Theoretical yeild": ["https://youtu.be/jtAj0s203CI?si=3lpgg2wt-ebnBw62"],
+                "Percentage yield": ["https://youtu.be/DIird9oZVII?si=UryysM-O6ocDlLh2"],
+                "Moles and mass": ["https://youtu.be/kBlmEfS_P00?si=5bdOnuvjkI8Qb3Pq"],
+                "Limiting reagent": ["https://youtu.be/nZOVR8EMwRU?si=e1-jNQQfwcO7IDWT"],
+                "Standard temperature and pressure (STP)": ["https://youtu.be/B1ZsDnOGeYA?si=FlwiaPfDZjGBSiZd"]
+            },
+            LO11: {
+                "Types of chemical reactions": ["https://youtu.be/2Ik5KRHBlRU?si=ouIEM3quTsT8EuB8", "https://youtu.be/iIJD8RNLpS0?si=oOzaMJjah8DJl0cy"],
+                "Single-replacement reaction": ["https://youtu.be/4xLmQvoKFlg?si=5W4VTV8X2tU3tntL"],
+                "Double-replacement reaction": ["https://youtu.be/d8vWIGf2mGE?si=vf26jifpyXF8_Pyf"],
+                "Synthesis reaction": ["https://youtu.be/FRsuhbTGWSg?si=mgdiTm8_4uj"],
+                "Decomposition reaction": ["https://youtu.be/Bf0alYXHbGw?si=SlhibqW1gaBDH6T9"]
+            },
+            LO12: {
+                "Intermolecular forces": ["https://youtu.be/bjZbDk1Oe9M?si=IENzDmtPcflDaPF0"],
+                "bond polarity, electronegativity, and the dipole moment": ["https://youtu.be/ds5HXmBkO0Y?si=rh4_Egp898SuVa0D"],
+                "Dipole-dipole force": ["https://youtu.be/zOvnu0KYyxo?si=IiMcrFUWzb7rVxpt"],
+                "London dispersion force": ["https://youtu.be/yIuJfHOVh48?si=5FGJN7BPzD3d0LB5"],
+                "VESPR theory": ["https://youtu.be/DBrq31w8vC4?si=-e7yKkCQnlSinUX6"],
+                "Chemical bonds": ["https://youtu.be/PoQjsnQmxok?si=v1x3bJyiq-t17lwc"]
+            },
+            LO13: {
+                "Metals": ["https://youtu.be/BD7vnlr-i-c?si=Bx6Jc0i-z8W6SLMG"],
+                "Oxidation-reduction (redox) reaction": ["https://youtu.be/VXvtkwubQQg?si=qJyRU-mDKsiWwnOb", "https://youtu.be/6gtcvqLmPo8?si=Fj1IGKAq-NpLjE3s", "https://youtu.be/lQ6FBA1HM3s?si=zqohJZIDiKupB4Lb"]
+            },
+            LO14: {
+                "Oxidation-reduction (redox) reaction": ["https://youtu.be/SaBiqQ_L46g?si=D9Lz8EdGXGpWatWx", "https://youtu.be/dF5lB7gRtcA?si=JoO5a1rbI7FsYJmr"],
+                "Half-reactions": ["https://youtu.be/fdbrhQAM9Gw?si=uIcCaD8L22EaWeJC"],
+                "Galvanic cell": ["https://youtu.be/9blB-uMTIAM?si=M0gNqpsKP1PoWmFZ"],
+                "Electrochemical cell": ["https://youtu.be/IV4IUsholjg?si=3NLq1MCobb69PGQ6"],
+                "Spectator ions": ["https://youtu.be/PIciMJN5HwU?si=1alrSF-lUAB_QhiI"]
+            },
+            LO15: {
+                "System": ["https://youtu.be/TFP6SvWPOQc?si=VCnawRswSdUNp2VL"],
+                "Thermodynamic": ["https://youtu.be/3Mjx0cFMpE8?si=Tp6zre4Qk-ULWd5D"],
+                "Kinetics": ["https://youtu.be/DyaVgHGssos?si=_FkHiFJXBO6eNJ_z"],
+                "Energy": ["https://youtu.be/JRIm_a2LDPM?si=eaFxcgmODwCvI3zj"],
+                "Heat": ["https://youtu.be/2ixEf2zpR8E?si=cw7T3WKe_h1pWWmL"],
+                "Maximum work": ["https://youtu.be/jX4dEOFwaLQ?si=XULxzLeJJ1W-EJlc"],
+                "Law of conservation of energy": ["https://youtu.be/DWiCaDPM7Hk?si=-Ynh9xiAvBgXeliC"],
+                "Endothermic": ["https://youtu.be/wYqQCojggyM?si=NMLrZJsbf3pAgb2d"],
+                "Exothermic": ["https://youtu.be/8N1BxHgsoOw?si=0cJlKOp6-PgsH2CE"],
+                "Heat content": ["https://youtu.be/zVRH9d5PW8g?si=1GaXRTm9fc_odrUi"],
+                "Enthalpy change": ["https://youtu.be/OTK9JrKC6EY?si=JqiiGvgn8smnCVr3"],
+                "Energy diagram": ["https://youtu.be/yhNHJ7WdT8A?si=oRxHlk8g3y46dmT5"],
+                "Activation energy": ["https://youtu.be/8N1BxHgsoOw?si=FYAXy0dRKf8JKaQZ"],
+                "Activated complex": ["https://youtu.be/7qOFtL3VEBc?si=8zmtKsXi4STSdc5z"],
+                "Entropy(S)": ["https://youtu.be/a23khZI8wJk?si=btQStFOG7QfYLgDA"],
+                "Spontaneity": ["https://youtu.be/ROBkMqJQLr4?si=bdGCkOHcf4MJnWK3"],
+                "Gibbs free energy": ["https://youtu.be/hNNvIsQLSV8?si=DABx2uK6Ffcp1ueZ"]
+            },
+            LO16: {
+                "Natural law": ["https://youtu.be/r_UfYY7aWKo?si=egFHdgxJ1SyEaWxH"],
+                "Pressure": ["https://youtu.be/6t50Gmo8tq0?si=iWTQQkxGDmDVNJCJ"],
+                "Barometers": ["https://youtu.be/YI4RRZ3ZM7g?si=nkeKn3nG-a4zCoU-"],
+                "Boyle's Law": ["https://youtu.be/v8r_AU_TlPg?si=TduxCehI44P2SaUi", "https://youtu.be/YQmv272-4yU?si=CiwnDhmkUQnCuic0"],
+                "Charles's Law": ["https://youtu.be/twCcSsHmMgI?si=0an_G1blrCB1NP_o", "https://youtu.be/uZ2d79NFx2w?si=OM6rzEQWsA58Qvte"],
+                "Absolute Zero": ["https://youtu.be/JHXxPnmyDbk?si=R5Jnmjy3IE3bH0r5"],
+                "Kinetic Theory of Matter": ["https://youtu.be/robEY-idcLU?si=vst_CGpx02CS_kMf", "https://youtu.be/cshKgBRigE0?si=7w_iW2ClFwgby_3s"]
+            },
+            LO17: {
+                "Diffusion": ["https://youtu.be/KRLNDTmBFZY?si=5UlabLk4zLZqERC8"],
+                "Effusion": ["https://youtu.be/TLRZAFU_9Kg?si=JU6O1ZJa9-n50XMf"],
+                "Graham's Law of Effusion": ["https://youtu.be/fE14DJj7oeI?si=jGUSagQ4wvgOGLCk"]
+            }
+        };
+
+        const loSummaryVideos = {
+            LO8: [],
+            LO9: [],
+            LO10: [],
+            LO11: [],
+            LO12: [],
+            LO13: [],
+            LO14: [],
+            LO15: ["https://youtu.be/AGxnJF-dQlM?si=2ht01yyxO_uyLI2f"],
+            LO16: ["https://youtu.be/0kDlUfDkRTE?si=iwnbMJRdffosxAgi"],
+            LO17: ["https://youtu.be/0kDlUfDkRTE?si=iwnbMJRdffosxAgi"]
+        };
+
+        const revisionVideos = {
+            midterm: ["https://youtu.be/JTIlLwdEHOU?si=ZMvZQoFb8PGIQCvt"],
+            final: ["https://youtu.be/Jq_tValNch0?si=cit9F7aK46jbiwmq"]
+        };
+
+        // Mapping of filename -> Google Drive share URL (generated from CSV)
+        const shareMap = {
+            "Chemistry practical for G10, G11 Second term Dr. baya.pdf": "https://drive.google.com/file/d/1ZlYnj1hvp9biEFR4FdikfSExrW2-aelR/view",
+            "Chemistry practical.pdf": "https://drive.google.com/file/d/1qDFJyjb5swFTv_QO7UNKMuu9HufyHc3k/view",
+            "G10 CHEM.14.pdf": "https://drive.google.com/file/d/1UKokQ8xgJbACZSV6MswEWJtiLGFRAw5y/view",
+            "G10 CHEM.16.pdf": "https://drive.google.com/file/d/1NLPywX50uonTIW-c6gIzj3_QByU9Hseh/view",
+            "G10 CHEM.17.pdf": "https://drive.google.com/file/d/1Y7c7-vGXIIMndHLRCvyK_cJ4c2RQ0C6R/view",
+            "G10 CHEM.15.pdf": "https://drive.google.com/file/d/1dFEhAAk1AwKsQbRggSU_7bBmPoVo-mEm/view",
+            "G10 CHEM.13.pdf": "https://drive.google.com/file/d/1ePci2A1HnGMk38bbGUmEVmgrtKt5uymi/view",
+            "G10 CHEM.11.pdf": "https://drive.google.com/file/d/1lcTafnpFU-v-VnTdNFDX-pKj90TVeP0b/view",
+            "G10 CHEM.12.pdf": "https://drive.google.com/file/d/10-ygXV1Bp7Ay7S_pD1qkmiJWBKUpUx2S/view",
+            "G10 CHEM.10.pdf": "https://drive.google.com/file/d/12h885E96a7nIJh-HI0YCENthXiA1-MUN/view",
+            "G10 CHEM.09.pdf": "https://drive.google.com/file/d/11_tgZ_iMGmqlg_LVMa4xkBAeA68vWMUa/view",
+            "G10 CHEM.08.pdf": "https://drive.google.com/file/d/1_UyTefoDhRpE1hagnfMgkMkh-xZkUHiL/view",
+            "L.O:17": "https://docs.google.com/document/d/1oCxnyJbcJz_CHNQEYTXvWwppHyJwDvnfJyPS90tBBgQ/edit",
+            "CH.1.17.pptx": "https://drive.google.com/file/d/12KPT4QLrpxedwDY4HdeJWgn1PGYjXwa4/view",
+            "LO 17.pdf": "https://drive.google.com/file/d/1Ff2qXL8SppfUJc1wj0VnnfIdZpXDvhNF/view",
+            "LO 17 Mahjoub.pptx.pdf": "https://drive.google.com/file/d/1Ou0znmhl8RHtoa3EgFKYUjmiTD2Sq5au/view",
+            "chem lo17.pptx": "https://drive.google.com/file/d/1wfaa6rKLibezIdoW9qvHikbMLDcgSgAv/view",
+            "L.O:16": "https://docs.google.com/document/d/1KjhFyrzpklrgC_ArGP5GwGKKmcnaycMQ5z-SJkqL15A/edit",
+            "CH.1.16.pptx": "https://drive.google.com/file/d/1mM53ep-8iIQN3AHIJYpZHTZLEmL5KPgz/view",
+            "LO 16.pdf": "https://drive.google.com/file/d/1Z5Lks-w7Yf9XTSAWDBdX699b5IaeZOG3/view",
+            "chem ch16 IS.pptx": "https://drive.google.com/file/d/1zNcz-OOXp3zIPShbrkBXapXVl4SyFuh1/view",
+            "L.O:15": "https://docs.google.com/document/d/1ETDXYhCX3Y8TskukRoUIIzk6Ju4syuOAuojVrsNC7KI/edit",
+            "CH.1.15.pptx": "https://drive.google.com/file/d/1t6VQ6O3xFhUJFvJyFMlLUdpwr4dc-lrb/view",
+            "LO.15 Chem.pdf": "https://drive.google.com/file/d/1knGbIia0MmfPmu7iSjP1oDdD4-OYF2a1/view",
+            "LO 14-15.pdf": "https://drive.google.com/file/d/1ALq5fBxf2QIuU3IE0rQEoGM7XD4b2TwD/view",
+            "Chem LO.15.pptx": "https://drive.google.com/file/d/19VWThZZk7Mb3GAUsIcMwkchd87e_a7Ks/view",
+            "L.O:14": "https://docs.google.com/document/d/1B2CEhKuiusuRQh2vMzkpmo5qSxAWkK6nvwZqKm8rq6s/edit",
+            "CH.1.14.pptx": "https://drive.google.com/file/d/1hOLQR-hyUX8KVYQLqi6nxjSm3XeZMAuc/view",
+            "L.O:13": "https://docs.google.com/document/d/16sgodK4nE8P-S4oVtZFiiPwB9CoAZmjmdmLgkQvgJzQ/edit",
+            "CH.1.13.pptx": "https://drive.google.com/file/d/10g9hq_pDwiKHjYsnKDCH7p3IzSLxtKwC/view",
+            "LO 13 Mahjoub.pptx.pdf": "https://drive.google.com/file/d/1lGoFpmZpdPyh2O9X740MzM-CF3BlqAvJ/view",
+            "LO13.pptx": "https://drive.google.com/file/d/1Oq75RW-0Z0xukmh3naA6nuGLvd9Kb6z1/view",
+            "L.O:12": "https://docs.google.com/document/d/19T0S51GubaTKXr6lN2COzEGeDFyZMyVM1VYGWcSze1o/edit",
+            "chem.. 12.pptx": "https://drive.google.com/file/d/1MVV7GTZxOe-SP1STQqceeuUsDa_K2jiH/view",
+            "CH.1.12.pptx": "https://drive.google.com/file/d/10edqtz0NLzF8B4S0Z_l68PqPegg417Yv/view",
+            "LO 12 Mahjoub.pptx.pdf": "https://drive.google.com/file/d/1kKK67vx4RseBLpve7NHrI6WB-cwUwib3/view",
+            "LO 12.pdf": "https://drive.google.com/file/d/106c5t2bDdrI7PVlBmkt4TMZKFa594WEy/view",
+            "L.O:11": "https://docs.google.com/document/d/1X7F9D_MatDl2jrt0IFQFqYhNPpuCXa786ZAwuwN7FTI/edit",
+            "LO11.pptx": "https://drive.google.com/file/d/1VAMxAiZam25sEef_IaJIo0tkEgoM-vz-/view",
+            "LO 11  Mahjoub.pdf": "https://drive.google.com/file/d/17Z8qH4Guimozvo4v4_dZFMkz8QV3t4NC/view",
+            "LO 11.pdf": "https://drive.google.com/file/d/12NlG_w85ArD7xTxoRF8WB5NdCFH9znvX/view",
+            "L.O:10": "https://docs.google.com/document/d/12gayhQhDBiofnsJ78vScSuyLhako7sK9FC2wwchHEPk/edit",
+            "Chemistry Lo 10 M.E.O.pdf": "https://drive.google.com/file/d/1ZwzXYQHU2rAoz6Ovq1ipZtY1CpVs120h/view",
+            "Copy of CH.1.10.pptx": "https://drive.google.com/file/d/1zN21FDvarAiPq60N-pwL57J742nRKfGt/view",
+            "LO 10-3.pdf": "https://drive.google.com/file/d/1aWCKY__S4ZLEX4cLeZqj34iC0j17z6BE/view",
+            "LO 10-2.pdf": "https://drive.google.com/file/d/14Bo9GetsnZ_zsFVcQro9XuRgPj76cFvY/view",
+            "LO 10-1.pdf": "https://drive.google.com/file/d/1FxubX3qTaiM_tTdSCYTzvFNqd2DLESfo/view",
+            "L.O:9": "https://docs.google.com/document/d/1p7AnrpoWcX3RWmSKG8sIwREBwa-EYiRFv_UL1wZMscA/edit",
+            "CH.1.09 .ppt": "https://drive.google.com/file/d/1dfQE4l6r-R9VCqDstNUOeB77MEHtOSLt/view",
+            "LO 9  Mahjoub.pptx.pdf": "https://drive.google.com/file/d/18NQzBFBTvndrApLQX21tFUre3Qj5UsSF/view",
+            "LO 9.pdf": "https://drive.google.com/file/d/1JHapMDk-Q2WUOOZczyl1eMu7Polffc8_/view",
+            "LO.1.09 MR. Ayman Elkady.pdf": "https://drive.google.com/file/d/17vokL-VUH5g7_JDMBYT5b9OG3u9m4BfC/view",
+            "Chem LO9.pptx": "https://drive.google.com/file/d/1p7L_IxHmR2r5twF0Tb4RYaY9-TZkLbGN/view",
+            "L.O:8": "https://docs.google.com/document/d/1ozklVlua61942qPdj0PvOF8A2U6Da2zIiBiHf9VHEE0/edit",
+            "lo8 chemistry.pdf": "https://drive.google.com/file/d/1oFeWLuUrAaAyhunsY_5vHjmb3iZR5L6E/view",
+            "CH.1.08.pdf": "https://drive.google.com/file/d/11w5ScfBdUTG1sgYAG8yaHbsXmsVJkCX8/view",
+            "Copy of CH.1.08.pptx": "https://drive.google.com/file/d/1r_YuU9N8EZhJ7cxm2v9Eni6n0ItVxVa6/view",
+            "LO.O8 mixtures with questions.pptx": "https://drive.google.com/file/d/1dBj4ZNoGGs-YvSOXum4tjI-6cVMGP9n-/view",
+            "LO 8 questions.pdf": "https://drive.google.com/file/d/1jyk1lN08blKsf9qFmAzJ9JxjK1EBnupH/view",
+            "LO 8 Part One Mahjoub.pptx.pdf": "https://drive.google.com/file/d/11fjtYkUxKr6UrNjj0a37L68I0sWaSfhy/view",
+            "Chemistry LO8 (M.E.O) (1).pdf": "https://drive.google.com/file/d/1o_N3xLHQM1sQ2yPqlQwXhkk0M9yjaCw6/view",
+
+            //references
+            "References Positions.pdf": "https://drive.google.com/file/d/1-boikkPX4nk4zrKhj3s6kAPeBY3CZcDu/view",
+            "Principles_of_General_Chemistry_by_Martin_Silberberg_z_lib_org.pdf": "https://drive.google.com/file/d/14m3z-gnDKIHoXCYgkwT9YTX4iuoN1_4i/view",
+            "Principles of organic chemistry.pdf": "https://drive.google.com/file/d/1HCrQLUOSzkqV_84i9UcU-xaWlKraakzK/view",
+            "Holt_Chemistry_Textbook.pdf": "https://drive.google.com/file/d/1XNMHDqHhavlvWhBilOgMAQ8A0Fczt-eo/view",
+            "Active_Chemistry.PDF": "https://drive.google.com/file/d/1Mi7xSGxdqSaM3CsHU6U_1RALvtOy09IW/view",
+            "Zumdahl Chemistry 9th c2014 solutions - Copy.pdf": "https://drive.google.com/file/d/1y_ZiYIeS7ZVr0ZrcpG2SqO5a6Hai6IDi/view",
+        };
+
+        // Render video links for a given LO/concept
+        function renderVideoLinks(loKey, conceptTitle) {
+            const lo = videoLinks[loKey] || {};
+            const links = lo[conceptTitle] || [];
+            if (!links.length) return '';
+            let html = `<div class="mt-3 p-3 bg-tech-dark-alt rounded-lg border border-tech-dark-alt">
+                            <h4 class="text-md font-bold text-tech-secondary mb-1">Videos</h4>`;
+            links.forEach((url, idx) => {
+                html += `
+                    <div class="mb-2">
+                        <a href="${url}" target="_blank" rel="noopener noreferrer" class="text-tech-primary hover:text-tech-secondary transition duration-200 text-sm underline font-semibold">Video ${idx + 1}</a>
+                    </div>
+                `;
+            });
+            html += `</div>`;
+            return html;
+        }
+
+        // Render Test Banks section
+        function renderTestBanks() {
+            const files = resourceFiles.testBanks || [];
+            let html = `
+                <h2 class="text-3xl font-extrabold mb-6 text-tech-primary border-b border-tech-secondary/50 pb-2">Test Banks</h2>
+                <div class="p-6 bg-tech-dark-alt rounded-xl border border-tech-secondary/50 shadow-subtle-glow">
+                    <p class="text-xl font-medium text-tech-light mb-6">Download test banks to practice and evaluate your understanding.</p>
+            `;
+            files.forEach(f => {
+                const name = f.split('/').pop();
+                const url = shareMap[name] || f;
+                html += `
+                    <div class="mb-4">
+                        <a href="${url}" target="_blank" rel="noopener noreferrer" class="text-tech-secondary hover:text-tech-primary transition duration-200 text-lg underline font-semibold">${name}</a>
+                    </div>
+                `;
+            });
+            html += `</div>`;
+            return html;
+        }
+
+        // Render file list for a given LO key
+        function renderFilesList(loKey) {
+            const files = resourceFiles[loKey] || [];
+            if (!files.length) return '';
+            let html = `<div class="mt-3 p-3 bg-tech-dark-alt rounded-lg border border-tech-dark-alt">
+                            <h4 class="text-md font-bold text-tech-secondary mb-1">Files & Presentations</h4>`;
+            files.forEach(f => {
+                const name = f.split('/').pop();
+                const url = shareMap[name] || f;
+                html += `
+                    <div class="mb-2">
+                        <a href="${url}" target="_blank" rel="noopener noreferrer" class="text-tech-primary hover:text-tech-secondary transition duration-200 text-sm underline font-semibold">${name}</a>
+                    </div>
+                `;
+            });
+            html += `</div>`;
+            return html;
+        }
+
+        // Function to create a single downloadable link block
+        function createLinkBlock(title, placeholderText) {
+            // Show placeholder text (no fake downloads)
+            return `
+                <div class="mt-3 p-3 bg-tech-dark-alt rounded-lg border border-tech-dark-alt">
+                    <h4 class="text-md font-bold text-tech-secondary mb-1">${title}</h4>
+                    <p class="text-sm text-tech-light/70 italic mb-2">${placeholderText}</p>
+                </div>
+            `;
+        }
+
+        // Function to render the expandable concept content
+        function renderConcept(loKey, conceptTitle) {
+            // Placeholder text for description (can be replaced with actual content later)
+            const description = `This section covers the fundamental principles of **${conceptTitle}**. Understanding this concept is crucial for solving problems related to classical mechanics. It often involves analysis of vectors and their components.`;
+
+            return `
+                <details class="mb-4 bg-tech-dark-alt rounded-xl border border-tech-primary/30 shadow-lg overflow-hidden">
+                    <summary class="flex items-center justify-between p-4 cursor-pointer text-lg font-semibold text-tech-light hover:bg-tech-primary/20 transition duration-300">
+                        <span class="truncate">${conceptTitle}</span>
+                        <svg class="w-5 h-5 ml-2 transition-transform duration-300 arrow-icon flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                    </summary>
+                    <div class="px-4 pb-4 pt-2 border-t border-tech-primary/30 space-y-4">
+                        <!-- Description -->
+                        <div class="bg-tech-dark-alt p-3 rounded-lg border border-tech-dark-alt">
+                            <h4 class="text-md font-bold text-tech-secondary mb-1">Concept Description</h4>
+                            <p class="text-tech-light/90 text-sm">${description}</p>
+                        </div>
+                        <!-- Video links for this concept -->
+                        ${renderVideoLinks(loKey, conceptTitle)}
+                    </div>
+                </details>
+            `;
+        }
+
+        /**
+         * Main function to handle content rendering (called by click and by Firestore snapshot).
+         * @param {string} loKey - The key of the Learning Objective.
+         * @param {boolean} isProgressUpdate - If true, skips scrolling the content area to the top.
+         */
+        function renderContent(loKey, isProgressUpdate = false) {
+            const contentArea = document.getElementById('dynamic-content');
+            const defaultMessage = document.getElementById('default-message');
+
+            // Hide default message
+            if (defaultMessage) {
+                defaultMessage.style.display = 'none';
+            }
+
+            // Render Content
+            if (loKey === 'revisions') {
+                contentArea.innerHTML = renderRevisions();
+            } else if (loKey === 'test-banks') {
+                contentArea.innerHTML = renderTestBanks();
+            } else if (learningObjectives[loKey]) {
+                contentArea.innerHTML = renderLO(loKey, learningObjectives[loKey]);
+            } else {
+                contentArea.innerHTML = `<h2 class="text-red-400">Error: LO not found.</h2>`;
+            }
+
+            // Scroll content area to the top, but only if the action was a user-initiated navigation 
+            if (!isProgressUpdate) {
+                document.getElementById('content-area').scrollTop = 0;
+            }
+        }
+
+        // Function to render a selected LO
+        function renderLO(loKey, loData) {
+            let html = `
+                <h2 class="text-3xl font-extrabold mb-6 text-tech-primary border-b border-tech-secondary/50 pb-2">${loData.title}</h2>
+            `;
+
+            // 1. LO summarized video(s)
+            if (loSummaryVideos[loKey]) {
+                html += `
+                    <div class="mb-6 p-4 bg-tech-dark-alt/80 rounded-lg border border-tech-primary/30">
+                        <h3 class="text-xl font-bold text-tech-secondary mb-3">Summary Videos</h3>
+                        <div class="space-y-2">
+                `;
+                loSummaryVideos[loKey].forEach((vid, idx) => {
+                    html += `
+                        <a href="${vid}" target="_blank" class="flex items-center space-x-2 text-tech-light hover:text-tech-primary transition">
+                            <svg class="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
+                            <span class="underline">Watch Summary Video ${idx + 1}</span>
+                        </a>
+                     `;
+                });
+                html += `</div></div>`;
+            }
+
+            // Render all concepts
+            loData.concepts.forEach(concept => {
+                html += renderConcept(loKey, concept);
+            });
+
+            // 2. Files / Presentations
+            // Render files list once per LO
+            html += renderFilesList(loKey);
+
+            // 3. Test Banks Link
+            html += `
+                <div class="mt-8 p-4 bg-tech-dark-alt rounded-lg border border-tech-dark-alt">
+                    <p class="text-tech-light/80 mb-3">Looking for practice tests? Check the Test Banks section.</p>
+                    <button onclick="handleNavigationClick('test-banks')" class="px-3 py-2 bg-tech-primary text-tech-bg rounded-md font-semibold hover:bg-tech-secondary transition duration-200">Open Test Banks</button>
+                </div>
+            `;
+
+            return html;
+        }
+
+        // Function to render revisions list
+        function renderRevisions() {
+            let html = `
+                <h2 class="text-3xl font-extrabold mb-6 text-tech-primary border-b border-tech-secondary/50 pb-2">Revisions & References</h2>
+            `;
+
+            // Helper for video sections
+            const renderVidSection = (title, vids) => {
+                if (!vids || !vids.length) return '';
+                let block = `
+                    <div class="mb-6">
+                        <h3 class="text-2xl font-bold text-tech-light mb-4">${title}</h3>
+                        <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                `;
+                vids.forEach((v, idx) => {
+                    block += `
+                        <a href="${v}" target="_blank" class="block p-4 bg-tech-dark-alt rounded-lg border border-tech-primary/30 hover:border-tech-secondary hover:shadow-subtle-glow transition group">
+                            <div class="flex items-center space-x-3">
+                                <svg class="w-8 h-8 text-red-500 group-hover:text-red-400 transition" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
+                                </svg>
+                                <span class="font-semibold text-tech-light group-hover:text-tech-primary">Watch Video ${idx + 1}</span>
+                            </div>
+                        </a>
+                    `;
+                });
+                block += `</div></div>`;
+                return block;
+            }
+
+            // Midterm Revision Videos
+            if (revisionVideos && revisionVideos.midterm) {
+                html += renderVidSection('Midterm Revision', revisionVideos.midterm);
+            }
+
+            // Reference Files (Books)
+            html += `
+                <div class="mt-8">
+                    <h3 class="text-2xl font-bold text-tech-light mb-4">Reference Books</h3>
+                    <div class="p-6 bg-tech-dark-alt rounded-xl border border-tech-secondary/50 shadow-subtle-glow">
+                        <p class="text-xl font-medium text-tech-light mb-6">
+                            Download these files if you want to study deeper in references:
+                        </p>
+            `;
+            const refs = resourceFiles.references || [];
+            refs.forEach((f) => {
+                const name = f.split('/').pop();
+                const url = shareMap[name] || f;
+                html += `
+                    <div class="mb-4">
+                        <a href="${url}" target="_blank" rel="noopener noreferrer" class="text-tech-secondary hover:text-tech-primary transition duration-200 text-lg underline font-semibold">${name}</a>
+                    </div>
+                `;
+            });
+            html += `</div></div>`;
+
+            return html;
+        }
+
+        // Progress tracking removed
+
+
+        // Function to handle navigation click and update sidebar state
+        function handleNavigationClick(loKey) {
+            const loItems = document.querySelectorAll('.lo-item');
+
+            // 1. Update Active State in Sidebar
+            loItems.forEach(item => item.classList.remove('active'));
+            document.getElementById(`lo-${loKey}`).classList.add('active');
+
+            // Render Content (which handles scrolling)
+            renderContent(loKey);
+        }
+
+        // DOM Content Loaded: Initialize Navigation Bar
+        document.addEventListener('DOMContentLoaded', () => {
+            const loList = document.getElementById('lo-list');
+
+            // Loop through all defined LOs to create sidebar buttons
+            // Loop through all defined LOs to create sidebar buttons
+            Object.keys(learningObjectives).forEach(key => {
+                const displayText = learningObjectives[key].title;
+
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `
+                    <button id="lo-${key}" 
+                        class="lo-item w-full flex justify-between items-center text-left p-3 rounded-lg border-l-4 border-tech-dark-alt transition duration-200 
+                                hover:bg-tech-primary/10 hover:border-tech-primary font-medium text-sm sm:text-base"
+                        data-lo-key="${key}">
+                        <span class="truncate">${displayText}</span>
+                    </button>
+                `;
+                loList.appendChild(listItem);
+            });
+
+            // Add Revisions Button
+            const revItem = document.createElement('li');
+            revItem.innerHTML = `
+                <button id="lo-revisions" 
+                    class="lo-item w-full flex justify-between items-center text-left p-3 rounded-lg border-l-4 border-tech-dark-alt transition duration-200 
+                            hover:bg-tech-primary/10 hover:border-tech-primary font-medium text-sm sm:text-base"
+                    data-lo-key="revisions">
+                    <span class="truncate">References & Revisions</span>
+                </button>
+            `;
+            loList.appendChild(revItem);
+
+            // Add Test Banks button to the sidebar
+            const tbItem = document.createElement('li');
+            tbItem.innerHTML = `
+                <button id="lo-test-banks" 
+                    class="lo-item w-full flex justify-between items-center text-left p-3 rounded-lg border-l-4 border-tech-dark-alt transition duration-200 
+                            hover:bg-tech-primary/10 hover:border-tech-primary font-medium text-sm sm:text-base"
+                    data-lo-key="test-banks">
+                    <span class="truncate">Test Banks</span>
+                </button>
+            `;
+            loList.appendChild(tbItem);
+
+            // Attach event listener to the list container (delegation)
+            loList.addEventListener('click', (event) => {
+                const button = event.target.closest('.lo-item');
+                if (button) {
+                    const loKey = button.getAttribute('data-lo-key');
+                    handleNavigationClick(loKey);
+                }
+            });
+
+            // Initialize first render
+            renderContent('LO8');
+
+            // Theme toggle initialization for this page
+            // Theme toggle initialization for this page
+            const themeToggleIcon = document.getElementById('theme-toggle-icon');
+
+            function setTheme(theme) {
+                document.documentElement.setAttribute('data-theme', theme);
+                localStorage.setItem('theme', theme);
+
+                // update icon if present
+                if (themeToggleIcon) {
+                    if (theme === 'dark') {
+                        themeToggleIcon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+                    } else {
+                        // Light/Christmas/Midnight - use generic or specific icons if needed
+                        // For now, keeping the "sun" icon for non-dark themes or simplified logic
+                        themeToggleIcon.innerHTML = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
+                    }
+                }
+
+                // Use centralized effects
+                if (window.ThemeEffects) {
+                    window.ThemeEffects.setEffect(theme);
+                } else {
+                    if (theme === 'christmas') {
+                        startSnow();
+                    } else {
+                        stopSnow();
+                    }
+                }
+            }
+
+            // Default to dark unless user has saved preference
+            // Christmas / Language Logic
+            const translations = {
+                en: { "settings": "Settings", "language": "Language", "theme": "Theme", "close": "Close", "footer_contact": "If you have any comments please text me" },
+                ar: { "settings": "الإعدادات", "language": "اللغة", "theme": "السمة", "close": "إغلاق", "footer_contact": "إذا كان لديك أي تعليقات يرجى مراسلتي" }
+            };
+            function updateText(lang) {
+                const t = translations[lang];
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (t[key]) el.textContent = t[key];
+                });
+            }
+            function setLanguage(lang) {
+                document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+                document.documentElement.setAttribute('lang', lang);
+                localStorage.setItem('language', lang);
+                updateText(lang);
+            }
+
+            // Snow helper functions (fallback)
+            function startSnow() {
+                const c = document.getElementById('snow-container'); if (!c) return; stopSnow();
+                window.snowInterval = setInterval(() => {
+                    const s = document.createElement('div');
+                    s.className = 'snowflake';
+                    s.style.left = Math.random() * 100 + 'vw';
+                    s.style.width = s.style.height = (Math.random() * 5 + 3) + 'px';
+                    s.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                    s.style.opacity = Math.random();
+                    c.appendChild(s);
+                    setTimeout(() => s.remove(), 5000);
+                }, 100);
+            }
+            function stopSnow() { if (window.snowInterval) clearInterval(window.snowInterval); const c = document.getElementById('snow-container'); if (c) c.innerHTML = ''; }
+
+            // Init
+            setLanguage(localStorage.getItem('language') || 'en');
+            const saved = localStorage.getItem('theme');
+            if (saved) setTheme(saved); else setTheme('dark');
+
+            // Listeners
+            document.getElementById('open-settings')?.addEventListener('click', (e) => { e.preventDefault(); document.getElementById('settings-modal').classList.remove('hidden'); });
+            document.getElementById('close-settings')?.addEventListener('click', () => document.getElementById('settings-modal').classList.add('hidden'));
+            document.getElementById('settings-modal')?.addEventListener('click', (e) => { if (e.target === document.getElementById('settings-modal')) document.getElementById('settings-modal').classList.add('hidden'); });
+            document.getElementById('lang-en')?.addEventListener('click', () => setLanguage('en'));
+            document.getElementById('lang-ar')?.addEventListener('click', () => setLanguage('ar'));
+            document.getElementById('theme-dark')?.addEventListener('click', () => setTheme('dark'));
+            document.getElementById('theme-midnight')?.addEventListener('click', () => setTheme('midnight'));
+            document.getElementById('theme-christmas')?.addEventListener('click', () => setTheme('christmas'));
+            document.getElementById('theme-space')?.addEventListener('click', () => setTheme('space'));
+
+            // Legacy
+            const legacyToggle = document.getElementById('theme-toggle');
+            if (legacyToggle) legacyToggle.addEventListener('click', () => { setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'christmas' : 'dark'); });
+
+        });
+    </script>
+    <script src="../space-theme.js"></script>
+</body>
+
+</html>

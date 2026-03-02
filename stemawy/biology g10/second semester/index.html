@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biology Checkpoints</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+
+    <!-- No Firebase module needed anymore -->
+
+    <style>
+        /* Apply Inter font family and smooth scrolling */
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        /* --- Tech Aesthetic Colors and Glows --- */
+        .shadow-subtle-glow {
+            box-shadow: 0 4px 15px rgba(51, 255, 204, 0.25), 0 0 5px rgba(51, 255, 204, 0.1);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .hover\:shadow-subtle-glow-lg:hover {
+            box-shadow: 0 6px 20px rgba(51, 255, 204, 0.4), 0 0 8px rgba(51, 255, 204, 0.2);
+        }
+
+        /* Keyframes for continuous gradient shift */
+        @keyframes gradient-shift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Base class for the animated text effect */
+        .gradient-text-wrapper {
+            display: inline-block;
+            background-size: 300% 100%;
+            animation: gradient-shift 8s linear infinite;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            line-height: 1.2;
+            white-space: nowrap;
+        }
+
+        /* Style for the main header ( Biology) */
+        .gradient-h1 {
+            background-image: linear-gradient(to right, #00BFFF, #33FFCC, #00BFFF, #33FFCC);
+            animation-duration: 8s;
+        }
+
+        /* Light theme variables */
+        :root[data-theme="light"] {
+            --tech-bg: #ffffff;
+            --tech-dark-alt: #f3f4f6;
+            --tech-light: #111827;
+            --tech-primary: #0369a1;
+            --tech-secondary: #0e7490;
+            --border-color: rgba(2, 132, 199, 0.3);
+        }
+
+        /* Dark theme variables (default) */
+        :root[data-theme="dark"] {
+            --tech-bg: #1A1F26;
+            --tech-dark-alt: #2C333F;
+            --tech-light: #E0E6F0;
+            --tech-primary: #00BFFF;
+            --tech-secondary: #33FFCC;
+            --border-color: rgba(51, 255, 204, 0.3);
+        }
+
+        /* Space Theme Variables */
+        :root[data-theme="space"] {
+            --tech-bg: #050505;
+            --tech-dark-alt: #0F1218;
+            --tech-light: #ffffff;
+            --tech-primary: #00BFFF;
+            --tech-secondary: #33FFCC;
+            --border-color: rgba(0, 191, 255, 0.3);
+        }
+
+        /* Midnight Synth Theme */
+        :root[data-theme="midnight"] {
+            --tech-bg: #1e1b4b;
+            --tech-dark-alt: #312e81;
+            --tech-light: #e0e7ff;
+            --tech-primary: #f472b6;
+            --tech-secondary: #818cf8;
+            --border-color: rgba(244, 114, 182, 0.4);
+        }
+
+        /* Christmas Theme */
+        :root[data-theme="christmas"] {
+            --tech-bg: #2C0412;
+            --tech-dark-alt: #460B1C;
+            --tech-light: #FEEBC8;
+            --tech-primary: #D4AF37;
+            --tech-secondary: #228B22;
+            --border-color: rgba(212, 175, 55, 0.4);
+        }
+
+        /* Helper classes to apply CSS variable values (overrides Tailwind utility colors) */
+        body {
+            background-color: var(--tech-bg);
+            color: var(--tech-light);
+        }
+
+        .bg-tech-bg {
+            background-color: var(--tech-bg) !important;
+        }
+
+        .bg-tech-dark-alt {
+            background-color: var(--tech-dark-alt) !important;
+        }
+
+        .text-tech-light {
+            color: var(--tech-light) !important;
+        }
+
+        .text-tech-primary {
+            color: var(--tech-primary) !important;
+        }
+
+        .text-tech-secondary {
+            color: var(--tech-secondary) !important;
+        }
+
+        .border-tech-primary\/30 {
+            border-color: var(--border-color) !important;
+        }
+
+        /* Custom scrollbar style for the content area */
+        #content-area {
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #00BFFF #1A1F26;
+        }
+
+        #content-area::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #content-area::-webkit-scrollbar-thumb {
+            background-color: #00BFFF;
+            border-radius: 4px;
+        }
+
+        #content-area::-webkit-scrollbar-track {
+            background-color: #1A1F26;
+        }
+
+        /* Custom style for the LO button when active */
+        .lo-item.active {
+            background-color: #00BFFF33;
+            /* tech-primary with opacity */
+            border-left-color: #33FFCC;
+            /* tech-secondary */
+            box-shadow: 0 0 10px rgba(51, 255, 204, 0.3);
+        }
+
+        /* Centered header title helper */
+        .header-inner {
+            position: relative;
+        }
+
+        .centered-title {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+        }
+
+        /* Theme toggle button */
+        .theme-toggle {
+            padding: 0.5rem;
+            border-radius: 9999px;
+            transition: all 0.3s ease;
+            color: var(--tech-light);
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--tech-primary);
+            color: var(--tech-bg);
+        }
+
+        /* Details summary arrow rotation */
+        details summary .arrow-icon {
+            transform: rotate(0deg);
+            transition: transform 0.3s;
+        }
+
+        details[open] summary .arrow-icon {
+            transform: rotate(90deg);
+        }
+
+        /* Enforce CSS Variables */
+        .bg-tech-bg {
+            background-color: var(--tech-bg) !important;
+        }
+
+        .bg-tech-dark-alt {
+            background-color: var(--tech-dark-alt) !important;
+        }
+
+        .text-tech-light {
+            color: var(--tech-light) !important;
+        }
+
+        .text-tech-primary {
+            color: var(--tech-primary) !important;
+        }
+
+        .text-tech-secondary {
+            color: var(--tech-secondary) !important;
+        }
+
+        .border-tech-primary {
+            border-color: var(--tech-primary) !important;
+        }
+
+        .border-tech-secondary {
+            border-color: var(--tech-secondary) !important;
+        }
+
+        /* Christmas Theme */
+        :root[data-theme="christmas"] {
+            --tech-bg: #2C0412;
+            --tech-dark-alt: #460B1C;
+            --tech-light: #FDF5E6;
+            --tech-primary: #FFD700;
+            --tech-secondary: #006400;
+            --border-color: rgba(255, 215, 0, 0.4);
+        }
+
+        /* Snow */
+        #snow-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+            display: none;
+        }
+
+        :root[data-theme="christmas"] #snow-container {
+            display: block;
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh);
+            }
+        }
+
+        /* RTL */
+        [dir="rtl"] {
+            font-family: 'Tajawal', 'Inter', sans-serif;
+        }
+
+        [dir="rtl"] .text-right-rtl {
+            text-align: right;
+        }
+
+        [dir="rtl"] #sidebar {
+            border-left: 1px solid var(--tech-primary);
+            border-right: none;
+            margin-left: 1.5rem;
+            margin-right: 0;
+        }
+
+        #settings-modal {
+            backdrop-filter: blur(5px);
+        }
+
+        /* --- Dark Neon Dynamic Background --- */
+        .cyber-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+            display: none;
+        }
+
+        /* Only show in Dark Theme */
+        :root[data-theme="dark"] .cyber-wrapper {
+            display: block;
+        }
+
+        .cyber-grid {
+            position: absolute;
+            width: 200vw;
+            height: 200vh;
+            top: -50%;
+            left: -50%;
+            background-image:
+                linear-gradient(rgba(0, 191, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 191, 255, 0.05) 1px, transparent 1px);
+            background-size: 60px 60px;
+            transform: perspective(500px) rotateX(60deg);
+            animation: grid-move 20s linear infinite;
+        }
+
+        @keyframes grid-move {
+            0% {
+                transform: perspective(500px) rotateX(60deg) translateY(0);
+            }
+
+            100% {
+                transform: perspective(500px) rotateX(60deg) translateY(60px);
+            }
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+            animation: float-orb 20s infinite ease-in-out;
+        }
+
+        .orb-1 {
+            top: 20%;
+            left: 20%;
+            width: 300px;
+            height: 300px;
+            background: rgba(0, 191, 255, 0.3);
+            animation-duration: 25s;
+        }
+
+        .orb-2 {
+            bottom: 20%;
+            right: 20%;
+            width: 400px;
+            height: 400px;
+            background: rgba(51, 255, 204, 0.2);
+            animation-duration: 30s;
+            animation-delay: -5s;
+        }
+
+        .orb-3 {
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            height: 200px;
+            background: rgba(138, 43, 226, 0.15);
+            animation-duration: 20s;
+            animation-delay: -10s;
+        }
+
+        @keyframes float-orb {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            33% {
+                transform: translate(40px, -60px);
+            }
+
+            66% {
+                transform: translate(-30px, 30px);
+            }
+        }
+
+        /* Breathing Glow for Cards in Dark Mode */
+        :root[data-theme="dark"] .subject-card,
+        :root[data-theme="dark"] .comp-card,
+        :root[data-theme="dark"] .lo-item,
+        :root[data-theme="dark"] details {
+            animation: breathing-glow 5s ease-in-out infinite;
+        }
+
+        :root[data-theme="dark"] .subject-card:hover,
+        :root[data-theme="dark"] .comp-card:hover,
+        :root[data-theme="dark"] .lo-item:hover,
+        :root[data-theme="dark"] details[open] {
+            animation: none;
+        }
+
+        @keyframes breathing-glow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 5px rgba(0, 191, 255, 0.05);
+                border-color: rgba(0, 191, 255, 0.1);
+            }
+
+            50% {
+                box-shadow: 0 0 15px rgba(51, 255, 204, 0.15);
+                border-color: rgba(51, 255, 204, 0.3);
+            }
+        }
+
+        /* Space Theme Variables */
+        :root[data-theme="space"] {
+            --tech-bg: #050505;
+            --tech-dark-alt: #0F1218;
+            --tech-light: #ffffff;
+            --tech-primary: #00BFFF;
+            --tech-secondary: #33FFCC;
+            --border-color: rgba(0, 191, 255, 0.3);
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+
+    <script>
+        // Tailwind Configuration with a Modern Tech Palette
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'tech-bg': '#1A1F26',
+                        'tech-dark-alt': '#2C333F',
+                        'tech-light': '#E0E6F0',
+                        'tech-primary': '#00BFFF',
+                        'tech-secondary': '#33FFCC',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-tech-bg text-tech-light min-h-screen flex flex-col">
+    <!-- Dark Neon Background Effects -->
+    <div class="cyber-wrapper">
+        <div class="cyber-grid"></div>
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Header -->
+    <header
+        class="w-full bg-tech-dark-alt p-4 shadow-xl shadow-tech-primary/10 border-b border-tech-primary/30 sticky top-0 z-10">
+        <div class="max-w-7xl mx-auto flex justify-between items-center header-inner">
+            <!-- Left: Back Button & Logo -->
+            <div class="flex items-center space-x-4">
+                <button onclick="window.location.href='../index.html'"
+                    class="text-tech-light hover:text-tech-secondary transition duration-200 p-2 rounded-full hover:bg-tech-primary/20">
+                    <!-- Back Arrow SVG Icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 12H5" />
+                        <path d="m12 19-7-7 7-7" />
+                    </svg>
+                </button>
+
+                <!-- NEW LOGO: "Stemawy" link -->
+                <a href="../index.html"
+                    class="flex items-center space-x-2 text-2xl font-extrabold transition duration-200 hover:opacity-80">
+                    <span class="gradient-text-wrapper gradient-h1">Stemawy</span>
+                </a>
+            </div>
+
+            <!-- Centered Title -->
+            <h1 class="centered-title text-4xl font-extrabold tracking-tight">
+                <span class="gradient-text-wrapper gradient-h1"> Biology</span>
+            </h1>
+
+            <!-- Right: Theme Toggle Button -->
+            <div class="flex items-center">
+                <button id="theme-toggle" class="theme-toggle" title="Toggle theme">
+                    <svg id="theme-toggle-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area: Sidebar and Main Section -->
+    <main class="flex flex-1 overflow-hidden max-w-7xl mx-auto w-full p-4 sm:p-6">
+
+        <!-- Left Sidebar (LO Navigation) -->
+        <nav id="sidebar"
+            class="w-full sm:w-64 bg-tech-dark-alt rounded-xl p-4 mr-6 flex-shrink-0 border border-tech-primary/20 h-full overflow-y-auto">
+            <h2
+                class="text-lg font-bold mb-4 text-tech-secondary uppercase tracking-wider border-b border-tech-secondary/30 pb-2">
+                Learning Objectives</h2>
+            <ul id="lo-list" class="space-y-2">
+                <!-- LO items will be generated here -->
+            </ul>
+        </nav>
+
+        <!-- Right Content Area -->
+        <section id="content-area"
+            class="flex-1 bg-tech-dark-alt rounded-xl p-6 border border-tech-primary/50 shadow-subtle-glow">
+            <div id="dynamic-content" class="h-full">
+                <!-- Default State -->
+                <div id="default-message"
+                    class="flex items-center justify-center h-full text-3xl font-light text-tech-light/50">
+                    Please choose your checkpoint
+                </div>
+                <!-- Content will be rendered here -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full bg-tech-dark-alt p-4 mt-auto border-t border-tech-primary/30 relative z-20">
+        <div class="section-container flex flex-col sm:flex-row justify-between items-center text-sm">
+            <div class="text-center sm:text-left order-2 sm:order-1 mt-4 sm:mt-0">
+                <span data-i18n="footer_contact">If you have any comments please text me</span> <a
+                    href="mailto:yassoalaa822@gmail.com"
+                    class="text-tech-secondary hover:text-tech-primary transition duration-200">yassoalaa822@gmail.com</a>
+            </div>
+            <div class="space-x-4 order-1 sm:order-2">
+                <a href="#" id="open-settings" class="hover:text-tech-primary transition duration-200"
+                    data-i18n="settings">Settings</a>
+            </div>
+        </div>
+    </footer>
+    <div id="snow-container"></div>
+    <div id="settings-modal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+        <div
+            class="bg-tech-dark-alt rounded-2xl border border-tech-secondary/50 shadow-2xl p-6 w-full max-w-sm transform transition-all scale-100">
+            <div class="flex justify-between items-center mb-6 border-b border-tech-primary/20 pb-4">
+                <h3 class="text-2xl font-bold text-tech-primary" data-i18n="settings">Settings</h3>
+                <button id="close-settings" class="text-tech-light hover:text-tech-secondary"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg></button>
+            </div>
+            <div class="mb-6">
+                <h4 class="text-sm font-semibold text-tech-secondary uppercase tracking-wider mb-3"
+                    data-i18n="language">Language</h4>
+                <div class="grid grid-cols-2 gap-3"><button id="lang-en"
+                        class="p-2 rounded-lg border border-tech-primary/30 hover:bg-tech-primary/10 text-center transition">English</button><button
+                        id="lang-ar"
+                        class="p-2 rounded-lg border border-tech-primary/30 hover:bg-tech-primary/10 text-center transition font-['Tajawal']">العربية</button>
+                </div>
+            </div>
+            <!-- Theme Section -->
+            <div class="mb-6">
+                <h4 class="text-sm font-semibold text-tech-secondary uppercase tracking-wider mb-3" data-i18n="theme">
+                    Theme</h4>
+                <div class="grid grid-cols-2 gap-3">
+                    <button id="theme-dark"
+                        class="p-2 rounded-lg border border-tech-primary/30 hover:bg-tech-primary/10 text-center transition">Dark
+                        Neon</button>
+                    <button id="theme-midnight"
+                        class="p-2 rounded-lg border border-pink-500/50 hover:bg-pink-500/10 text-center transition text-pink-300">Midnight
+                        🌆</button>
+                    <button id="theme-christmas"
+                        class="p-2 rounded-lg border border-red-500/50 hover:bg-red-500/10 text-center transition text-red-300">Christmas
+                        🎄</button>
+                    <button id="theme-space"
+                        class="p-2 rounded-lg border border-tech-primary/30 hover:bg-tech-primary/10 text-center transition text-tech-primary"
+                        data-i18n="theme_space">Space 🚀</button>
+                </div>
+            </div>
+
+            <button onclick="document.getElementById('settings-modal').classList.add('hidden')"
+                class="w-full py-2 bg-tech-primary text-tech-bg font-bold rounded-lg hover:bg-tech-secondary transition"
+                data-i18n="close">
+                Close
+            </button>
+        </div>
+    </div>
+    <script src="../space-theme.js"></script>
+    <script src="../theme-effects.js"></script>
+    <script>
+        // Define the data structure for all Learning Objectives and Concepts
+        const learningObjectives = {
+            LO9: {
+                title: "LO9",
+                concepts: [
+                    "Plant tissues: meristematic and permanent",
+                    "Meristematic",
+                    "Epical",
+                    "Vascular cambium",
+                    "Cork cambium",
+                    "Permanent tissues",
+                    "Parenchyma",
+                    "Collenchyma",
+                    "Sclerenchyma",
+                    "Chlorenchyma",
+                    "Complex permanent tissues",
+                    "Vascular",
+                    "Dermal",
+                    "Ground tissues",
+                    "Plant tissue adaptation",
+                    "Transpiration and capillary action"
+                ]
+            },
+            LO10: {
+                title: "LO10",
+                concepts: [
+                    "Photosynthesis - definition",
+                    "Cellular respiration definition",
+                    "Light",
+                    "Chloroplasts & chlorophyll",
+                    "Producers",
+                    "Mitochondria and cytoplasm",
+                    "Oxygen-dependent cellular respiration",
+                    "Photosynthesis - process",
+                    "Cellular respiration process",
+                    "Adenosine triphosphate (ATP)"
+                ]
+            },
+            LO11: {
+                title: "LO11",
+                concepts: [
+                    "Experimental design",
+                    "Reproducible procedures",
+                    "Independent variable to be manipulated",
+                    "Cellular respiration in plants",
+                    "Energy release",
+                    "Photosynthesis",
+                    "Capture of energy and production of carbon dioxide",
+                    "Impact of variables on photosynthesis and cellular respiration",
+                    "Temperature",
+                    "Amount of light",
+                    "Chemical indicators"
+                ]
+            },
+            LO12: {
+                title: "LO12",
+                concepts: [
+                    "Ecological biodiversity",
+                    "Habitat variety",
+                    "Micro to macro constituents of food web",
+                    "Producers and consumers",
+                    "Food as energy source",
+                    "Varieties of consumers",
+                    "Herbivores",
+                    "Carnivores",
+                    "Omnivores",
+                    "Decomposers",
+                    "Food web diagram",
+                    "Energy flow and pyramid",
+                    "Consumers levels",
+                    "Primary",
+                    "Secondary",
+                    "Tertiary consumers",
+                    "Ecosystem's diversity, disruption and collapse"
+                ]
+            },
+            LO13: {
+                title: "LO13",
+                concepts: [
+                    "Carbon cycle",
+                    "Carbon reservoirs",
+                    "Quantity of carbon - fixed",
+                    "Reservoir quantity - fluctuates",
+                    "Forms of carbon (carbohydrate, organic compounds)",
+                    "Human impact on reservoirs"
+                ]
+            },
+            LO14: {
+                title: "LO14",
+                concepts: [
+                    "Ecosystem services",
+                    "Management of resources",
+                    "Theoretical vs. actual situations",
+                    "Natural and human-caused disturbances",
+                    "Ecosystem disturbance: minor to catastrophic",
+                    "Recover and succession",
+                    "Primary succession",
+                    "Secondary succession",
+                    "Ecosystem resilience",
+                    "Sustainable decisions",
+                    "Invasive species",
+                    "Ecosystem resistance",
+                    "Cost-benefit ratio of management",
+                    "Indicators for management decisions"
+                ]
+            },
+            LO15: {
+                title: "LO15",
+                concepts: [
+                    "Restoration of ecosystems"
+                ]
+            }
+        };
+
+        // Resource files found in the 'semester two' folders
+        const resourceFiles = {
+            LO9: [
+                "Copy of BIO LO.9 (MEO) (1).pdf",
+                "Copy of LO9.pdf",],
+            LO10: [
+                "Copy of Biology LO. 10 and 11.pptx",
+                "Copy of Bio LO. 10.pptx",
+                "BIO.1.10(MEO).pdf",
+            ],
+            LO11: [
+                "Copy of L.O10, 11 session 5 bio Dr. Baya education.pdf",
+                "Copy of Biology LO. 10 and 11.pptx",
+            ],
+
+            LO12: [
+                "Copy of LO. 12 & 13.pptx",
+                "Copy of ecology (4).pdf",
+                "Copy of ECOLOGY.ppt",
+                "Copy of 52 ecology campbell reduced.ppt",
+                "Copy of Ecology.L.O.12.ppt",
+                "Copy of L O 12.pdf",
+                "Copy of G10_26 bio session 7 L.O12 Dr. Baya.pdf",
+            ],
+            LO13: [
+                "Copy of LO. 12 & 13.pptx",
+                "Copy of ecology (4).pdf",
+                "Copy of ECOLOGY.ppt",
+                "Copy of 52 ecology campbell reduced.ppt",
+            ],
+            LO14: [
+                "Copy of ecology (4).pdf",
+                "Copy of ECOLOGY.ppt",
+                "Copy of 52 ecology campbell reduced.ppt",
+                "Copy of LO 14 and 15.pptx",
+            ],
+            LO15: [
+                "Copy of ecology (4).pdf",
+                "Copy of ECOLOGY.ppt",
+                "Copy of 52 ecology campbell reduced.ppt",
+                "Copy of LO 14 and 15.pptx",
+            ],
+
+            references: [
+                "Genetics.pdf",
+                "practical biology needing.docx",
+                "report .docx",
+                "Ecology.pdf",
+                "Cell Biology.pdf",
+                "Evolution.pdf",
+                "Sustinability.pdf",
+                "~$w Microsoft Word Document.docx",
+                "pdf.pdf",
+                "28180030367697.pdf",
+                "Modern Biology.pdf",
+                "[Gerald_Karp]_Cell_and_Molecular_Biology_Concepts(BookFi.org).pdf",
+                "Thumbs.db",
+                "Molecular biology of the cell 5e, the Problems Books.pdf",
+                "Molecular Cell Biology, 6th (Lodish - W. H. Freeman, 2008).pdf",
+                "Molecular biology of the cell 5e.pdf",
+                "Simon - Campbell Essential Biology with Physiology 4th c2013 txtbk.pdf",
+                "Reece Campbell Biology 9th txtbk.pdf",
+                "Biology 8th ed by Campbell and Reece.pdf",
+                "Cover.jpg",
+                "Reading Essentials for Biology.pdf",
+                "Dynamics of life.pdf",
+            ]
+        };
+
+        // Test banks folder files
+        resourceFiles.testBanks = [
+            "Biology Final revision - Ecology part.pdf",
+            "campbell_chapter54.doc",
+            "Copy of Ecology-mixed-questions-answers.docx",
+            "Copy of G10 bio Ecology testbank Dr. Baya education.pdf",
+            "Copy of Ecology-mixed-questions2.docx",
+            "Copy of G10 bio L.O11 testbank Dr. Baya education.pdf",
+            "Campbell_chapter10.doc",
+            "Campbell_chapter09.doc",
+            "Copy of G10 bio L.O10 testbank Dr. Baya education.pdf",
+            "Copy of Campbell Test bank ch35  .doc",
+            "Copy of G10 L.O9 bio Plant structure and function testbank Dr. Baya education.pdf",
+        ];
+
+        // Video links mapped to LO keys and concept titles
+        const videoLinks = {
+            LO8: {
+                // format: " Biology as experimental science": ["https://youtu.be/uXa3keakdWs?si=K-cP76rRtxekQO_V"],
+            },
+            LO9: {
+                "Plant tissues: meristematic and permanent": ["https://youtu.be/M-qDzKG3RB0?si=xCY29YwJmGfIThK8", "https://youtu.be/ddsJCyo3SBo?si=kgDnQzLhpIQAidBk", "https://youtu.be/LsV4dO-9uok?si=7MyLrq8A-Xtu_iyR"],
+                "Meristematic": ["https://youtu.be/lLnjo4Pf2JM?si=9hUyVd64vNQbaT55", "https://youtu.be/ddsJCyo3SBo?si=yCom6fibACjNQ5oO"],
+                "Epical": ["https://youtu.be/03K82iPyWS0?si=IN81qBVaAvHvbrTV", "https://youtu.be/m8xYgZAlov8?si=sgiyoyzL2x3oTFru"],
+                "Vascular cambium": ["https://youtu.be/dqFSCTVpH0Y?si=pf0bybC4QWHODbUU", "https://youtu.be/y-IMaJlnbho?si=XEomvLJazBmDNb1o", "https://youtu.be/mIXCa7GxgNU?si=GsX7V9jdjppXPdsu"],
+                "Cork cambium": ["https://youtu.be/tG4Yw6eBotY?si=FBZupKbJrhMyS1n8", "https://youtu.be/JBu2ghgsT5E?si=hZTQHR-rXz47N1J1"],
+                "Permanent tissues": ["https://youtu.be/MW68KNYgZdg?si=oYP_XoALB1SPRSmQ"],
+                "Parenchyma": ["https://youtu.be/13U3sDePjnI?si=PypiJNmOQ0sxQZ1A", "https://youtu.be/zHp_voyo7MY?si=-QLRl7na4wdzkEWB"],
+                "Collenchyma": ["https://youtu.be/Ul4oO1P9VaM?si=IiBC1CpjkN5Jfref"],
+                "Sclerenchyma": ["https://youtu.be/Y2na4yayWiU?si=6mIJPUuQy_UYECN8"],
+                "Chlorenchyma": ["https://youtu.be/3bpetmtJMso?si=kOFwBvhxqhv-tVEU", "https://youtu.be/B9ld_I7UtT0?si=zkDNPYi7XTJqK_fa"],
+                "Complex permanent tissues": ["https://youtu.be/VordcSnVCM4?si=LD221iXnacwdZbtN", "https://youtu.be/L2XqsXNmIGA?si=6sLru08kKLeNP-b7", "https://youtu.be/d3vUNYzbeNc?si=Gkw0EbaPKonY72MK"],
+                "Vascular": ["https://youtu.be/AYyPlvdcMEY?si=YIhBAcz5cmulLgSX"],
+                "Dermal": ["https://youtu.be/zevOkEPislo?si=mLE_0w15RIkl4tPi", "https://youtu.be/UXaISeUv1LU?si=wdWuYX8kHAaLg-gO"],
+                "Ground tissues": ["https://youtu.be/VnEtIAzpDbE?si=m827RgGT1DkEZFn8"],
+                "Plant tissue adaptation": ["https://youtu.be/A_DF246uVlU?si=1zK2BlZtdi1dYafu", "https://youtu.be/aKzcbUKfV0A?si=2fDwkjXMtOHPTdYw"],
+                "Transpiration and capillary action": ["https://youtu.be/h8lFVutKS7A?si=XD1t09q45aeybVmQ", "https://youtu.be/5jJLfwTkGe8?si=qNpFsCjOgxp_YJjM"]
+            },
+            LO10: {
+                "Photosynthesis - definition": ["https://youtu.be/lNKdw9VoAkA?si=ulkGOdSKnCePJYZU", "https://youtu.be/sQK3Yr4Sc_k?si=E6Ns4zJoHiXVPYj2", "https://youtu.be/dAF5FngVa7A?si=ZaAYm8UVB1t8Ep49", "https://www.youtube.com/watch?v=YeD9idmcX0w", "https://www.youtube.com/watch?v=hj_WKgnL6MI", "https://youtu.be/CL9A8YhwUps?si=3Bsz5G06Bq_KlNOP"],
+                "Cellular respiration definition": ["https://youtu.be/eJ9Zjc-jdys?si=jS1OsmmCAksCGAn8", "https://youtu.be/eBl3U-T5Nvk?si=jvh6RYbOIywfdD40"],
+                "Light": ["https://youtu.be/Le7KOX91w7U?si=-iNlwQokoy9FjP1Z", "https://youtu.be/CMiPYHNNg28?si=nZinf_qe1ozYthR-", "https://youtu.be/D2Y_eEaxrYo?si=r_qX7lJbJigmhezr"],
+                "Chloroplasts & chlorophyll": ["https://youtu.be/9SzicsAqZgI?si=N_n9Z7FGWpBjjPCz", "https://youtu.be/xr0E673Bt6A?si=wK42CdggbUE7PohW"],
+                "Producers": ["https://youtu.be/HQL_rMANFCM?si=fKZrsKYVOEYeAGwL", "https://youtu.be/mLcD8GmEByo?si=gFUzhgk7eNGRs5bT"],
+                "Mitochondria and cytoplasm": ["https://youtu.be/FXDkK-eZeuk?si=GJ127rcEn_tPW0eD", "https://youtu.be/Swv-Cf4eDbs?si=gr2W6sVtON7vAt1w", "https://youtu.be/7oOqq-Cqf-0?si=dBA0VXYvjONaW9Hz"],
+                "Oxygen-dependent cellular respiration": ["https://youtu.be/uEifhZjjJMo?si=NO3IDaRYk8_LQzzn"],
+                "Photosynthesis - process": ["https://youtu.be/g78utcLQrJ4?si=F6BEoQKMQVIYWqtu"],
+                "Cellular respiration process": ["https://youtu.be/2_ceHsFmLVk?si=kA9eCQuz8Q-w5xWk"],
+                "Adenosine triphosphate (ATP)": ["https://youtu.be/cSXpH8eX_14?si=plXTzl3CVryRSLl3", "https://youtu.be/5GMLIMIVUvo?si=UdNF0qHDI-s7BccC", "https://youtu.be/PK6HmIe2EAg?si=gRk_7iumB1Y4B_JN", "https://youtu.be/1cxXwoyyOk4?si=Q9e7JGpnP3xMKMJe", "https://youtu.be/23ZzI6WZS28?si=dr5b14fRGJKphzv7"]
+            },
+            LO11: {
+                "Experimental design": ["https://youtu.be/SN3rGOBEHYg?si=4dcwTvtF0kOMZsYS", "https://youtu.be/ceWyayKg3QY?si=8Vz3xu6mYgWBwAHP", "https://youtu.be/xmfhKbmQhq0?si=zIvjaqEdiOo2U3Dp"],
+                "Reproducible procedures": ["https://youtu.be/RcCCM_HkK4A?si=9ygrluTDZKQt0FHB", "https://youtu.be/tVAl1rwjBro?si=4ChvpPCQG0WcKdfN"],
+                "Independent variable to be manipulated": ["https://youtu.be/w6FiSi3fASw?si=zISJRsl17-iEtw_M"],
+                "Cellular respiration in plants": ["https://youtu.be/SUPQVg1vO0Q?si=md1Qs6jwpa9Qqmd4", "https://youtu.be/eJ9Zjc-jdys?si=bAFFZIlzkzQzIQix"],
+                "Energy release": ["https://youtu.be/eJyt1lqasHo?si=yxaVetVO7_xvXHg8"],
+                "Photosynthesis": ["https://youtu.be/xmfhKbmQhq0?si=eBzeAQw1NuYcghNj"],
+                "Capture of energy and production of carbon dioxide": ["https://youtu.be/vJY3DTaE0sI?si=62bpCTSOpDNGLDBx"],
+                "Impact of variables on photosynthesis and cellular respiration": ["https://youtu.be/1curtzL8rUM?si=AOrjbbUPFpXui0Ri"],
+                "Temperature": ["https://study.com/academy/lesson/video/effect-of-temperature-on-cellular-respiration.html"],
+                "Amount of light": ["https://youtu.be/6sLrh-SDv_Y?si=o9ITyNk3nKO5TKHj"],
+                "Chemical indicators": ["https://www.labxchange.org/library/pathway/lx-pathway:0c884377-cb1c-4753-b7ee-9fadf934ab2e/items/lb:LabXchange:71907a0b:video:1/220129"]
+            },
+            LO12: {
+                "Ecological biodiversity": ["https://youtu.be/_bk2nnDI68g?si=QoAVHuck4QjlnxMg"],
+                "Habitat variety": ["https://youtu.be/HllekLRVYgY?si=NyQ1MrTZp0t0JTjf"],
+                "Micro to macro constituents of food web": ["https://youtu.be/-oVavgmveyY?si=-zo32zvhKBWgWQwr"],
+                "Producers and consumers": ["https://www.youtube.com/watch?v=HQL_rMANFCM"],
+                "Food as energy source": ["https://youtu.be/LnPRHcp5_vo?si=Z9sP8U0ladg7w-Tc", "https://youtu.be/7ETHfIlzs9Q?si=FlddQXtYotIFUYYC"],
+                "Varieties of consumers": ["https://youtu.be/zh2XvT9o9vk?si=l0z7c4wFzZZffEX4"],
+                "Herbivores": ["https://youtu.be/bjnquo_BZ_Y?si=838ADcJGG5aTWnTQ"],
+                "Carnivores": ["https://youtu.be/egorNO93AdQ?si=zT74ScizhtfL35yI"],
+                "Omnivores": ["https://www.youtube.com/watch?v=0pHXXP-xlG8"],
+                "Decomposers": ["https://youtu.be/Rfe49hJYpfQ?si=P7MKCATr7_Xwlcai", "https://www.youtube.com/watch?v=HQL_rMANFCM"],
+                "Food web diagram": ["https://youtu.be/bCQpE8xV9wU?si=LlGqeruXN6FgmR2e"],
+                "Energy flow and pyramid": ["https://youtu.be/yorK7QzuFhI?si=v2tvx_xeXleZCWsj"],
+                "Consumers levels": [],
+                "Primary": ["https://www.youtube.com/watch?v=7ETHfIlzs9Q"],
+                "Secondary": ["https://youtu.be/PAgPUrsG3YE?si=QWe0rqPhxkI3rjbS"],
+                "Tertiary consumers": ["https://www.youtube.com/watch?v=D1In8W2qev4"],
+                "Ecosystem's diversity, disruption and collapse": ["https://youtu.be/c09lOdgXoYE?si=5K3rV5XPdIYzshNn", "https://youtu.be/wXJiHr8jWBs?si=5m0cnHpDv-IJwbr6"]
+            },
+            LO13: {
+                "Carbon cycle": ["https://youtu.be/KNLUzqW8IuA?si=NJt0LyHAlg0SkSRQ", "https://youtu.be/A4cPmHGegKI?si=4WVFsSMD29IQsDrB", "https://youtu.be/-wSqQiihf7c?si=AhcVmPh0gnndHs_q"],
+                "Carbon reservoirs": ["https://youtu.be/OoW2PlvMpZs?si=VgpL0MMut2i_BOzS"],
+                "Quantity of carbon - fixed": ["https://youtu.be/gDjkl0uw1BM?si=q_0GrIwj6ZcVqL5-"],
+                "Reservoir quantity - fluctuates": ["https://youtu.be/aLuSi_6Ol8M?si=HYKN9P89KW5E1nOx"],
+                "Forms of carbon (carbohydrate, organic compounds)": ["https://www.youtube.com/watch?v=ULiLt2rtpAg"],
+                "Human impact on reservoirs": ["https://www.youtube.com/watch?v=Um-bo2MWDsQ"]
+            },
+            LO14: {
+                "Ecosystem services": ["https://youtu.be/EgzfsKHfAtw?si=sNRfum-hLEOzSJd3"],
+                "Management of resources": ["https://youtu.be/wMtnbjKJzFw?si=hYEj24NBbopr6AvY"],
+                "Theoretical vs. actual situations": ["https://youtu.be/WxtB8eIhTm4?feature=shared"],
+                "Natural and human-caused disturbances": ["https://youtu.be/cupWz8BpieA?feature=shared"],
+                "Ecosystem disturbance: minor to catastrophic": ["https://youtu.be/9MkzVeaLch4?si=-3s6WGNiKpZtfqbm"],
+                "Recover and succession": ["https://youtu.be/V49IovRSJDs?si=kQrWzFSFYHqdqF_5"],
+                "Primary succession": ["https://youtu.be/geXQMIDRl2I?feature=shared"],
+                "Secondary succession": ["https://youtu.be/8ceDE01iWLE?si=psBXOGogkJjfAFKa"],
+                "Ecosystem resilience": ["https://youtu.be/PcO9OMuz67E?si=qE_aVuhDy7M-pkdC"],
+                "Sustainable decisions": ["https://youtu.be/JiUjKVzX8S0?feature=shared"],
+                "Invasive species": ["https://youtu.be/ed8SHj-lyjc?si=Z7rV7dwQP31bsRPe"],
+                "Ecosystem resistance": ["https://youtu.be/lGvWgwvfD54?si=id0p_LmfR891R5ZR"],
+                "Cost-benefit ratio of management": ["https://youtu.be/7tdKkeNClPE?si=A4GmPD1TLVSlPk7-"],
+                "Indicators for management decisions": ["https://youtu.be/exH5hLCOvtE?si=YxzW9wQTp18DT5NN"]
+            },
+            LO15: {
+                "Restoration of ecosystems": ["https://youtu.be/hHYg2kx8wMw?si=VvBCguhJH_R4F0-3", "https://youtu.be/Kaeyr5-O2eU?si=L0ABZcL01Km7cw_6"]
+            }
+        };
+
+        const loSummaryVideos = {
+            LO8: [],
+            LO9: ["https://youtu.be/T9KF05Vi7Pk?si=Bg2aWJHjBq9wT-S_", "https://youtu.be/HTQZVeLzuS8?si=YDSuQkphbQKtcTl3", "https://youtu.be/MeMv6W7yu_o?si=rT1cVojZVXeKVacw"],
+            LO10: ["https://youtu.be/ue_Qb2ZGPCg?si=9ck2Hd47uYrjFW8Q", "https://youtu.be/ue_Qb2ZGPCg?si=8GtVhVdz4qAfy9ne", "https://youtu.be/9yO4a18RqY4?si=eRZ6xdZhTOfZT_oL"],
+            LO11: ["https://youtu.be/WTNTrdt_TXg?si=96755jW3SDJagDer"],
+            LO12: ["https://youtu.be/oEUAznUGKPA?si=5JeZQ-gHRtgSlEO5", "https://youtu.be/6r7CKuwTJV8?si=PhNCXne4wiCCJPvP"],
+            LO13: ["https://youtu.be/5XHpodsyFS0?si=FXFpClnDH8wEuQug"],
+            LO14: ["https://youtu.be/4vYrs2EM-KM?si=sjGqygunFTKv2tkL"],
+            LO15: ["https://youtu.be/lsZKglDJW3w?si=b2FFKOX0FYI6xqCw"]
+        };
+
+        const revisionVideos = {
+            midterm: ["https://youtu.be/YT6DoJxWkJk?si=PdydPpoFVNpDEnZU", "https://youtu.be/DoEjttE8j0w?si=FlfxO5Q4vfAZcLbY"],
+            final: ["https://youtu.be/u3_T6qFXUwU?si=4422HEo7cuuMMTxE", "https://youtu.be/p-j9yH4kt8o?si=8lYqDnle3spxxGEH"]
+        };
+
+        // Mapping of filename -> Google Drive share URL (generated from CSV)
+        const shareMap = {
+            "Copy of ecology (4).pdf": "https://drive.google.com/file/d/1JVlUM-xzmKWsceBxFKdP65qllwDXmiIp/view",
+            "Copy of ECOLOGY.ppt": "https://drive.google.com/file/d/1kJ4MoeX3XKWlRESSgm6pmftph0laZFh9/view",
+            "Copy of 52 ecology campbell reduced.ppt": "https://drive.google.com/file/d/1WOtRY1EKe9fux8ikGYl9NpfUTfelZMGV/view",
+            "Copy of LO 14 and 15.pptx": "https://drive.google.com/file/d/1jhNJpYKXe6LnfwE_1qvJtnVEe6CDItYq/view",
+            "Copy of LO. 12 & 13.pptx": "https://drive.google.com/file/d/1bjDgYN-usILSSJCcclTgp3lN1UbsPfbA/view",
+            "Copy of Biology LO. 10 and 11.pptx": "https://drive.google.com/file/d/1WhdTtphGpl5ybR4xyDeuj8QR0riwy3df/view",
+            "Copy of Bio LO. 10.pptx": "https://drive.google.com/file/d/1qoUWNK7ZlFAxUpI_5euTIRja899hAooX/view",
+            "BIO.1.10(MEO).pdf": "https://drive.google.com/file/d/11-yAQCwgcx6QFaUcaFOQyovT8VWsBNRZ/view",
+            "Biology Final revision - Ecology part.pdf": "https://drive.google.com/file/d/1YQ6BVNyyfb-11yvEWW_UZZMVkmVW-bLy/view",
+            "campbell_chapter54.doc": "https://drive.google.com/file/d/1NCtGtuw8R-HSZkpdA7ygdgx6ikq7pQWr/view",
+            "Copy of Ecology-mixed-questions-answers.docx": "https://drive.google.com/file/d/1dE1v7LztXkQZvXgr4FfZK85Z0APm5A98/view",
+            "Copy of G10 bio Ecology testbank Dr. Baya education.pdf": "https://drive.google.com/file/d/1jBjY_wIA2qXSeJ96HsIsN9VSoiDusayE/view",
+            "Copy of Ecology-mixed-questions2.docx": "https://drive.google.com/file/d/1OlctjHLnaBoIn_yRJ5JSYbY_7jHkhWn3/view",
+            "Copy of G10 bio L.O11 testbank Dr. Baya education.pdf": "https://drive.google.com/file/d/1jcUDC-rBw9oNzeEyxipgCl6H5GWiRgoM/view",
+            "Campbell_chapter10.doc": "https://drive.google.com/file/d/1xgtushXBuizdwILaAGoOV_DybqpGQBUP/view",
+            "Campbell_chapter09.doc": "https://drive.google.com/file/d/1p8b1JZV5OnfE9JwUfV7qrSrXtln9c5zZ/view",
+            "Copy of G10 bio L.O10 testbank Dr. Baya education.pdf": "https://drive.google.com/file/d/1s3FN86xaY5Qzo5SEjWe4liGuIJO8y7-P/view",
+            "Copy of Campbell Test bank ch35  .doc": "https://drive.google.com/file/d/1c9Zh4tWYcXVeFOwuhjfgs22fVdpZ-ar3/view",
+            "Copy of G10 L.O9 bio Plant structure and function testbank Dr. Baya education.pdf": "https://drive.google.com/file/d/1flRIaCz7DhQWbPKd2pODbqor08Ni1Rsf/view",
+            "Copy of BIO LO.9 (MEO) (1).pdf": "https://drive.google.com/file/d/1UUj9lRXfXUGNIQxM0G6Wk8LAuygF_aM9/view",
+            "Copy of LO9.pdf": "https://drive.google.com/file/d/1Bh6ugpmCKCLoC3lklSvb6OWdO_cIr3Z5/view",
+            "Copy of Ecology.L.O.12.ppt": "https://drive.google.com/file/d/1k0sFMaXqIkU9qhQIvc0t8-O8ZEB9AyfF/view",
+            "Copy of L O 12.pdf": "https://drive.google.com/file/d/1gI8zn2Ga9_Go-qSO7jssB3J7NuBRaD1J/view",
+            "Copy of G10_26 bio session 7 L.O12 Dr. Baya.pdf": "https://drive.google.com/file/d/1x3YjZvXGP8_rohqfcooZTu-QKLqW_LhD/view",
+            "Copy of L.O10, 11 session 5 bio Dr. Baya education.pdf": "https://drive.google.com/file/d/1dBPO_vEXGEEfGHHfCT6bOxh6vjnvBMng/view",
+
+            //references
+            "Genetics.pdf": "https://drive.google.com/file/d/1ABto5bzogxYkPi-fGsj_VcDoONVNuxnR/view",
+            "practical biology needing.docx": "https://drive.google.com/file/d/1rkQTw2vG4ZmkwsKYKkOK8NmXzrBP-PV5/view",
+            "report .docx": "https://drive.google.com/file/d/1yQAFiW6uJW9j1RAC7XmGE4YS6dI-bQGr/view",
+            "Ecology.pdf": "https://drive.google.com/file/d/1PWwvURBmsTAvJ2sEpbJ6yogYisl2Hh5Y/view",
+            "Cell Biology.pdf": "https://drive.google.com/file/d/1j-vpkflD7ieCYs3pb_lvBaDXihHOgyYD/view",
+            "Evolution.pdf": "https://drive.google.com/file/d/1RVVZqUIdSdUwDeZ8__2-bT2CzBOytU9r/view",
+            "Sustinability.pdf": "https://drive.google.com/file/d/1u46Zd3sjx1hzVap65lju6E3qlNQfB5Mm/view",
+            "~$w Microsoft Word Document.docx": "https://drive.google.com/file/d/1U9V7ZQivoIaVB41gbtMcYP7W9qKEni0l/view",
+            "pdf.pdf": "https://drive.google.com/file/d/1lVDvcfeUUMBByZLHfAZtsQTvoUgiLsyG/view",
+            "28180030367697.pdf": "https://drive.google.com/file/d/1a19J4vnP_3yshRlNEqLSZwxx38d21j0B/view",
+            "Modern Biology.pdf": "https://drive.google.com/file/d/1ODvlSWZdOyewrfa3u6925FoQMyfdyxU5/view",
+            "[Gerald_Karp]_Cell_and_Molecular_Biology_Concepts(BookFi.org).pdf": "https://drive.google.com/file/d/17Y0psHFQIExjKa5asgDNUsPEiJS0RmYH/view",
+            "Thumbs.db": "https://drive.google.com/file/d/1t88yIVRLzMPTzWHyCvcEdud1CubxRh9R/view",
+            "Molecular biology of the cell 5e, the Problems Books.pdf": "https://drive.google.com/file/d/1yGs4MyRQdQ6_lg92nJ2_hNAfwCFanMPG/view",
+            "Molecular Cell Biology, 6th (Lodish - W. H. Freeman, 2008).pdf": "https://drive.google.com/file/d/1dz8HzW3XuTxnB1dKgc41vku82g79iwyG/view",
+            "Molecular biology of the cell 5e.pdf": "https://drive.google.com/file/d/13l79P9yk0PTWY-03qcZxNwFYI8sm_kfz/view",
+            "Simon - Campbell Essential Biology with Physiology 4th c2013 txtbk.pdf": "https://drive.google.com/file/d/1KUdb4LM6SaXOP2zjzLbGefuORvnmMQAB/view",
+            "Reece Campbell Biology 9th txtbk.pdf": "https://drive.google.com/file/d/1RwEvQ_b7PeSKXJ4N9HFolcyarilIAwHo/view",
+            "Biology 8th ed by Campbell and Reece.pdf": "https://drive.google.com/file/d/1VMbSnYbbyKKH-xyddjIGtr8eZK3Vrayu/view",
+            "Cover.jpg": "https://drive.google.com/file/d/1_ZoU2w9ngcZPDHxftUIAzYp_wTYzzW8i/view",
+            "Reading Essentials for Biology.pdf": "https://drive.google.com/file/d/1Q0Yk_2eFIm_PduWcyguTKz2QrtQRTTl9/view",
+            "Dynamics of life.pdf": "https://drive.google.com/file/d/1qkbttlnYS64NwA8X4DfdEa1FSXr7ov-F/view"
+        };
+
+        // Render video links for a given LO/concept
+        function renderVideoLinks(loKey, conceptTitle) {
+            const lo = videoLinks[loKey] || {};
+            const links = lo[conceptTitle] || [];
+            if (!links.length) return '';
+            let html = `<div class="mt-3 p-3 bg-tech-dark-alt rounded-lg border border-tech-dark-alt">
+                            <h4 class="text-md font-bold text-tech-secondary mb-1">Videos</h4>`;
+            links.forEach((url, idx) => {
+                html += `
+                    <div class="mb-2">
+                        <a href="${url}" target="_blank" rel="noopener noreferrer" class="text-tech-primary hover:text-tech-secondary transition duration-200 text-sm underline font-semibold">Video ${idx + 1}</a>
+                    </div>
+                `;
+            });
+            html += `</div>`;
+            return html;
+        }
+
+        // Render Test Banks section
+        function renderTestBanks() {
+            const files = resourceFiles.testBanks || [];
+            let html = `
+                <h2 class="text-3xl font-extrabold mb-6 text-tech-primary border-b border-tech-secondary/50 pb-2">Test Banks</h2>
+                <div class="p-6 bg-tech-dark-alt rounded-xl border border-tech-secondary/50 shadow-subtle-glow">
+                    <p class="text-xl font-medium text-tech-light mb-6">Download test banks to practice and evaluate your understanding.</p>
+            `;
+            files.forEach(f => {
+                const name = f.split('/').pop();
+                const url = shareMap[name] || f;
+                html += `
+                    <div class="mb-4">
+                        <a href="${url}" target="_blank" rel="noopener noreferrer" class="text-tech-secondary hover:text-tech-primary transition duration-200 text-lg underline font-semibold">${name}</a>
+                    </div>
+                `;
+            });
+            html += `</div>`;
+            return html;
+        }
+
+        // Render file list for a given LO key
+        function renderFilesList(loKey) {
+            const files = resourceFiles[loKey] || [];
+            if (!files.length) return '';
+            let html = `<div class="mt-3 p-3 bg-tech-dark-alt rounded-lg border border-tech-dark-alt">
+                            <h4 class="text-md font-bold text-tech-secondary mb-1">Files & Presentations</h4>`;
+            files.forEach(f => {
+                const name = f.split('/').pop();
+                const url = shareMap[name] || f;
+                html += `
+                    <div class="mb-2">
+                        <a href="${url}" target="_blank" rel="noopener noreferrer" class="text-tech-primary hover:text-tech-secondary transition duration-200 text-sm underline font-semibold">${name}</a>
+                    </div>
+                `;
+            });
+            html += `</div>`;
+            return html;
+        }
+
+        // Function to create a single downloadable link block
+        function createLinkBlock(title, placeholderText) {
+            // Show placeholder text (no fake downloads)
+            return `
+                <div class="mt-3 p-3 bg-tech-dark-alt rounded-lg border border-tech-dark-alt">
+                    <h4 class="text-md font-bold text-tech-secondary mb-1">${title}</h4>
+                    <p class="text-sm text-tech-light/70 italic mb-2">${placeholderText}</p>
+                </div>
+            `;
+        }
+
+        // Function to render the expandable concept content
+        function renderConcept(loKey, conceptTitle) {
+            // Placeholder text for description (can be replaced with actual content later)
+            const description = `This section covers the fundamental principles of **${conceptTitle}**. Understanding this concept is crucial for solving problems related to classical mechanics. It often involves analysis of vectors and their components.`;
+
+            return `
+                <details class="mb-4 bg-tech-dark-alt rounded-xl border border-tech-primary/30 shadow-lg overflow-hidden">
+                    <summary class="flex items-center justify-between p-4 cursor-pointer text-lg font-semibold text-tech-light hover:bg-tech-primary/20 transition duration-300">
+                        <span class="truncate">${conceptTitle}</span>
+                        <svg class="w-5 h-5 ml-2 transition-transform duration-300 arrow-icon flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                    </summary>
+                    <div class="px-4 pb-4 pt-2 border-t border-tech-primary/30 space-y-4">
+                        <!-- Description -->
+                        <div class="bg-tech-dark-alt p-3 rounded-lg border border-tech-dark-alt">
+                            <h4 class="text-md font-bold text-tech-secondary mb-1">Concept Description</h4>
+                            <p class="text-tech-light/90 text-sm">${description}</p>
+                        </div>
+                        <!-- Video links for this concept -->
+                        ${renderVideoLinks(loKey, conceptTitle)}
+                    </div>
+                </details>
+            `;
+        }
+
+        /**
+         * Main function to handle content rendering (called by click and by Firestore snapshot).
+         * @param {string} loKey - The key of the Learning Objective.
+         * @param {boolean} isProgressUpdate - If true, skips scrolling the content area to the top.
+         */
+        function renderContent(loKey, isProgressUpdate = false) {
+            const contentArea = document.getElementById('dynamic-content');
+            const defaultMessage = document.getElementById('default-message');
+
+            // Hide default message
+            if (defaultMessage) {
+                defaultMessage.style.display = 'none';
+            }
+
+            // Render Content
+            if (loKey === 'revisions') {
+                contentArea.innerHTML = renderRevisions();
+            } else if (loKey === 'test-banks') {
+                contentArea.innerHTML = renderTestBanks();
+            } else if (learningObjectives[loKey]) {
+                contentArea.innerHTML = renderLO(loKey, learningObjectives[loKey]);
+            } else {
+                contentArea.innerHTML = `<h2 class="text-red-400">Error: LO not found.</h2>`;
+            }
+
+            // Scroll content area to the top, but only if the action was a user-initiated navigation 
+            if (!isProgressUpdate) {
+                document.getElementById('content-area').scrollTop = 0;
+            }
+        }
+
+        // Function to render a selected LO
+        function renderLO(loKey, loData) {
+            let html = `
+                <h2 class="text-3xl font-extrabold mb-6 text-tech-primary border-b border-tech-secondary/50 pb-2">${loData.title}</h2>
+            `;
+
+            // 1. LO summarized video(s)
+            if (loSummaryVideos[loKey]) {
+                html += `
+                    <div class="mb-6 p-4 bg-tech-dark-alt/80 rounded-lg border border-tech-primary/30">
+                        <h3 class="text-xl font-bold text-tech-secondary mb-3">Summary Videos</h3>
+                        <div class="space-y-2">
+                `;
+                loSummaryVideos[loKey].forEach((vid, idx) => {
+                    html += `
+                        <a href="${vid}" target="_blank" class="flex items-center space-x-2 text-tech-light hover:text-tech-primary transition">
+                            <svg class="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
+                            <span class="underline">Watch Summary Video ${idx + 1}</span>
+                        </a>
+                     `;
+                });
+                html += `</div></div>`;
+            }
+
+            // Render all concepts
+            loData.concepts.forEach(concept => {
+                html += renderConcept(loKey, concept);
+            });
+
+            // 2. Files / Presentations
+            // Render files list once per LO
+            html += renderFilesList(loKey);
+
+            // 3. Test Banks Link
+            html += `
+                <div class="mt-8 p-4 bg-tech-dark-alt rounded-lg border border-tech-dark-alt">
+                    <p class="text-tech-light/80 mb-3">Looking for practice tests? Check the Test Banks section.</p>
+                    <button onclick="handleNavigationClick('test-banks')" class="px-3 py-2 bg-tech-primary text-tech-bg rounded-md font-semibold hover:bg-tech-secondary transition duration-200">Open Test Banks</button>
+                </div>
+            `;
+
+            return html;
+        }
+
+        // Function to render revisions list
+        function renderRevisions() {
+            let html = `
+                <h2 class="text-3xl font-extrabold mb-6 text-tech-primary border-b border-tech-secondary/50 pb-2">Revisions & References</h2>
+            `;
+
+            // Helper for video sections
+            const renderVidSection = (title, vids) => {
+                if (!vids || !vids.length) return '';
+                let block = `
+                    <div class="mb-6">
+                        <h3 class="text-2xl font-bold text-tech-light mb-4">${title}</h3>
+                        <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                `;
+                vids.forEach((v, idx) => {
+                    block += `
+                        <a href="${v}" target="_blank" class="block p-4 bg-tech-dark-alt rounded-lg border border-tech-primary/30 hover:border-tech-secondary hover:shadow-subtle-glow transition group">
+                            <div class="flex items-center space-x-3">
+                                <svg class="w-8 h-8 text-red-500 group-hover:text-red-400 transition" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
+                                </svg>
+                                <span class="font-semibold text-tech-light group-hover:text-tech-primary">Watch Video ${idx + 1}</span>
+                            </div>
+                        </a>
+                    `;
+                });
+                block += `</div></div>`;
+                return block;
+            }
+
+            // Midterm Revision Videos
+            if (revisionVideos && revisionVideos.midterm) {
+                html += renderVidSection('Midterm Revision', revisionVideos.midterm);
+            }
+
+            // Reference Files (Books)
+            html += `
+                <div class="mt-8">
+                    <h3 class="text-2xl font-bold text-tech-light mb-4">Reference Books</h3>
+                    <div class="p-6 bg-tech-dark-alt rounded-xl border border-tech-secondary/50 shadow-subtle-glow">
+                        <p class="text-xl font-medium text-tech-light mb-6">
+                            Download these files if you want to study deeper in references:
+                        </p>
+            `;
+            const refs = resourceFiles.references || [];
+            refs.forEach((f) => {
+                const name = f.split('/').pop();
+                const url = shareMap[name] || f;
+                html += `
+                    <div class="mb-4">
+                        <a href="${url}" target="_blank" rel="noopener noreferrer" class="text-tech-secondary hover:text-tech-primary transition duration-200 text-lg underline font-semibold">${name}</a>
+                    </div>
+                `;
+            });
+            html += `</div></div>`;
+
+            return html;
+        }
+
+        // Progress tracking removed
+
+
+        // Function to handle navigation click and update sidebar state
+        function handleNavigationClick(loKey) {
+            const loItems = document.querySelectorAll('.lo-item');
+
+            // 1. Update Active State in Sidebar
+            loItems.forEach(item => item.classList.remove('active'));
+            document.getElementById(`lo-${loKey}`).classList.add('active');
+
+            // Render Content (which handles scrolling)
+            renderContent(loKey);
+        }
+
+        // DOM Content Loaded: Initialize Navigation Bar
+        document.addEventListener('DOMContentLoaded', () => {
+            const loList = document.getElementById('lo-list');
+
+            // Loop through all defined LOs to create sidebar buttons
+            // Loop through all defined LOs to create sidebar buttons
+            Object.keys(learningObjectives).forEach(key => {
+                const displayText = learningObjectives[key].title;
+
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `
+                    <button id="lo-${key}" 
+                        class="lo-item w-full flex justify-between items-center text-left p-3 rounded-lg border-l-4 border-tech-dark-alt transition duration-200 
+                                hover:bg-tech-primary/10 hover:border-tech-primary font-medium text-sm sm:text-base"
+                        data-lo-key="${key}">
+                        <span class="truncate">${displayText}</span>
+                    </button>
+                `;
+                loList.appendChild(listItem);
+            });
+
+            // Add Revisions Button
+            const revItem = document.createElement('li');
+            revItem.innerHTML = `
+                <button id="lo-revisions" 
+                    class="lo-item w-full flex justify-between items-center text-left p-3 rounded-lg border-l-4 border-tech-dark-alt transition duration-200 
+                            hover:bg-tech-primary/10 hover:border-tech-primary font-medium text-sm sm:text-base"
+                    data-lo-key="revisions">
+                    <span class="truncate">References & Revisions</span>
+                </button>
+            `;
+            loList.appendChild(revItem);
+
+            // Add Test Banks button to the sidebar
+            const tbItem = document.createElement('li');
+            tbItem.innerHTML = `
+                <button id="lo-test-banks" 
+                    class="lo-item w-full flex justify-between items-center text-left p-3 rounded-lg border-l-4 border-tech-dark-alt transition duration-200 
+                            hover:bg-tech-primary/10 hover:border-tech-primary font-medium text-sm sm:text-base"
+                    data-lo-key="test-banks">
+                    <span class="truncate">Test Banks</span>
+                </button>
+            `;
+            loList.appendChild(tbItem);
+
+            // Attach event listener to the list container (delegation)
+            loList.addEventListener('click', (event) => {
+                const button = event.target.closest('.lo-item');
+                if (button) {
+                    const loKey = button.getAttribute('data-lo-key');
+                    handleNavigationClick(loKey);
+                }
+            });
+
+            // Initialize first render
+            renderContent('LO9');
+
+            // Theme toggle initialization for this page
+            // Theme toggle initialization for this page
+            const themeToggleIcon = document.getElementById('theme-toggle-icon');
+
+            function setTheme(theme) {
+                document.documentElement.setAttribute('data-theme', theme);
+                localStorage.setItem('theme', theme);
+
+                // update icon if present
+                if (themeToggleIcon) {
+                    if (theme === 'dark') {
+                        themeToggleIcon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+                    } else {
+                        // Light/Christmas/Midnight - use generic or specific icons if needed
+                        // For now, keeping the "sun" icon for non-dark themes or simplified logic
+                        themeToggleIcon.innerHTML = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
+                    }
+                }
+
+                // Use centralized effects
+                if (window.ThemeEffects) {
+                    window.ThemeEffects.setEffect(theme);
+                } else {
+                    if (theme === 'christmas') {
+                        startSnow();
+                    } else {
+                        stopSnow();
+                    }
+                }
+            }
+
+            // Default to dark unless user has saved preference
+            // Christmas / Language Logic
+            const translations = {
+                en: { "settings": "Settings", "language": "Language", "theme": "Theme", "close": "Close", "footer_contact": "If you have any comments please text me" },
+                ar: { "settings": "الإعدادات", "language": "اللغة", "theme": "السمة", "close": "إغلاق", "footer_contact": "إذا كان لديك أي تعليقات يرجى مراسلتي" }
+            };
+            function updateText(lang) {
+                const t = translations[lang];
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (t[key]) el.textContent = t[key];
+                });
+            }
+            function setLanguage(lang) {
+                document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+                document.documentElement.setAttribute('lang', lang);
+                localStorage.setItem('language', lang);
+                updateText(lang);
+            }
+
+            // Snow helper functions (fallback)
+            function startSnow() {
+                const c = document.getElementById('snow-container'); if (!c) return; stopSnow();
+                window.snowInterval = setInterval(() => {
+                    const s = document.createElement('div');
+                    s.className = 'snowflake';
+                    s.style.left = Math.random() * 100 + 'vw';
+                    s.style.width = s.style.height = (Math.random() * 5 + 3) + 'px';
+                    s.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                    s.style.opacity = Math.random();
+                    c.appendChild(s);
+                    setTimeout(() => s.remove(), 5000);
+                }, 100);
+            }
+            function stopSnow() { if (window.snowInterval) clearInterval(window.snowInterval); const c = document.getElementById('snow-container'); if (c) c.innerHTML = ''; }
+
+            // Init
+            setLanguage(localStorage.getItem('language') || 'en');
+            const saved = localStorage.getItem('theme');
+            if (saved) setTheme(saved); else setTheme('dark');
+
+            // Listeners
+            document.getElementById('open-settings')?.addEventListener('click', (e) => { e.preventDefault(); document.getElementById('settings-modal').classList.remove('hidden'); });
+            document.getElementById('close-settings')?.addEventListener('click', () => document.getElementById('settings-modal').classList.add('hidden'));
+            document.getElementById('settings-modal')?.addEventListener('click', (e) => { if (e.target === document.getElementById('settings-modal')) document.getElementById('settings-modal').classList.add('hidden'); });
+            document.getElementById('lang-en')?.addEventListener('click', () => setLanguage('en'));
+            document.getElementById('lang-ar')?.addEventListener('click', () => setLanguage('ar'));
+            document.getElementById('theme-dark')?.addEventListener('click', () => setTheme('dark'));
+            document.getElementById('theme-midnight')?.addEventListener('click', () => setTheme('midnight'));
+            document.getElementById('theme-christmas')?.addEventListener('click', () => setTheme('christmas'));
+            document.getElementById('theme-space')?.addEventListener('click', () => setTheme('space'));
+
+            // Legacy
+            const legacyToggle = document.getElementById('theme-toggle');
+            if (legacyToggle) legacyToggle.addEventListener('click', () => { setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'christmas' : 'dark'); });
+
+        });
+    </script>
+    <script src="../space-theme.js"></script>
+</body>
+
+</html>

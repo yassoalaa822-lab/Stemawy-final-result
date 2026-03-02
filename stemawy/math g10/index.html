@@ -4,1383 +4,201 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Math Checkpoints — First Semester</title>
-    <!-- Load Tailwind CSS -->
+    <title>Select Semester - Stemawy</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Load Inter Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
-        /* Apply Inter font family and smooth scrolling */
         body {
             font-family: 'Inter', sans-serif;
-            scroll-behavior: smooth;
-        }
-
-        /* --- Tech Aesthetic Colors and Glows --- */
-        .shadow-subtle-glow {
-            box-shadow: 0 4px 15px rgba(51, 255, 204, 0.25), 0 0 5px rgba(51, 255, 204, 0.1);
-            transition: all 0.3s ease-in-out;
-        }
-
-        .hover\:shadow-subtle-glow-lg:hover {
-            box-shadow: 0 6px 20px rgba(51, 255, 204, 0.4), 0 0 8px rgba(51, 255, 204, 0.2);
-        }
-
-        /* Keyframes for continuous gradient shift */
-        @keyframes gradient-shift {
-            0% {
-                background-position: 0% 50%;
-            }
-
-            50% {
-                background-position: 100% 50%;
-            }
-
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-
-        /* Base class for the animated text effect */
-        .gradient-text-wrapper {
-            display: inline-block;
-            background-size: 300% 100%;
-            animation: gradient-shift 8s linear infinite;
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            line-height: 1.2;
-            white-space: nowrap;
-        }
-
-        /* Style for the main header */
-        .gradient-h1 {
-            background-image: linear-gradient(to right, #00BFFF, #33FFCC, #00BFFF, #33FFCC);
-            animation-duration: 8s;
-        }
-
-        /* Light theme variables */
-        :root[data-theme="light"] {
-            --tech-bg: #ffffff;
-            --tech-dark-alt: #f3f4f6;
-            --tech-light: #111827;
-            --tech-primary: #0369a1;
-            --tech-secondary: #0e7490;
-            --border-color: rgba(2, 132, 199, 0.3);
-        }
-
-        /* Dark theme variables (default) */
-        :root[data-theme="dark"] {
-            --tech-bg: #1A1F26;
-            --tech-dark-alt: #2C333F;
-            --tech-light: #E0E6F0;
-            --tech-primary: #00BFFF;
-            --tech-secondary: #33FFCC;
-            --border-color: rgba(51, 255, 204, 0.3);
-        }
-
-        /* Space Theme Variables */
-        :root[data-theme="space"] {
-            --tech-bg: #050505;
-            --tech-dark-alt: #0F1218;
-            --tech-light: #ffffff;
-            --tech-primary: #00BFFF;
-            --tech-secondary: #33FFCC;
-            --border-color: rgba(0, 191, 255, 0.3);
-        }
-
-        /* Midnight Synth Theme */
-        :root[data-theme="midnight"] {
-            --tech-bg: #1e1b4b;
-            --tech-dark-alt: #312e81;
-            --tech-light: #e0e7ff;
-            --tech-primary: #f472b6;
-            --tech-secondary: #818cf8;
-            --border-color: rgba(244, 114, 182, 0.4);
-        }
-
-        /* Christmas Theme */
-        :root[data-theme="christmas"] {
-            --tech-bg: #2C0412;
-            --tech-dark-alt: #460B1C;
-            --tech-light: #FEEBC8;
-            --tech-primary: #D4AF37;
-            --tech-secondary: #228B22;
-            --border-color: rgba(212, 175, 55, 0.4);
-        }
-
-        body {
-            background-color: var(--tech-bg);
-            color: var(--tech-light);
-        }
-
-        .bg-tech-bg {
-            background-color: var(--tech-bg) !important;
-        }
-
-        .bg-tech-dark-alt {
-            background-color: var(--tech-dark-alt) !important;
-        }
-
-        .text-tech-light {
-            color: var(--tech-light) !important;
-        }
-
-        .text-tech-primary {
-            color: var(--tech-primary) !important;
-        }
-
-        .text-tech-secondary {
-            color: var(--tech-secondary) !important;
-        }
-
-        /* Custom scrollbar style for the content area */
-        #content-area {
-            overflow-y: auto;
-            scrollbar-width: thin;
-            scrollbar-color: #00BFFF #1A1F26;
-        }
-
-        #content-area::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        #content-area::-webkit-scrollbar-thumb {
-            background-color: #00BFFF;
-            border-radius: 4px;
-        }
-
-        #content-area::-webkit-scrollbar-track {
-            background-color: #1A1F26;
-        }
-
-        /* Custom style for the LO button when active */
-        .lo-item.active {
-            background-color: #00BFFF33;
-            /* tech-primary with opacity */
-            border-left-color: #33FFCC;
-            /* tech-secondary */
-            box-shadow: 0 0 10px rgba(51, 255, 204, 0.3);
-        }
-
-        /* Details summary arrow rotation */
-        details summary .arrow-icon {
-            transform: rotate(0deg);
-            transition: transform 0.3s;
-        }
-
-        details[open] summary .arrow-icon {
-            transform: rotate(90deg);
-        }
-
-        /* Theme toggle button */
-        .theme-toggle {
-            padding: 0.5rem;
-            border-radius: 9999px;
-            transition: all 0.3s ease;
-            color: var(--tech-light);
-        }
-
-        .gradient-h3 {
-            background-image: linear-gradient(to right, #00BFFF, #33FFCC, #00BFFF, #33FFCC);
-            animation-duration: 6s;
-        }
-
-        /* Enforce CSS Variables for Theme Switching (Overrides hardcoded Tailwind config) */
-        .bg-tech-dark-alt {
-            background-color: var(--tech-bg) !important;
-        }
-
-        .bg-tech-dark-alt {
-            background-color: var(--tech-dark-alt) !important;
-        }
-
-        .text-tech-light {
-            color: var(--tech-light) !important;
-        }
-
-        .text-tech-primary {
-            color: var(--tech-primary) !important;
-        }
-
-        .text-tech-secondary {
-            color: var(--tech-secondary) !important;
-        }
-
-        .border-tech-primary {
-            border-color: var(--tech-primary) !important;
-        }
-
-        .border-tech-secondary {
-            border-color: var(--tech-secondary) !important;
-        }
-
-        .theme-toggle:hover {
-            background-color: var(--tech-primary);
-            color: var(--tech-bg);
-        }
-
-        /* Christmas Theme Variables */
-        :root[data-theme="christmas"] {
-            /* Deep Burgundy/Wine Red & Gold Palette */
-            --tech-bg: #2C0412;
-            /* Deep Wine Red */
-            --tech-dark-alt: #460B1C;
-            /* Lighter Burgundy */
-            --tech-light: #FDF5E6;
-            /* Old Lace / Warm White */
-            --tech-primary: #FFD700;
-            /* Rich Gold */
-            --tech-secondary: #006400;
-            /* Deep Forest Green (Accent only) */
-            --border-color: rgba(255, 215, 0, 0.4);
-            /* Gold Border */
-        }
-
-        /* Space Theme Variables */
-        :root[data-theme="space"] {
-            --tech-bg: #050505;
-            --tech-dark-alt: #0F1218;
-            --tech-light: #ffffff;
-            --tech-primary: #00BFFF;
-            --tech-secondary: #33FFCC;
-            --border-color: rgba(0, 191, 255, 0.3);
-        }
-
-        /* Midnight Synth Theme */
-        :root[data-theme="midnight"] {
-            --tech-bg: #1e1b4b;
-            --tech-dark-alt: #312e81;
-            --tech-light: #e0e7ff;
-            --tech-primary: #f472b6;
-            --tech-secondary: #818cf8;
-            --border-color: rgba(244, 114, 182, 0.4);
-        }
-
-        /* Snow Effect */
-        #snow-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 50;
-            /* Above background, below some UI */
-            display: none;
-        }
-
-        :root[data-theme="christmas"] #snow-container {
-            display: block;
-        }
-
-        .snowflake {
-            position: absolute;
-            top: -10px;
-            background: white;
-            border-radius: 50%;
-            opacity: 0.8;
-            animation: fall linear forwards;
-        }
-
-        @keyframes fall {
-            to {
-                transform: translateY(110vh);
-            }
-        }
-
-        /* RTL Support */
-        [dir="rtl"] {
-            font-family: 'Tajawal', 'Inter', sans-serif;
-            /* Use Arabic-friendly font if available, fallback to Inter */
-        }
-
-        [dir="rtl"] .lo-item {
-            border-left: none;
-            border-right-width: 4px;
-            text-align: right;
-        }
-
-        [dir="rtl"] .border-l-4 {
-            border-left-width: 0;
-            border-right-width: 4px;
-        }
-
-        [dir="rtl"] .ml-auto {
-            margin-left: 0;
-            margin-right: auto;
-        }
-
-        [dir="rtl"] .space-x-4> :not([hidden])~ :not([hidden]) {
-            margin-right: calc(1rem * var(--space-x-reverse));
-            margin-left: 0;
-        }
-
-        [dir="rtl"] .mr-6 {
-            margin-right: 0;
-            margin-left: 1.5rem;
-        }
-
-        /* Modal Styles */
-        #settings-modal {
-            backdrop-filter: blur(5px);
-        }
-
-        /* --- Dark Neon Dynamic Background --- */
-        .cyber-wrapper {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
+            margin: 0;
             overflow: hidden;
-            pointer-events: none;
-            display: none;
+            background-color: #0f172a;
+            /* Fallback */
+            color: #fff;
         }
 
-        /* Only show in Dark Theme */
-        :root[data-theme="dark"] .cyber-wrapper {
-            display: block;
+        /* Video Background */
+        #bg-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            filter: brightness(0.6) blur(2px);
         }
 
-        .cyber-grid {
+        /* Glassy Card Style */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 24px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(51, 255, 204, 0.5);
+            box-shadow: 0 20px 50px rgba(51, 255, 204, 0.2);
+        }
+
+        .glass-card::before {
+            content: '';
             position: absolute;
-            width: 200vw;
-            height: 200vh;
             top: -50%;
             left: -50%;
-            background-image:
-                linear-gradient(rgba(0, 191, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 191, 255, 0.05) 1px, transparent 1px);
-            background-size: 60px 60px;
-            transform: perspective(500px) rotateX(60deg);
-            animation: grid-move 20s linear infinite;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(51, 255, 204, 0.2) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            transform: translate(var(--x, 0), var(--y, 0));
+            pointer-events: none;
         }
 
-        @keyframes grid-move {
-            0% {
-                transform: perspective(500px) rotateX(60deg) translateY(0);
-            }
-
-            100% {
-                transform: perspective(500px) rotateX(60deg) translateY(60px);
-            }
+        .glass-card:hover::before {
+            opacity: 1;
         }
 
-        .orb {
+        /* Text Gradients */
+        .gradient-text {
+            background: linear-gradient(135deg, #33FFCC 0%, #00BFFF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Back Button */
+        .back-btn {
             position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.3;
-            animation: float-orb 20s infinite ease-in-out;
+            top: 2rem;
+            left: 2rem;
+            padding: 0.75rem 1.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 9999px;
+            color: #E0E6F0;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
         }
 
-        .orb-1 {
-            top: 20%;
-            left: 20%;
-            width: 300px;
-            height: 300px;
-            background: rgba(0, 191, 255, 0.3);
-            animation-duration: 25s;
-        }
-
-        .orb-2 {
-            bottom: 20%;
-            right: 20%;
-            width: 400px;
-            height: 400px;
+        .back-btn:hover {
             background: rgba(51, 255, 204, 0.2);
-            animation-duration: 30s;
-            animation-delay: -5s;
-        }
-
-        .orb-3 {
-            top: 50%;
-            left: 50%;
-            width: 200px;
-            height: 200px;
-            background: rgba(138, 43, 226, 0.15);
-            animation-duration: 20s;
-            animation-delay: -10s;
-        }
-
-        @keyframes float-orb {
-
-            0%,
-            100% {
-                transform: translate(0, 0);
-            }
-
-            33% {
-                transform: translate(40px, -60px);
-            }
-
-            66% {
-                transform: translate(-30px, 30px);
-            }
-        }
-
-        /* Breathing Glow for Cards in Dark Mode */
-        :root[data-theme="dark"] .subject-card,
-        :root[data-theme="dark"] .comp-card,
-        :root[data-theme="dark"] .lo-item,
-        :root[data-theme="dark"] details {
-            animation: breathing-glow 5s ease-in-out infinite;
-        }
-
-        :root[data-theme="dark"] .subject-card:hover,
-        :root[data-theme="dark"] .comp-card:hover,
-        :root[data-theme="dark"] .lo-item:hover,
-        :root[data-theme="dark"] details[open] {
-            animation: none;
-        }
-
-        @keyframes breathing-glow {
-
-            0%,
-            100% {
-                box-shadow: 0 0 5px rgba(0, 191, 255, 0.05);
-                border-color: rgba(0, 191, 255, 0.1);
-            }
-
-            50% {
-                box-shadow: 0 0 15px rgba(51, 255, 204, 0.15);
-                border-color: rgba(51, 255, 204, 0.3);
-            }
+            border-color: #33FFCC;
+            transform: translateX(-5px);
+            color: #fff;
         }
     </style>
-    <!-- Load Tajawal font for Arabic -->
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
-
-    <script>
-        // Tailwind Configuration with Modern Tech Palette
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'tech-bg': '#1A1F26',
-                        'tech-dark-alt': '#2C333F',
-                        'tech-light': '#E0E6F0',
-                        'tech-primary': '#00BFFF',
-                        'tech-secondary': '#33FFCC',
-                    }
-                }
-            }
-        }
-
-        // Define the learning objectives data structure for Math
-        const learningObjectives = {
-            LO1: {
-                title: "LO1: Trigonometry",
-                concepts: [
-                    "Unit circle",
-                    "Six trigonometric functions",
-                    "Related angles",
-                    "Sine law, cos law",
-                    "Angle of elevation and angle of depression",
-                    "Directed angle",
-                    "Positive, negative, and coterminal angles of rotation"
-                ]
-            },
-            LO2: {
-                title: "LO2: Statistics and Data Analysis",
-                concepts: [
-                    "Shape, center, spread",
-                    "Histogram",
-                    "Stem plot",
-                    "Dot plot",
-                    "Skewed",
-                    "Symmetric",
-                    "IQR",
-                    "Boxplot",
-                    "Outliers",
-                    "Scatter plot",
-                    "Correlation",
-                    "Correlation coefficient",
-                    "Regression line",
-                    "Standard deviation (without frequency)"
-                ]
-            },
-            LO3: {
-                title: "LO3: Three-Dimensional Geometry",
-                concepts: [
-                    "Cross section",
-                    "Dimensional objects",
-                    "Classifying regular polyhedral"
-                ]
-            },
-            LO4: {
-                title: "LO4: Similarity and Transformations",
-                concepts: [
-                    "Similarity",
-                    "Transformation (reduction and magnification)",
-                    "Proportionality",
-                    "Parallel lines and proportional parts",
-                    "Angle bisectors"
-                ]
-            },
-            LO5: {
-                title: "LO5: Area and Volume",
-                concepts: [
-                    "Area",
-                    "Volume",
-                    "Composite figures"
-                ]
-            },
-            LO6: {
-                title: "LO6: Functions",
-                concepts: [
-                    "Linear functions",
-                    "Piecewise function",
-                    "Absolute-Value Functions",
-                    "STEP function",
-                    "Direct variation",
-                    "Inverse variation",
-                    "Intercepted part",
-                    "Composition of functions",
-                    "Translation of linear function"
-                ]
-            },
-            'references': {
-                title: "Additional References",
-                concepts: []
-            }
-        };
-
-        // Video links mapping for each concept
-        const videoLinks = {
-            "Unit circle": ["https://youtu.be/CPvPfdMwMig?si=FXCX-lzVtz-aZDCk", "https://youtu.be/iXGfVuv-sIY?si=hwLbvO1q03T-kt_M"],
-            "Six trigonometric functions": ["https://youtu.be/Fe4I9D5m4Cs?si=bYWrjpttbljYHKDT", "https://youtu.be/VlqBs_FzVds?si=QO54_ZLKTXShHkcH"],
-            "Related angles": ["https://youtu.be/D7w4DCJH2ZI?si=rOIEExFRbFbJk0_l"],
-            "Sine law, cos law": ["https://youtu.be/RfvDaovSkSU?si=it2vMTuArSahhHir", "https://youtu.be/RfvDaovSkSU?si=FN-aQlFmy7wxIx2I"],
-            "Angle of elevation and angle of depression": ["https://youtu.be/dMxFmmwbVXE?si=951ExjyXERrv_I7m"],
-            "Directed angle": ["https://youtu.be/CL2b187XUTg?si=l2w2dvJH0GcLRn2L"],
-            "Positive, negative, and coterminal angles of rotation": ["https://youtu.be/IqM-HtvUE-8?si=pwrlHauiZJNFgM1t"],
-            "Shape, center, spread": ["https://youtu.be/uYbtPM9p71w?si=f9HUHfC4beNZlDzu"],
-            "Histogram": ["https://youtu.be/Pr9ZqFU9-_U?si=F1QLC8PlZvJqXZdh"],
-            "Stem plot": ["https://youtu.be/lqeYIv8X67g?si=JDwnw8U-kA7g3KTH"],
-            "Dot plot": ["https://youtu.be/9qKfLDWN_Es?si=9f-mx4eFE2xk3zje"],
-            "Skewed": ["https://youtu.be/mypZy8Jl-Jc?si=MjGGQygLQLc8Xltx"],
-            "Symmetric": ["https://youtu.be/mypZy8Jl-Jc?si=ouLEUlCRiiREzwOU"],
-            "IQR": ["https://youtu.be/mypZy8Jl-Jc?si=RQmVJ79MaNDSA2nt"],
-            "Boxplot": ["https://youtu.be/mypZy8Jl-Jc?si=RQmVJ79MaNDSA2nt"],
-            "Outliers": ["https://youtu.be/mypZy8Jl-Jc?si=RQmVJ79MaNDSA2nt"],
-            "Scatter plot": ["https://youtu.be/mypZy8Jl-Jc?si=RQmVJ79MaNDSA2nt"],
-            "Correlation": ["https://youtu.be/mypZy8Jl-Jc?si=RQmVJ79MaNDSA2nt"],
-            "Correlation coefficient": ["https://youtu.be/mypZy8Jl-Jc?si=RQmVJ79MaNDSA2nt"],
-            "Regression line": ["https://youtu.be/29jQdHLCGPA?si=xapeIrJMDpF5GdEW"],
-            "Standard deviation (without frequency)": ["https://youtu.be/29jQdHLCGPA?si=xapeIrJMDpF5GdEW"],
-            "Cross section": ["https://youtu.be/4vLy5VoUcQE?si=iSFCajv1fxxn6tOj"],
-            "Dimensional objects": ["https://youtu.be/J2Qz-7ZWDAE?si=9I5znkCSJ4Mu5IVf"],
-            "Classifying regular polyhedral": ["https://youtu.be/UkxUMqrtGUw?si=BbQJrVITzYXzXKSM"],
-            "Similarity": [{ url: "https://youtu.be/6p1lweGactg?si=IVq4lCghbgc1E14j", text: "see the whole playlist" }],
-            "Transformation (reduction and magnification)": ["https://youtu.be/XiAoUDfrar0?si=am5JrD0W6_b6ANEG"],
-            "Proportionality": ["https://youtu.be/AQFZuih2odo?si=LT5Nu4rVMVboGepC"],
-            "Parallel lines and proportional parts": ["https://youtu.be/iywHKl0U-D0?si=VFyaldGacRGFWxcS"],
-            "Angle bisectors": ["https://youtu.be/TpIBLnRAslI?si=HximHX53hSy1Eb4b"],
-            "Area": ["https://youtu.be/kqqmJiJez6o?si=iyK37gPe0gfidits"],
-            "Volume": ["https://youtu.be/xMz9WFvox9g?si=V4OYRqCz0JsYwcBh"],
-            "Composite figures": ["https://youtu.be/z4Lat1uOQI4?si=x-KMGBOyYFST3_X8"],
-            "Linear functions": ["https://youtu.be/AZroE4fJqtQ?si=2aiauDXqRrNf9JXg"],
-            "Piecewise function": ["https://youtu.be/hg2HR9zJFq4?si=kw20EcXgOOyR7fba"],
-            "Absolute-Value Functions": ["https://youtu.be/u6zDpUL5RkU?si=cqO9f7n7pI217pwn"],
-            "STEP function": ["https://youtu.be/RqByBGKGHDU?si=c27anoSFcxETSi-R"],
-            "Direct variation": ["https://youtu.be/92U67CUy9Gc?si=DudyuKtHmw-xQwCS"],
-            "Inverse variation": ["https://youtu.be/92U67CUy9Gc?si=DudyuKtHmw-xQwCS"],
-            "Intercepted part": ["https://youtu.be/RvS5VTV8O88?si=suluCJopAXFTAJ3R"],
-            "Composition of functions": ["https://youtu.be/wUNWjd4bMmw?si=tAV9tmuWe3c2E_Zl"],
-            "Translation of linear function": ["https://youtu.be/rgvysb9emcQ?si=g3Y__YZoONFkPC9O"]
-        };
-
-
-        const loSummaryVideos = {
-            LO1: [
-                "https://youtu.be/Uq6OsIPhqzw?si=j7wGJnem-EHPmhr5",
-                "https://youtu.be/2trG5-1w5KE?si=0kkz7eiBc8YcmBmq"
-            ],
-            LO2: [
-                "https://youtu.be/dUBxHP0zBdc?si=bUJ8PHb4rSeuMZW-",
-                "https://youtu.be/gNCI5EHKenw?si=b98hXHMt593mX_ee"
-            ],
-            LO3: ["https://youtu.be/q2SQPztYaQQ?si=fZvPiR_t927FIc3I"],
-            LO4: ["https://youtu.be/gd377CI_uZY?si=DiDl_H1ugYVYDSiP"],
-            LO5: ["https://youtu.be/q2SQPztYaQQ?si=bpXGAUgjn--uEdAF"],
-            LO6: ["https://youtu.be/7oUir6R9x2w?si=j0X3o2n91Hr0Hp1s"]
-        };
-
-        const revisionVideos = {
-            midterm: [
-                "https://youtu.be/eBdw_2tLabg?si=nv8PoczibR6B0z3Z",
-                "https://youtu.be/O92lj_P9Pes?si=X2u17Sc9vKJKhIvG",
-                "https://youtu.be/4UQ7JMbpWig?si=fte2M9m859FWXt-h"
-            ],
-            final: ["https://youtu.be/yNszOrjbDSg?si=5jwp5SYOTlSIC4TV"]
-        };
-
-
-        // Function to create a single downloadable link block
-        function createLinkBlock(title, placeholderText) {
-            const mockDownloadLink = "javascript:void(0)";
-            return `
-                <div class="mt-3 p-3 bg-tech-dark-alt/50 rounded-lg border border-tech-dark-alt">
-                    <h4 class="text-md font-bold text-tech-secondary mb-1">${title}</h4>
-                    <p class="text-sm text-tech-light/70 italic mb-2">${placeholderText}</p>
-                </div>
-            `;
-        }
-
-        // Resource files mapping (sourced from "first semester" folder)
-        const resourceFiles = {
-            LO1: [
-                'first semester/LO1/LO 1.pptx',
-                'first semester/LO1/LO 1 MATH.pptx',
-                'first semester/LO1/MA 1.01.1 Modeling with trigonometric functions.pptx',
-                'first semester/LO1/Trig 7 sin=cos (2).pptx',
-                'first semester/LO1/2a lesson 3.4 .6 .7.pdf',
-                'first semester/LO1/LAW OF SINES AND COSINES.pdf',
-                'first semester/LO1/1 st trigonometric functions.pptx',
-                'first semester/LO1/2nd  Follow trigonometric functions.pptx',
-                'first semester/LO1/4th trig sin and cos law.pptx',
-                'first semester/LO1/3rd trig identities.pptx',
-                'first semester/LO1/6th cross section and rotaion (1).pptx',
-                'first semester/LO1/5th trig angl elevation annd depretion.pptx',
-                'first semester/LO1/Trig Functions and Identities.pdf',
-                'first semester/LO1/Trig 8  Sum and Difference of two angles  Formulas.ppt',
-                'first semester/LO1/Trig 1The Unit Circle.ppt',
-                'first semester/LO1/trig 3 starting and ending points for sin and  functions.ppt'
-            ],
-            LO2: [
-                'first semester/LO2/G10 S3.pdf',
-                'first semester/LO2/LO 2.pptx',
-                'first semester/LO2/MA 1.02.1.pptx'
-            ],
-            LO3: [
-                'first semester/LO3/LO 3.pptx',
-                'first semester/LO3/MA 1.03 Modeling with geometry.pptx'
-            ],
-            LO4: [
-                'first semester/LO4/LO 4.pptx',
-                'first semester/LO4/MA 1.04 Similarity.pptx'
-            ],
-            LO5: [
-                'first semester/LO5/LO 5.pptx',
-                'first semester/LO5/MA 1.05 pyramid.pptx',
-                'first semester/LO5/MA 1.05 Cone.pptx'
-            ],
-            LO6: [
-                'first semester/LO6/LO 6.pptx',
-                'first semester/LO6/MA 1.06 functions.pptx',
-                'first semester/LO6/MA 1.06 functions.2pptx.pptx'
-            ],
-            testBanks: [
-                'first semester/test banks/LO 1 exercise.pptx',
-                'first semester/test banks/LO 2 exercise.pptx',
-                'first semester/test banks/LO 3 exercise.pptx',
-                'first semester/test banks/LO 4 exercise.pptx',
-                'first semester/test banks/LO 5 exercise.pdf',
-                'first semester/test banks/5B Honors Quiz Review final.pdf'
-            ],
-            revisions: [
-                'first semester/revisions/First term revision.pptx',
-                'first semester/revisions/First term revision2.pptx',
-                'first semester/revisions/Revision L.O.5 & 6.pdf',
-                'first semester/revisions/final revision on maths for grade 10 first semester 2017.pdf',
-                'first semester/revisions/pure math 1st term .docx'
-            ]
-        };
-
-        // Mapping filename -> shareUrl (math files)
-        const shareMap = {
-            "LO 1.pptx": "https://docs.google.com/presentation/d/1FdGqo-21V3Y1qt_4VNDsXwkosi4Sh4Kn/edit?usp=sharing",
-            "LO 1 MATH.pptx": "https://docs.google.com/presentation/d/1Giim5RVOhLFSQkffCrksDPWHL1KbwluB/edit?usp=sharing",
-            "MA 1.01.1 Modeling with trigonometric functions.pptx": "https://docs.google.com/presentation/d/1IRpwXNJFlpn_ueYcSSj0-6KZAXoyeggX/edit?usp=sharing",
-            "Trig Functions and Identities.pdf": "https://drive.google.com/file/d/1iGaaBTxBLLht5G7XmpnmhqVMYbhC6tWj/view?usp=sharing",
-            "MA 1.06 functions.pptx": "https://docs.google.com/presentation/d/1rc--v8LmNy01hf8uHNckGnRBS1wRoQ3N/edit?usp=sharing",
-            "MA 1.06 functions.2pptx.pptx": "https://docs.google.com/presentation/d/1P9LMRGyUHFKl3WSGhl0bchCvx2d2zQ59/edit?usp=sharing",
-            "LO 1 exercise.pptx": "https://docs.google.com/presentation/d/1puJGrzFAprcef2YJW7hy9ghe5rcHUgY-/edit?usp=sharing",
-            "LO 2 exercise.pptx": "https://docs.google.com/presentation/d/1-B1tG1NuihTAEKeYFK9Lye13hbfwI1x6/edit?usp=sharing",
-            "LO 3 exercise.pptx": "https://docs.google.com/presentation/d/11IWafbzqF9oEPj5d2xinV_k0EfmdmsZb/edit?usp=sharing",
-            "LO 4 exercise.pptx": "https://docs.google.com/presentation/d/17zoQd9lky3Yud5XsScnFFqwuPa-m0f-w/edit?usp=sharing",
-            "LO 5 exercise.pdf": "https://drive.google.com/file/d/1KSbcP-83rHE76eOkgY_Mj_kJEW0mOrOf/view?usp=sharing",
-            "5B Honors Quiz Review final.pdf": "https://drive.google.com/file/d/1zJfftm-ZsOiCbbLm7-JbvHyfmw91Q99v/view?usp=sharing",
-            "Revision L.O.5 & 6.pdf": "https://drive.google.com/file/d/15mfxDc76f540OAGRiOHphT99foENSDvE/view?usp=sharing",
-            "First term revision.pptx": "https://docs.google.com/presentation/d/1N5igRHMtf580lzgam1nfMVg_Jra2xCOR/edit?usp=sharing",
-            "First term revision2.pptx": "https://docs.google.com/presentation/d/1O1A6NAb2CkrDN19MIbfHcAT2GCw0DbfU/edit?usp=sharing",
-            "final revision on maths for grade 10 first semester 2017.pdf": "https://drive.google.com/file/d/19SH4HOs4s8iteLiisGZc9pxHdtd4IfI5/view?usp=sharing",
-            "pure math 1st term .docx": "https://docs.google.com/document/d/1bFyCBSzKntzZh6wRwJ5eOX57sVE9FgYG/edit?usp=sharing",
-            "LO 6.pptx": "https://docs.google.com/presentation/d/12Rau-6JGJlENAtrc8uQaxJ9dGdfCbGnK/edit?usp=sharing",
-            "LO 5.pptx": "https://docs.google.com/presentation/d/1L-7THfGCXlq1jEW4VTlXVi9MaOczVFbK/edit?usp=sharing",
-            "MA 1.05 pyramid.pptx": "https://docs.google.com/presentation/d/16oCUdRawsz3FqHuZKs4bynzn5gVQ0hM5/edit?usp=sharing",
-            "MA 1.05 Cone.pptx": "https://docs.google.com/presentation/d/1TKd3WwBkg82qxw3pk66WTAYhVpr-9OLo/edit?usp=sharing",
-            "LO 4.pptx": "https://docs.google.com/presentation/d/1QnoaIKLj73Ry20X7YhrLAaOvEU2_fHaU/edit?usp=sharing",
-            "MA 1.04 Similarity.pptx": "https://docs.google.com/presentation/d/1009nneJgOCiIXt24EbC-kRs2pSRDkwGb/edit?usp=sharing",
-            "LO 3.pptx": "https://docs.google.com/presentation/d/1qv_X-Qy2g23OFh7C_5_AJR1za9zd1BVX/edit?usp=sharing",
-            "MA 1.03 Modeling with geometry.pptx": "https://docs.google.com/presentation/d/1Q7drACLaLJ7TuMpUIfv4OYr-zKZl47Sk/edit?usp=sharing",
-            "G10 S3.pdf": "https://drive.google.com/file/d/1nIGGd8RheQvldM4NBU0I-rCFSVMUXU4L/view?usp=sharing",
-            "LO 2.pptx": "https://docs.google.com/presentation/d/1Iby_kKYJO1s67smbDMpctB27c6sZBVqz/edit?usp=sharing",
-            "MA 1.02.1.pptx": "https://docs.google.com/presentation/d/1-Pfn178Ftqx10PgS4g-IKYgP_AE314B9/edit?usp=sharing",
-            "Trig 7 sin=cos (2).pptx": "https://docs.google.com/presentation/d/1qxj4B5Jr0i6j1ZePOd6Fxkzy6UPRqTnO/edit?usp=sharing",
-            "2a lesson 3.4 .6 .7.pdf": "https://drive.google.com/file/d/1-XFnVMn0pNgp9P6WzdeTFKFNgz43xN0p/view?usp=sharing",
-            "LAW OF SINES AND COSINES.pdf": "https://drive.google.com/file/d/1TamSbaOWXzbv5FeHlM_YqdkeJrdxbRgg/view?usp=sharing",
-            "1 st trigonometric functions.pptx": "https://docs.google.com/presentation/d/1ppQLnIf0Ua8170_qiCN2eC2CyK1dWbI4/edit?usp=sharing",
-            "2nd  Follow trigonometric functions.pptx": "https://docs.google.com/presentation/d/1W85ypvrele1Pw2SuRRJ9d02nvWgL9LTM/edit?usp=sharing",
-            "4th trig sin and cos law.pptx": "https://docs.google.com/presentation/d/1pJkBs9DwpPS2IVKCAYAG1nOBb592TKbY/edit?usp=sharing",
-            "3rd trig identities.pptx": "https://docs.google.com/presentation/d/1Sz8Tl2Xuody6RU_w7ndw8lnq3I1bS8VU/edit?usp=sharing",
-            "6th cross section and rotaion (1).pptx": "https://docs.google.com/presentation/d/1-omYi-veGVHMSvP3PfS4J5aE80ctmbSF/edit?usp=sharing",
-            "5th trig angl elevation annd depretion.pptx": "https://docs.google.com/presentation/d/11LbVV8IKX4Q6raG372xVwCX2AaIppTtY/edit?usp=sharing",
-            "Trig 8  Sum and Difference of two angles  Formulas.ppt": "https://docs.google.com/presentation/d/1TWDCXlAY7Xc-4G0aXSNjEp5UW5R5ZKaL/edit?usp=sharing",
-            "Trig 1The Unit Circle.ppt": "https://docs.google.com/presentation/d/1WcdMeDQQ-syeLhAUMSBrYNi9xZVFCh9l/edit?usp=sharing",
-            "trig 3 starting and ending points for sin and  functions.ppt": "https://docs.google.com/presentation/d/1Se6sJV-o_e78JB9yUW5hSumiWCzvuRMn/edit?usp=sharing"
-        };
-
-        // Function to create a presentation links block
-        function createPresentationLinks(loKey) {
-            const files = resourceFiles[loKey] || [];
-            if (!files.length) return '';
-
-            let html = `
-                <div class="mt-3 p-3 bg-tech-dark-alt/50 rounded-lg border border-tech-dark-alt">
-                    <h4 class="text-md font-bold text-tech-secondary mb-2">Presentations & Files</h4>
-                    <ul class="list-disc list-inside space-y-2">
-            `;
-
-            files.forEach(file => {
-                const fileName = file.split('/').pop();
-                const url = shareMap[fileName] || file;
-                html += `
-                    <li>
-                        <a href="${url}" target="_blank" rel="noopener noreferrer" 
-                           class="text-tech-secondary hover:text-tech-primary transition duration-200 text-sm underline font-semibold">
-                            ${fileName}
-                        </a>
-                    </li>
-                `;
-            });
-
-            html += `</ul></div>`;
-            return html;
-        }
-
-        // Function to render test banks list
-        function renderTestBanks() {
-            const files = resourceFiles.testBanks || [];
-            if (!files.length) return `<h3 class="text-xl text-tech-secondary">No test banks available.</h3>`;
-
-            let html = `
-                <h2 class="text-3xl font-extrabold mb-6 text-tech-primary border-b border-tech-secondary/50 pb-2">Test Banks</h2>
-                <div class="p-4 bg-tech-dark-alt rounded-xl border border-tech-secondary/50 shadow-subtle-glow">
-                    <p class="text-xl font-medium text-tech-light mb-6">
-                        Practice your knowledge with these test banks:
-                    </p>
-                    <ul class="space-y-3">
-            `;
-
-            files.forEach(f => {
-                const name = f.split('/').pop();
-                const url = shareMap[name] || f;
-                html += `<li><a href="${url}" target="_blank" rel="noopener noreferrer" class="text-tech-secondary hover:text-tech-primary transition duration-200 underline">${name}</a></li>`;
-            });
-
-            html += `</ul></div>`;
-            return html;
-        }
-
-        // Function to render revisions list
-        function renderRevisions() {
-            let html = `
-                <h2 class="text-3xl font-extrabold mb-6 text-tech-primary border-b border-tech-secondary/50 pb-2">Revisions</h2>
-            `;
-
-            // Helper for video sections
-            const renderVidSection = (title, vids) => {
-                if (!vids || !vids.length) return '';
-                let block = `
-                    <div class="mb-6">
-                        <h3 class="text-2xl font-bold text-tech-light mb-4">${title}</h3>
-                        <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-                `;
-                vids.forEach((v, idx) => {
-                    block += `
-                        <a href="${v}" target="_blank" class="block p-4 bg-tech-dark-alt rounded-lg border border-tech-primary/30 hover:border-tech-secondary hover:shadow-subtle-glow transition group">
-                            <div class="flex items-center space-x-3">
-                                <svg class="w-8 h-8 text-red-500 group-hover:text-red-400 transition" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
-                                </svg>
-                                <span class="font-semibold text-tech-light group-hover:text-tech-primary">Watch Video ${idx + 1}</span>
-                            </div>
-                        </a>
-                    `;
-                });
-                block += `</div></div>`;
-                return block;
-            }
-
-            html += renderVidSection('Midterm Revision', revisionVideos.midterm);
-            html += renderVidSection('Final Revision', revisionVideos.final);
-
-            const files = resourceFiles.revisions || [];
-            if (!files.length && !revisionVideos.midterm && !revisionVideos.final) {
-                return `<h3 class="text-xl text-tech-secondary">No revision materials available.</h3>`;
-            }
-
-            if (files.length) {
-                html += `
-                    <div class="p-4 bg-tech-dark-alt rounded-xl border border-tech-secondary/50 shadow-subtle-glow mt-6">
-                        <p class="text-xl font-medium text-tech-light mb-6">
-                            Review your knowledge with these revision materials:
-                        </p>
-                        <ul class="space-y-3">
-                `;
-                files.forEach(f => {
-                    const name = f.split('/').pop();
-                    const url = shareMap[name] || f;
-                    html += `<li><a href="${url}" target="_blank" rel="noopener noreferrer" class="text-tech-secondary hover:text-tech-primary transition duration-200 underline">${name}</a></li>`;
-                });
-                html += `</ul></div>`;
-            }
-
-            return html;
-        }
-
-        // Function to render concept content
-        function renderConcept(conceptTitle, loKey) {
-            const description = `This section covers the fundamental principles of **${conceptTitle}**. Understanding this concept is crucial for mastering mathematics.`;
-            // Get video links for this concept
-            let links = videoLinks[conceptTitle] || [];
-            let videoHtml = '';
-            if (links.length) {
-                videoHtml = `<div class=\"mt-3 p-3 bg-tech-bg/50 rounded-lg border border-tech-dark-alt\">\n` +
-                    `<h4 class=\"text-md font-bold text-tech-secondary mb-2\">Videos</h4>\n` +
-                    `<ul class=\"list-disc list-inside space-y-2">`;
-                links.forEach(l => {
-                    if (typeof l === 'string') {
-                        videoHtml += `<li><a href=\"${l}\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"text-tech-primary hover:text-tech-secondary underline\">Watch on YouTube</a></li>`;
-                    } else if (typeof l === 'object' && l.url) {
-                        videoHtml += `<li><a href=\"${l.url}\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"text-tech-primary hover:text-tech-secondary underline\">Watch on YouTube</a> <span class=\"text-tech-secondary text-xs ml-2\">${l.text}</span></li>`;
-                    }
-                });
-                videoHtml += `</ul></div>`;
-            }
-            return `
-                <details class=\"mb-4 bg-tech-dark-alt rounded-xl border border-tech-primary/30 shadow-lg overflow-hidden\">\n` +
-                `<summary class=\"flex items-center justify-between p-4 cursor-pointer text-lg font-semibold text-tech-light hover:bg-tech-primary/20 transition duration-300\">\n` +
-                `<span class=\"truncate\">${conceptTitle}</span>\n` +
-                `<svg class=\"w-5 h-5 ml-2 transition-transform duration-300 arrow-icon flex-shrink-0\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"9 18 15 12 9 6\"/></svg>\n` +
-                `</summary>\n` +
-                `<div class=\"px-4 pb-4 pt-2 border-t border-tech-primary/30 space-y-4\">\n` +
-                `<div class=\"bg-tech-bg/80 p-3 rounded-lg border border-tech-dark-alt\">\n` +
-                `<h4 class=\"text-md font-bold text-tech-secondary mb-1\">Concept Description</h4>\n` +
-                `<p class=\"text-tech-light/90 text-sm\">${description}</p>\n` +
-                `</div>\n` +
-                `${videoHtml}\n` +
-                `</div>\n` +
-                `</details>\n`;
-        }
-
-        // Function to render the LO content
-        function renderLO(loKey, loData) {
-            let html = `
-                <h2 class="text-3xl font-extrabold mb-6 text-tech-primary border-b border-tech-secondary/50 pb-2">${loData.title}</h2>
-            `;
-
-            // Summary Videos
-            if (loSummaryVideos[loKey]) {
-                html += `
-                    <div class="mb-6 p-4 bg-tech-dark-alt/80 rounded-lg border border-tech-primary/30">
-                        <h3 class="text-xl font-bold text-tech-secondary mb-3">Summary Videos</h3>
-                        <div class="space-y-2">
-                `;
-                loSummaryVideos[loKey].forEach((vid, idx) => {
-                    html += `
-                        <a href="${vid}" target="_blank" class="flex items-center space-x-2 text-tech-light hover:text-tech-primary transition">
-                            <svg class="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
-                            <span class="underline">Watch Summary Video ${idx + 1}</span>
-                        </a>
-                     `;
-                });
-                html += `</div></div>`;
-            }
-
-            loData.concepts.forEach(concept => {
-                html += renderConcept(concept, loKey);
-            });
-
-            // Presentations/Files for this LO
-            html += createPresentationLinks(loKey);
-
-            // Test Banks CTA
-            html += `
-                <div class="mt-8 p-4 bg-tech-bg/80 rounded-lg border border-tech-dark-alt">
-                    <p class="text-tech-light/80 mb-3">Looking for practice tests? Check the Test Banks section.</p>
-                    <button onclick="handleNavigationClick('test-banks')" class="px-3 py-2 bg-tech-primary text-tech-bg rounded-md font-semibold hover:bg-tech-secondary transition duration-200">Open Test Banks</button>
-                </div>
-            `;
-
-            return html;
-        }
-
-        // State for re-rendering
-        let currentLOKey = 'LO1';
-
-        // Function to handle navigation and content rendering
-        function handleNavigationClick(loKey) {
-            currentLOKey = loKey; // Update state
-
-            const contentArea = document.getElementById('dynamic-content');
-            const defaultMessage = document.getElementById('default-message');
-            const loItems = document.querySelectorAll('.lo-item');
-
-            // Update active state
-            loItems.forEach(item => item.classList.remove('active'));
-            const target = document.getElementById(`lo-${loKey}`);
-            if (target) target.classList.add('active');
-
-            // Hide default message if visible
-            if (defaultMessage) defaultMessage.style.display = 'none';
-
-            // Render appropriate content
-            if (loKey === 'test-banks') {
-                contentArea.innerHTML = renderTestBanks();
-            } else if (loKey === 'revisions') {
-                contentArea.innerHTML = renderRevisions();
-            } else if (learningObjectives[loKey]) {
-                contentArea.innerHTML = renderLO(loKey, learningObjectives[loKey]);
-            } else {
-                contentArea.innerHTML = `<h2 class="text-red-400">Error: Learning Objective not found.</h2>`;
-            }
-
-            // Scroll to top
-            document.getElementById('content-area').scrollTop = 0;
-        }
-
-        // Initialize everything when the DOM is loaded
-        document.addEventListener('DOMContentLoaded', () => {
-            const loList = document.getElementById('lo-list');
-
-            // Generate sidebar buttons for each LO
-            Object.keys(learningObjectives).forEach(key => {
-                if (key !== 'references') {  // Skip the references section
-                    const displayText = learningObjectives[key].title;
-
-                    const listItem = document.createElement('li');
-                    listItem.innerHTML = `
-                        <button id="lo-${key}" 
-                            class="lo-item w-full text-left p-3 rounded-lg border-l-4 border-tech-dark-alt transition duration-200 
-                                   hover:bg-tech-primary/10 hover:border-tech-primary font-medium text-sm sm:text-base"
-                            data-lo-key="${key}">
-                            <span class="truncate">${displayText}</span>
-                        </button>
-                    `;
-                    loList.appendChild(listItem);
-                }
-            });
-
-            // Add Test Banks button to the sidebar
-            const tbItem = document.createElement('li');
-            tbItem.innerHTML = `
-                <button id="lo-test-banks" 
-                    class="lo-item w-full text-left p-3 rounded-lg border-l-4 border-tech-dark-alt transition duration-200 
-                           hover:bg-tech-primary/10 hover:border-tech-primary font-medium text-sm sm:text-base"
-                    data-lo-key="test-banks">
-                    <span class="truncate">Test Banks</span>
-                </button>
-            `;
-            loList.appendChild(tbItem);
-
-            // Add Revisions button to the sidebar
-            const revItem = document.createElement('li');
-            revItem.innerHTML = `
-                <button id="lo-revisions" 
-                    class="lo-item w-full text-left p-3 rounded-lg border-l-4 border-tech-dark-alt transition duration-200 
-                           hover:bg-tech-primary/10 hover:border-tech-primary font-medium text-sm sm:text-base"
-                    data-lo-key="revisions">
-                    <span class="truncate">Revisions</span>
-                </button>
-            `;
-            loList.appendChild(revItem);
-
-            // Add click handler to sidebar
-            loList.addEventListener('click', (event) => {
-                const button = event.target.closest('.lo-item');
-                if (button) {
-                    const loKey = button.getAttribute('data-lo-key');
-                    handleNavigationClick(loKey);
-                }
-            });
-
-            // Theme toggle initialization (default to dark)
-            const themeToggleBtn = document.getElementById('theme-toggle');
-            const themeToggleIcon = document.getElementById('theme-toggle-icon');
-
-
-
-            // Dictionary for Translations
-            const translations = {
-                en: {
-                    "settings": "Settings",
-                    "language": "Language",
-                    "theme": "Theme",
-                    "close": "Close",
-                    "lo_title": "Learning Objectives",
-                    "default_msg": "Please choose your checkpoint",
-                    "test_banks": "Test Banks",
-                    "revisions": "Revisions",
-                    "back": "Back",
-                    "comments": "If you have any comments please text me",
-                    "practice_text": "Practice your knowledge with these test banks:",
-                    "revision_text": "Review your knowledge with these revision materials:",
-                    "videos": "Videos",
-                    "presentations": "Presentations & Files",
-                    "concept_desc": "Concept Description",
-                    "open_test_banks": "Open Test Banks",
-                    "looking_for": "Looking for practice tests? Check the Test Banks section.",
-                    "watch_youtube": "Watch on YouTube",
-                    "concept_intro": "This section covers the fundamental principles of",
-                    "concept_outro": "Understanding this concept is crucial for mastering mathematics.",
-                    "no_test_banks": "No test banks available.",
-                    "no_revisions": "No revision files available.",
-                    "theme_dark": "Dark Neon",
-                    "theme_christmas": "Chresmas 🎄"
-                },
-                ar: {
-                    "settings": "الإعدادات",
-                    "language": "اللغة",
-                    "theme": "السمة",
-                    "close": "إغلاق",
-                    "lo_title": "أهداف التعلم",
-                    "default_msg": "يرجى اختيار نقطة التفتيش الخاصة بك",
-                    "test_banks": "بنك الأسئلة",
-                    "revisions": "المراجعات",
-                    "back": "رجوع",
-                    "comments": "إذا كان لديك أي تعليقات يرجى مراسلتي",
-                    "practice_text": "تدرّب على معرفتك مع بنوك الأسئلة هذه:",
-                    "revision_text": "راجع معلوماتك مع مواد المراجعة هذه:",
-                    "videos": "فيديوهات",
-                    "presentations": "العروض التقديمية والملفات",
-                    "concept_desc": "وصف المفهوم",
-                    "open_test_banks": "فتح بنك الأسئلة",
-                    "looking_for": "تبحث عن اختبارات تدريبية؟ تحقق من قسم بنك الأسئلة.",
-                    "watch_youtube": "شاهد على يوتيوب",
-                    "concept_intro": "يغطي هذا القسم المبادئ الأساسية لـ",
-                    "concept_outro": "فهم هذا المفهوم ضروري لإتقان الرياضيات.",
-                    "no_test_banks": "لا يوجد بنوك أسئلة متاحة.",
-                    "no_revisions": "لا توجد ملفات مراجعة متاحة.",
-                    "theme_dark": "نيون داكن",
-                    "theme_christmas": "كريسماس 🎄"
-                }
-            };
-
-            function updateText(lang) {
-                const t = translations[lang];
-                document.querySelectorAll('[data-i18n]').forEach(el => {
-                    const key = el.getAttribute('data-i18n');
-                    if (t[key]) el.textContent = t[key];
-                });
-
-                // Update Sidebar Text
-                document.querySelectorAll('.lo-item').forEach(btn => {
-                    const key = btn.getAttribute('data-lo-key');
-                    if (key === 'test-banks') {
-                        btn.querySelector('span').textContent = t['test_banks'];
-                    } else if (key === 'revisions') {
-                        btn.querySelector('span').textContent = t['revisions'];
-                    } else if (learningObjectives[key]) {
-                        const title = (lang === 'ar' && learningObjectives[key].ar_title)
-                            ? learningObjectives[key].ar_title
-                            : learningObjectives[key].title;
-                        btn.querySelector('span').textContent = title;
-                    }
-                });
-
-                // Re-render Main Content
-                handleNavigationClick(currentLOKey);
-            }
-
-            function setLanguage(lang) {
-                document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
-                document.documentElement.setAttribute('lang', lang);
-                localStorage.setItem('language', lang);
-                updateText(lang);
-
-                // Re-render sidebar to apply RTL classes if needed (CSS mostly handles it)
-            }
-
-            function setTheme(theme) {
-                document.documentElement.setAttribute('data-theme', theme);
-                localStorage.setItem('theme', theme);
-
-                // Use centralized effects
-                if (window.ThemeEffects) {
-                    window.ThemeEffects.setEffect(theme);
-                } else {
-                    if (theme === 'christmas') {
-                        startSnow();
-                    } else {
-                        stopSnow();
-                    }
-                }
-
-                if (themeToggleIcon) {
-                    if (theme === 'dark') {
-                        themeToggleIcon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
-                    } else if (theme === 'light') {
-                        themeToggleIcon.innerHTML = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
-                    } else if (theme === 'christmas') {
-                        themeToggleIcon.innerHTML = '<path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"></path>'; // Star
-                    }
-                }
-
-                // Anime.js Stagger Effect on Sidebar
-                if (window.anime) {
-                    const items = document.querySelectorAll('#lo-list li');
-                    anime({
-                        targets: items,
-                        translateX: [-20, 0],
-                        opacity: [0, 1],
-                        delay: anime.stagger(100),
-                        easing: 'easeOutQuad',
-                        duration: 800
-                    });
-                }
-            }
-
-            // Snow Animation Logic
-            let snowInterval;
-            function startSnow() {
-                const container = document.getElementById('snow-container');
-                if (!container) return;
-                stopSnow(); // Clear existing
-                snowInterval = setInterval(() => {
-                    const snowflake = document.createElement('div');
-                    snowflake.classList.add('snowflake');
-                    snowflake.style.left = Math.random() * 100 + 'vw';
-                    snowflake.style.width = snowflake.style.height = (Math.random() * 5 + 3) + 'px'; // 3-8px
-                    snowflake.style.animationDuration = (Math.random() * 3 + 2) + 's'; // 2-5s
-                    snowflake.style.opacity = Math.random();
-
-                    container.appendChild(snowflake);
-
-                    // Cleanup
-                    setTimeout(() => {
-                        snowflake.remove();
-                    }, 5000);
-                }, 100);
-            }
-
-            function stopSnow() {
-                if (snowInterval) clearInterval(snowInterval);
-                const container = document.getElementById('snow-container');
-                if (container) container.innerHTML = '';
-            }
-
-            const saved = localStorage.getItem('theme');
-            if (saved) {
-                setTheme(saved);
-            } else {
-                setTheme('dark');
-            }
-
-            if (themeToggleBtn) {
-                themeToggleBtn.addEventListener('click', () => {
-                    document.getElementById('settings-modal').classList.remove('hidden');
-                });
-            }
-
-
-            // Load Saved Language
-            const savedLang = localStorage.getItem('language') || 'en';
-            setLanguage(savedLang);
-
-            // Modal Logic
-            const settingsModal = document.getElementById('settings-modal');
-            const closeSettings = document.getElementById('close-settings');
-
-            closeSettings.addEventListener('click', () => {
-                settingsModal.classList.add('hidden');
-            });
-
-            // Close on outside click
-            settingsModal.addEventListener('click', (e) => {
-                if (e.target === settingsModal) {
-                    settingsModal.classList.add('hidden');
-                }
-            });
-
-            // Lang Buttons
-            document.getElementById('lang-en')?.addEventListener('click', () => setLanguage('en'));
-            document.getElementById('lang-ar')?.addEventListener('click', () => setLanguage('ar'));
-
-            // Theme Buttons
-            document.getElementById('theme-dark').addEventListener('click', () => setTheme('dark'));
-            document.getElementById('theme-midnight')?.addEventListener('click', () => setTheme('midnight'));
-            document.getElementById('theme-christmas').addEventListener('click', () => setTheme('christmas'));
-
-            // Initialize with LO1
-            handleNavigationClick('LO1');
-        });
-    </script>
 </head>
 
-<body class="bg-tech-bg text-tech-light min-h-screen flex flex-col">
-    <!-- Dark Neon Background Effects -->
-    <div class="cyber-wrapper">
-        <div class="cyber-grid"></div>
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
-    </div>
+<body class="flex items-center justify-center min-h-screen">
 
-    <!-- Header -->
-    <header
-        class="w-full bg-tech-dark-alt p-4 shadow-xl shadow-tech-primary/10 border-b border-tech-primary/30 sticky top-0 z-10">
-        <div class="max-w-7xl mx-auto flex items-center relative">
-            <!-- Left: Back Button & Logo -->
-            <div class="flex items-center space-x-4">
-                <button onclick="window.location.href='../index.html'"
-                    class="text-tech-light hover:text-tech-secondary transition duration-200 p-2 rounded-full hover:bg-tech-primary/20">
-                    <!-- Back Arrow SVG Icon -->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M19 12H5" />
-                        <path d="m12 19-7-7 7-7" />
-                    </svg>
-                </button>
+    <!-- Background Video -->
+    <video autoplay muted loop id="bg-video">
+        <source src="../the vedio.mp4" type="video/mp4">
+        Your browser does not support HTML5 video.
+    </video>
 
-                <!-- Logo: Single gradient-styled "Stemawy" -->
-                <a href="../index.html"
-                    class="flex items-center space-x-2 text-2xl font-extrabold transition duration-200 hover:opacity-80">
-                    <span class="gradient-text-wrapper gradient-h1">Stemawy</span>
-                </a>
-            </div>
+    <!-- Navigation -->
+    <a href="../index.html" class="back-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5" />
+            <path d="M12 19l-7-7 7-7" />
+        </svg>
+        Dashboard
+    </a>
 
-            <!-- Center: Title (Absolutely centered) -->
-            <h1 class="absolute left-1/2 transform -translate-x-1/2 text-4xl font-extrabold tracking-tight">
-                <span class="gradient-text-wrapper gradient-h1">MATH</span>
-            </h1>
-
-            <!-- Right: Theme toggle (Pushed to the right) -->
-            <div class="ml-auto flex items-center">
-                <button id="theme-toggle" class="p-2 rounded-md hover:bg-tech-primary/10 transition"
-                    title="Toggle theme">
-                    <svg id="theme-toggle-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-                    </svg>
-                </button>
-            </div>
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 z-10">
+        <div class="text-center mb-16 opacity-0" id="header-content">
+            <h1 class="text-5xl md:text-7xl font-extrabold mb-4 tracking-tight">Select Semester</h1>
+            <p class="text-xl text-gray-300 font-light max-w-2xl mx-auto">Choose your academic path to access resources
+                and materials.</p>
         </div>
-    </header>
 
-    <!-- Main Content Area -->
-    <main class="flex flex-1 overflow-hidden max-w-7xl mx-auto w-full p-4 sm:p-6">
+        <div class="flex flex-col md:flex-row gap-8 justify-center items-center max-w-5xl mx-auto">
 
-        <!-- Left Sidebar (LO Navigation) -->
-        <nav id="sidebar"
-            class="w-full sm:w-64 bg-tech-dark-alt rounded-xl p-4 mr-6 flex-shrink-0 border border-tech-primary/20 h-full overflow-y-auto">
-            <h2 class="text-lg font-bold mb-4 text-tech-secondary uppercase tracking-wider border-b border-tech-secondary/30 pb-2"
-                data-i18n="lo_title">
-                Learning Objectives</h2>
-            <ul id="lo-list" class="space-y-2">
-                <!-- LO items will be generated here -->
-            </ul>
-        </nav>
-
-        <!-- Right Content Area -->
-        <section id="content-area"
-            class="flex-1 bg-tech-dark-alt rounded-xl p-6 border border-tech-primary/50 shadow-subtle-glow">
-            <div id="dynamic-content" class="h-full">
-                <!-- Default State -->
-                <div id="default-message"
-                    class="flex items-center justify-center h-full text-3xl font-light text-tech-light/50"
-                    data-i18n="default_msg">
-                    Please choose your checkpoint
+            <!-- First Semester Card -->
+            <a href="./first semester/index.html"
+                class="glass-card w-full md:w-1/2 p-10 flex flex-col items-center text-center group h-80 justify-center card-entry">
+                <div
+                    class="w-20 h-20 mb-6 rounded-full bg-white/5 flex items-center justify-center border border-white/10 group-hover:border-[#33FFCC] transition-colors duration-300">
+                    <span class="text-4xl">1️⃣</span>
                 </div>
-                <!-- Dynamic content will be rendered here -->
-            </div>
-        </section>
-    </main>
+                <h2 class="text-4xl font-bold text-white mb-3 group-hover:text-[#33FFCC] transition-colors">First
+                    Semester</h2>
+                <p class="text-gray-400 group-hover:text-gray-200 transition-colors">Access materials for the start of
+                    the year.</p>
+            </a>
 
-    <!-- Footer -->
-    <footer class="w-full bg-tech-dark-alt p-4 mt-auto border-t border-tech-primary/30 relative z-20">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
-            <div class="text-center text-sm text-tech-light/70 mb-4 md:mb-0">
-                <span data-i18n="comments">If you have any comments please text me</span>
-                <a href="mailto:yassoalaa822@gmail.com"
-                    class="text-tech-secondary hover:text-tech-primary transition duration-200">yassoalaa822@gmail.com</a>
-            </div>
-            <button onclick="document.getElementById('settings-modal').classList.remove('hidden')"
-                class="px-4 py-2 bg-tech-bg border border-tech-primary/30 rounded-lg text-tech-primary hover:bg-tech-primary hover:text-tech-bg transition"
-                data-i18n="settings">
-                Settings
-            </button>
-        </div>
-    </footer>
-
-    <!-- Snow Container -->
-    <div id="snow-container"></div>
-
-    <!-- Settings Modal -->
-    <div id="settings-modal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-        <div
-            class="bg-tech-dark-alt rounded-2xl border border-tech-secondary/50 shadow-2xl p-6 w-full max-w-sm transform transition-all scale-100">
-            <div class="flex justify-between items-center mb-6 border-b border-tech-primary/20 pb-4">
-                <h3 class="text-2xl font-bold text-tech-primary" data-i18n="settings">Settings</h3>
-                <button id="close-settings" class="text-tech-light hover:text-tech-secondary">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                    </svg>
-                </button>
-            </div>
-
-
-
-            <div class="mb-6">
-                <h4 class="text-sm font-semibold text-tech-secondary uppercase tracking-wider mb-3"
-                    data-i18n="language">Language</h4>
-                <div class="grid grid-cols-2 gap-3">
-                    <button id="lang-en"
-                        class="p-2 rounded-lg border border-tech-primary/30 hover:bg-tech-primary/10 text-center transition">English</button>
-                    <button id="lang-ar"
-                        class="p-2 rounded-lg border border-tech-primary/30 hover:bg-tech-primary/10 text-center transition font-['Tajawal']">العربية</button>
+            <!-- Second Semester Card -->
+            <a href="./second semester/index.html"
+                class="glass-card w-full md:w-1/2 p-10 flex flex-col items-center text-center group h-80 justify-center card-entry">
+                <div
+                    class="w-20 h-20 mb-6 rounded-full bg-white/5 flex items-center justify-center border border-white/10 group-hover:border-[#00BFFF] transition-colors duration-300">
+                    <span class="text-4xl">2️⃣</span>
                 </div>
-            </div>
+                <h2 class="text-4xl font-bold text-white mb-3 group-hover:text-[#00BFFF] transition-colors">Second
+                    Semester</h2>
+                <p class="text-gray-400 group-hover:text-gray-200 transition-colors">continue your journey with term 2
+                    resources.</p>
+            </a>
 
-            <!-- Theme Section -->
-            <div class="mb-6">
-                <h4 class="text-sm font-semibold text-tech-secondary uppercase tracking-wider mb-3" data-i18n="theme">
-                    Theme</h4>
-                <div class="grid grid-cols-2 gap-3">
-                    <button id="theme-dark"
-                        class="p-2 rounded-lg border border-tech-primary/30 hover:bg-tech-primary/10 text-center transition"
-                        data-i18n="theme_dark">Dark
-                        Neon</button>
-                    <button id="theme-midnight"
-                        class="p-2 rounded-lg border border-pink-500/50 hover:bg-pink-500/10 text-center transition text-pink-300">Midnight
-                        🌆</button>
-                    <button id="theme-christmas"
-                        class="p-2 rounded-lg border border-red-500/50 hover:bg-red-500/10 text-center transition text-red-300"
-                        data-i18n="theme_christmas">Christmas 🎄</button>
-                    <button id="theme-space"
-                        class="p-2 rounded-lg border border-tech-primary/30 hover:bg-tech-primary/10 text-center transition text-tech-primary"
-                        data-i18n="theme_space">Space 🚀</button>
-                </div>
-            </div>
-
-            <button onclick="document.getElementById('settings-modal').classList.add('hidden')"
-                class="w-full py-2 bg-tech-primary text-tech-bg font-bold rounded-lg hover:bg-tech-secondary transition"
-                data-i18n="close">
-                Close
-            </button>
         </div>
     </div>
-    <script src="../space-theme.js"></script>
-    <script src="../theme-effects.js"></script>
+
+    <script>
+        // Entrance Animation
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // Animate Header
+            anime({
+                targets: '#header-content',
+                opacity: [0, 1],
+                translateY: [-20, 0],
+                easing: 'easeOutExpo',
+                duration: 1000,
+                delay: 200
+            });
+
+            // Animate Cards
+            anime({
+                targets: '.card-entry',
+                opacity: [0, 1],
+                translateY: [50, 0],
+                easing: 'easeOutElastic(1, .6)',
+                duration: 1200,
+                delay: anime.stagger(200, { start: 500 })
+            });
+
+            // Card Hover Mouse Effect
+            const cards = document.querySelectorAll('.glass-card');
+            cards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    card.style.setProperty('--x', `${x}px`);
+                    card.style.setProperty('--y', `${y}px`);
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>

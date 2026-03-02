@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدراسات الاجتماعية</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+
+    <!-- No Firebase module needed anymore -->
+
+    <style>
+        /* Apply Inter font family and smooth scrolling */
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        /* --- Tech Aesthetic Colors and Glows --- */
+        .shadow-subtle-glow {
+            box-shadow: 0 4px 15px rgba(51, 255, 204, 0.25), 0 0 5px rgba(51, 255, 204, 0.1);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .hover\:shadow-subtle-glow-lg:hover {
+            box-shadow: 0 6px 20px rgba(51, 255, 204, 0.4), 0 0 8px rgba(51, 255, 204, 0.2);
+        }
+
+        /* Keyframes for continuous gradient shift */
+        @keyframes gradient-shift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Base class for the animated text effect */
+        .gradient-text-wrapper {
+            display: inline-block;
+            background-size: 300% 100%;
+            animation: gradient-shift 8s linear infinite;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            line-height: 1.2;
+            white-space: nowrap;
+        }
+
+        /* Style for the main header (Physics) */
+        .gradient-h1 {
+            background-image: linear-gradient(to right, #00BFFF, #33FFCC, #00BFFF, #33FFCC);
+            animation-duration: 8s;
+        }
+
+        /* Light theme variables */
+        :root[data-theme="light"] {
+            --tech-bg: #ffffff;
+            --tech-dark-alt: #f3f4f6;
+            --tech-light: #111827;
+            --tech-primary: #0369a1;
+            --tech-secondary: #0e7490;
+            --border-color: rgba(2, 132, 199, 0.3);
+        }
+
+        /* Dark theme variables (default) */
+        :root[data-theme="dark"] {
+            --tech-bg: #1A1F26;
+            --tech-dark-alt: #2C333F;
+            --tech-light: #E0E6F0;
+            --tech-primary: #00BFFF;
+            --tech-secondary: #33FFCC;
+            --border-color: rgba(51, 255, 204, 0.3);
+        }
+
+        /* Space Theme Variables */
+        :root[data-theme="space"] {
+            --tech-bg: #050505;
+            --tech-dark-alt: #0F1218;
+            --tech-light: #ffffff;
+            --tech-primary: #00BFFF;
+            --tech-secondary: #33FFCC;
+            --border-color: rgba(0, 191, 255, 0.3);
+        }
+
+        /* Midnight Synth Theme */
+        :root[data-theme="midnight"] {
+            --tech-bg: #1e1b4b;
+            --tech-dark-alt: #312e81;
+            --tech-light: #e0e7ff;
+            --tech-primary: #f472b6;
+            --tech-secondary: #818cf8;
+            --border-color: rgba(244, 114, 182, 0.4);
+        }
+
+        /* Christmas Theme */
+        :root[data-theme="christmas"] {
+            --tech-bg: #2C0412;
+            --tech-dark-alt: #460B1C;
+            --tech-light: #FEEBC8;
+            --tech-primary: #D4AF37;
+            --tech-secondary: #228B22;
+            --border-color: rgba(212, 175, 55, 0.4);
+        }
+
+        /* Helper classes to apply CSS variable values (overrides Tailwind utility colors) */
+        body {
+            background-color: var(--tech-bg);
+            color: var(--tech-light);
+        }
+
+        .bg-tech-bg {
+            background-color: var(--tech-bg) !important;
+        }
+
+        .bg-tech-dark-alt {
+            background-color: var(--tech-dark-alt) !important;
+        }
+
+        .text-tech-light {
+            color: var(--tech-light) !important;
+        }
+
+        .text-tech-primary {
+            color: var(--tech-primary) !important;
+        }
+
+        .text-tech-secondary {
+            color: var(--tech-secondary) !important;
+        }
+
+        .border-tech-primary\/30 {
+            border-color: var(--border-color) !important;
+        }
+
+        /* Custom scrollbar style for the content area */
+        #content-area {
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #00BFFF #1A1F26;
+        }
+
+        #content-area::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #content-area::-webkit-scrollbar-thumb {
+            background-color: #00BFFF;
+            border-radius: 4px;
+        }
+
+        #content-area::-webkit-scrollbar-track {
+            background-color: #1A1F26;
+        }
+
+        /* Custom style for the LO button when active */
+        .lo-item.active {
+            background-color: #00BFFF33;
+            /* tech-primary with opacity */
+            border-left-color: #33FFCC;
+            /* tech-secondary */
+            box-shadow: 0 0 10px rgba(51, 255, 204, 0.3);
+        }
+
+        /* Centered header title helper */
+        .header-inner {
+            position: relative;
+        }
+
+        .centered-title {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+        }
+
+        /* Theme toggle button */
+        .theme-toggle {
+            padding: 0.5rem;
+            border-radius: 9999px;
+            transition: all 0.3s ease;
+            color: var(--tech-light);
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--tech-primary);
+            color: var(--tech-bg);
+        }
+
+        /* Details summary arrow rotation */
+        details summary .arrow-icon {
+            transform: rotate(0deg);
+            transition: transform 0.3s;
+        }
+
+        details[open] summary .arrow-icon {
+            transform: rotate(90deg);
+        }
+
+        /* Enforce CSS Variables */
+        .bg-tech-bg {
+            background-color: var(--tech-bg) !important;
+        }
+
+        .bg-tech-dark-alt {
+            background-color: var(--tech-dark-alt) !important;
+        }
+
+        .text-tech-light {
+            color: var(--tech-light) !important;
+        }
+
+        .text-tech-primary {
+            color: var(--tech-primary) !important;
+        }
+
+        .text-tech-secondary {
+            color: var(--tech-secondary) !important;
+        }
+
+        .border-tech-primary {
+            border-color: var(--tech-primary) !important;
+        }
+
+        .border-tech-secondary {
+            border-color: var(--tech-secondary) !important;
+        }
+
+        /* Christmas Theme */
+        :root[data-theme="christmas"] {
+            --tech-bg: #2C0412;
+            --tech-dark-alt: #460B1C;
+            --tech-light: #FDF5E6;
+            --tech-primary: #FFD700;
+            --tech-secondary: #006400;
+            --border-color: rgba(255, 215, 0, 0.4);
+        }
+
+        /* Snow */
+        #snow-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+            display: none;
+        }
+
+        :root[data-theme="christmas"] #snow-container {
+            display: block;
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh);
+            }
+        }
+
+        /* RTL */
+        [dir="rtl"] {
+            font-family: 'Tajawal', 'Inter', sans-serif;
+        }
+
+        [dir="rtl"] .text-right-rtl {
+            text-align: right;
+        }
+
+        [dir="rtl"] #sidebar {
+            border-left: 1px solid var(--tech-primary);
+            border-right: none;
+            margin-left: 1.5rem;
+            margin-right: 0;
+        }
+
+        #settings-modal {
+            backdrop-filter: blur(5px);
+        }
+
+        /* --- Dark Neon Dynamic Background --- */
+        .cyber-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+            display: none;
+        }
+
+        /* Only show in Dark Theme */
+        :root[data-theme="dark"] .cyber-wrapper {
+            display: block;
+        }
+
+        .cyber-grid {
+            position: absolute;
+            width: 200vw;
+            height: 200vh;
+            top: -50%;
+            left: -50%;
+            background-image:
+                linear-gradient(rgba(0, 191, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 191, 255, 0.05) 1px, transparent 1px);
+            background-size: 60px 60px;
+            transform: perspective(500px) rotateX(60deg);
+            animation: grid-move 20s linear infinite;
+        }
+
+        @keyframes grid-move {
+            0% {
+                transform: perspective(500px) rotateX(60deg) translateY(0);
+            }
+
+            100% {
+                transform: perspective(500px) rotateX(60deg) translateY(60px);
+            }
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+            animation: float-orb 20s infinite ease-in-out;
+        }
+
+        .orb-1 {
+            top: 20%;
+            left: 20%;
+            width: 300px;
+            height: 300px;
+            background: rgba(0, 191, 255, 0.3);
+            animation-duration: 25s;
+        }
+
+        .orb-2 {
+            bottom: 20%;
+            right: 20%;
+            width: 400px;
+            height: 400px;
+            background: rgba(51, 255, 204, 0.2);
+            animation-duration: 30s;
+            animation-delay: -5s;
+        }
+
+        .orb-3 {
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            height: 200px;
+            background: rgba(138, 43, 226, 0.15);
+            animation-duration: 20s;
+            animation-delay: -10s;
+        }
+
+        @keyframes float-orb {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            33% {
+                transform: translate(40px, -60px);
+            }
+
+            66% {
+                transform: translate(-30px, 30px);
+            }
+        }
+
+        /* Breathing Glow for Cards in Dark Mode */
+        :root[data-theme="dark"] .subject-card,
+        :root[data-theme="dark"] .comp-card,
+        :root[data-theme="dark"] .lo-item,
+        :root[data-theme="dark"] details {
+            animation: breathing-glow 5s ease-in-out infinite;
+        }
+
+        :root[data-theme="dark"] .subject-card:hover,
+        :root[data-theme="dark"] .comp-card:hover,
+        :root[data-theme="dark"] .lo-item:hover,
+        :root[data-theme="dark"] details[open] {
+            animation: none;
+        }
+
+        @keyframes breathing-glow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 5px rgba(0, 191, 255, 0.05);
+                border-color: rgba(0, 191, 255, 0.1);
+            }
+
+            50% {
+                box-shadow: 0 0 15px rgba(51, 255, 204, 0.15);
+                border-color: rgba(51, 255, 204, 0.3);
+            }
+        }
+
+        /* Space Theme Variables */
+        :root[data-theme="space"] {
+            --tech-bg: #050505;
+            --tech-dark-alt: #0F1218;
+            --tech-light: #ffffff;
+            --tech-primary: #00BFFF;
+            --tech-secondary: #33FFCC;
+            --border-color: rgba(0, 191, 255, 0.3);
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+
+    <script>
+        // Tailwind Configuration with a Modern Tech Palette
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'tech-bg': '#1A1F26',
+                        'tech-dark-alt': '#2C333F',
+                        'tech-light': '#E0E6F0',
+                        'tech-primary': '#00BFFF',
+                        'tech-secondary': '#33FFCC',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-tech-bg text-tech-light min-h-screen flex flex-col">
+    <!-- Dark Neon Background Effects -->
+    <div class="cyber-wrapper">
+        <div class="cyber-grid"></div>
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Header -->
+    <header
+        class="w-full bg-tech-dark-alt p-4 shadow-xl shadow-tech-primary/10 border-b border-tech-primary/30 sticky top-0 z-10">
+        <div class="max-w-7xl mx-auto flex justify-between items-center header-inner">
+            <!-- Left: Back Button & Logo -->
+            <div class="flex items-center space-x-4">
+                <button onclick="window.location.href='../index.html'"
+                    class="text-tech-light hover:text-tech-secondary transition duration-200 p-2 rounded-full hover:bg-tech-primary/20">
+                    <!-- Back Arrow SVG Icon -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 12H5" />
+                        <path d="m12 19-7-7 7-7" />
+                    </svg>
+                </button>
+
+                <!-- NEW LOGO: "Stemawy" link -->
+                <a href="../index.html"
+                    class="flex items-center space-x-2 text-2xl font-extrabold transition duration-200 hover:opacity-80">
+                    <span class="gradient-text-wrapper gradient-h1">Stemawy</span>
+                </a>
+            </div>
+
+            <!-- Centered Title -->
+            <h1 class="centered-title text-4xl font-extrabold tracking-tight">
+                <span class="gradient-text-wrapper gradient-h1">الدراسات الاجتماعية</span>
+            </h1>
+
+            <!-- Right: Theme Toggle Button -->
+            <div class="flex items-center">
+                <button id="theme-toggle" class="theme-toggle" title="Toggle theme">
+                    <svg id="theme-toggle-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area: Sidebar and Main Section -->
+    <main class="flex flex-1 overflow-hidden max-w-7xl mx-auto w-full p-4 sm:p-6">
+
+        <!-- Left Sidebar (LO Navigation) -->
+        <nav id="sidebar"
+            class="w-full sm:w-64 bg-tech-dark-alt rounded-xl p-4 mr-6 flex-shrink-0 border border-tech-primary/20 h-full overflow-y-auto">
+            <h2
+                class="text-lg font-bold mb-4 text-tech-secondary uppercase tracking-wider border-b border-tech-secondary/30 pb-2">
+                Learning Objectives</h2>
+            <ul id="lo-list" class="space-y-2">
+                <!-- LO items will be generated here -->
+            </ul>
+        </nav>
+
+        <!-- Right Content Area -->
+        <section id="content-area"
+            class="flex-1 bg-tech-dark-alt rounded-xl p-6 border border-tech-primary/50 shadow-subtle-glow">
+            <div id="dynamic-content" class="h-full">
+                <!-- Default State -->
+                <div id="default-message"
+                    class="flex items-center justify-center h-full text-3xl font-light text-tech-light/50">
+                    Please choose your checkpoint
+                </div>
+                <!-- Content will be rendered here -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full bg-tech-dark-alt p-4 mt-auto border-t border-tech-primary/30 relative z-20">
+        <div class="section-container flex flex-col sm:flex-row justify-between items-center text-sm">
+            <div class="text-center sm:text-left order-2 sm:order-1 mt-4 sm:mt-0">
+                <span data-i18n="footer_contact">If you have any comments please text me</span> <a
+                    href="mailto:yassoalaa822@gmail.com"
+                    class="text-tech-secondary hover:text-tech-primary transition duration-200">yassoalaa822@gmail.com</a>
+            </div>
+            <div class="space-x-4 order-1 sm:order-2">
+                <a href="#" id="open-settings" class="hover:text-tech-primary transition duration-200"
+                    data-i18n="settings">Settings</a>
+            </div>
+        </div>
+    </footer>
+    <div id="snow-container"></div>
+    <div id="settings-modal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+        <div
+            class="bg-tech-dark-alt rounded-2xl border border-tech-secondary/50 shadow-2xl p-6 w-full max-w-sm transform transition-all scale-100">
+            <div class="flex justify-between items-center mb-6 border-b border-tech-primary/20 pb-4">
+                <h3 class="text-2xl font-bold text-tech-primary" data-i18n="settings">Settings</h3>
+                <button id="close-settings" class="text-tech-light hover:text-tech-secondary"><svg
+                        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg></button>
+            </div>
+            <div class="mb-6">
+                <h4 class="text-sm font-semibold text-tech-secondary uppercase tracking-wider mb-3"
+                    data-i18n="language">Language</h4>
+                <div class="grid grid-cols-2 gap-3"><button id="lang-en"
+                        class="p-2 rounded-lg border border-tech-primary/30 hover:bg-tech-primary/10 text-center transition">English</button><button
+                        id="lang-ar"
+                        class="p-2 rounded-lg border border-tech-primary/30 hover:bg-tech-primary/10 text-center transition font-['Tajawal']">العربية</button>
+                </div>
+            </div>
+            <!-- Theme Section -->
+            <div class="mb-6">
+                <h4 class="text-sm font-semibold text-tech-secondary uppercase tracking-wider mb-3" data-i18n="theme">
+                    Theme</h4>
+                <div class="grid grid-cols-2 gap-3">
+                    <button id="theme-dark"
+                        class="p-2 rounded-lg border border-tech-primary/30 hover:bg-tech-primary/10 text-center transition">Dark
+                        Neon</button>
+                    <button id="theme-midnight"
+                        class="p-2 rounded-lg border border-pink-500/50 hover:bg-pink-500/10 text-center transition text-pink-300">Midnight
+                        🌆</button>
+                    <button id="theme-christmas"
+                        class="p-2 rounded-lg border border-red-500/50 hover:bg-red-500/10 text-center transition text-red-300">Christmas
+                        🎄</button>
+                    <button id="theme-space"
+                        class="p-2 rounded-lg border border-tech-primary/30 hover:bg-tech-primary/10 text-center transition text-tech-primary"
+                        data-i18n="theme_space">Space 🚀</button>
+                </div>
+            </div>
+
+            <button onclick="document.getElementById('settings-modal').classList.add('hidden')"
+                class="w-full py-2 bg-tech-primary text-tech-bg font-bold rounded-lg hover:bg-tech-secondary transition"
+                data-i18n="close">
+                Close
+            </button>
+        </div>
+    </div>
+    <script src="../space-theme.js"></script>
+    <script src="../theme-effects.js"></script>
+    <script>
+        // Define the data structure for all Learning Objectives and Concepts
+        const learningObjectives = {
+            LO9: {
+                title: "ملخصات",
+                concepts: [
+                ]
+            },
+            LO10: {
+                title: "ملفات",
+                concepts: [
+                ]
+            },
+        };
+
+        // Resource files found in the 'semester one' folders
+        const resourceFiles = {
+            LO9: [
+                    "A.C.E geography S.S part 3 .pdf",
+    "A.C.E geography S.S part 2 .pdf",
+    "A.C.E  history S.S .pdf",
+    "A.C.E geography S.S part1 .pdf",
+    "ملزمة الأستاذ أبو فادى.pdf",
+            ],
+            LO10: [
+                "the history the 3rd week[1].pdf",
+    "template_final[1][1].pdf",
+    "الدرس_الثالث[1] (1) (1).pptx",
+    "درس نمو وتركيب سكان مصر.pdf",
+    "ss[1].pptx",
+    "week 5 ss.pdf",
+    "مصر و المنظمات الاقليميه و الدوليه.pptx",
+    "توزيع السكان والكثافة السكانية في مصر-1.pdf",
+    "فنون العمارة عبر الحضارات و نماذجها الاسبوع 10.pdf",
+    "درس التنمية الاقتصادية.pdf",
+    "درس النقل والتجارة في مصر.pdf",
+            ],
+            references: [
+                 "الامتحان_تاريخ_1_ثانوي_الترم_الثاني_2026_المتميزون(١).PDF",
+    "الامتحان جغرافيا ١ث٢ 24 al3baqara1.pdf",           
+            ]
+        };
+
+        // Test banks folder files
+        resourceFiles.testBanks = [
+            "mid 21-22.pdf",
+    "mid 22-23 .pdf",
+    "Revision + Ans.pdf",
+        ];
+
+        // Video links mapped to LO keys and concept titles
+        const videoLinks = {
+            LO8: {
+                //format: "Mass": ["https://youtu.be/IuBoeDihLUc?si=3SXrfCI2W4X1hbhl"],
+            },
+            LO9: {
+                
+            },
+            LO10: {
+                
+            },
+            LO11: {
+                
+            }
+        };
+
+        const loSummaryVideos = {
+        
+        };
+
+        const revisionVideos = {
+            //format: "https://youtu.be/uXa3keakdWs?si=GsW0ld517POGIcom",
+            midterm: [
+            ]
+        };
+
+        // Mapping of filename -> Google Drive share URL (generated from CSV)
+        const shareMap = {
+             "A.C.E geography S.S part 3 .pdf": "https://drive.google.com/file/d/16jwTP0vAYpuJQ9UYFpBnobMcJyFpKlSb/view",
+    "A.C.E geography S.S part 2 .pdf": "https://drive.google.com/file/d/1pnNFBXiz_GVgHrs_Kr06Ai3I7bdzcoju/view",
+    "A.C.E  history S.S .pdf": "https://drive.google.com/file/d/1lKZYujywnQWdMMqeJe95K-pxI4W33Dux/view",
+    "A.C.E geography S.S part1 .pdf": "https://drive.google.com/file/d/1p160LxtLdyloVM3tBzlOFOz_Ecu360Gp/view",
+    "ملزمة الأستاذ أبو فادى.pdf": "https://drive.google.com/file/d/16dMJRAzl6VNn0Uf1a4wfuAsw_KqtQPXh/view",
+    "the history the 3rd week[1].pdf": "https://drive.google.com/file/d/1MAQcYWKXRI7kD3RpcdmJR5vgAqH6kn09/view",
+    "template_final[1][1].pdf": "https://drive.google.com/file/d/1pkH08HLCfxuA4DZvms6utrHUZuV0A2c_/view",
+    "الدرس_الثالث[1] (1) (1).pptx": "https://drive.google.com/file/d/18tZ3tLUG5dVt1jT8g9AVEAVdvK7GJ1DK/view",
+    "درس نمو وتركيب سكان مصر.pdf": "https://drive.google.com/file/d/1oMu-x3wsVSOCglYexg8k23kxk14nAYf3/view",
+    "ss[1].pptx": "https://drive.google.com/file/d/1Uy9wM5r5ulUkbAnQL9it8LERsFPEJkJb/view",
+    "week 5 ss.pdf": "https://drive.google.com/file/d/1wBWUzfV3K5zLWj3DNRnYaij927Xm1hjI/view",
+    "مصر و المنظمات الاقليميه و الدوليه.pptx": "https://drive.google.com/file/d/1KDIxYD2eHQcfMN-rmLRqyR_7dS6_0zRd/view",
+    "توزيع السكان والكثافة السكانية في مصر-1.pdf": "https://drive.google.com/file/d/131959zsDJ8dy1NO2B3kKfhW6kA06_1Ga/view",
+    "فنون العمارة عبر الحضارات و نماذجها الاسبوع 10.pdf": "https://drive.google.com/file/d/1F1ug6KjLEDTGWW8gqXYRDv4b-WUGbNnj/view",
+    "درس التنمية الاقتصادية.pdf": "https://drive.google.com/file/d/1BiPMCEdFlL-Q6H-XM9KeOHS6OlGUwrmP/view",
+    "درس النقل والتجارة في مصر.pdf": "https://drive.google.com/file/d/1dFIvWMi50mjt2leMnFRw7c5FxL60pMdW/view",
+    "mid 21-22.pdf": "https://drive.google.com/file/d/15vQ-SZIvxUOT_vIbmTPl733AZp4DUQ6r/view",
+    "mid 22-23 .pdf": "https://drive.google.com/file/d/1_UMRD6SFntO3qEpCe4uRkW0bWI-jog-l/view",
+    "Revision + Ans.pdf": "https://drive.google.com/file/d/1K0qWv0hYpou7GL_F1E2FTwY5uQQLNQ0d/view",
+    "الامتحان_تاريخ_1_ثانوي_الترم_الثاني_2026_المتميزون(١).PDF": "https://drive.google.com/file/d/1XPaqia498BTUKf9X6WCBtHOnwqc2TbDP/view",
+    "الامتحان جغرافيا ١ث٢ 24 al3baqara1.pdf": "https://drive.google.com/file/d/1Bs-rBOS05bvRL7S8Ta1-NNghh7xThV18/view",
+        };
+
+        // Render video links for a given LO/concept
+        function renderVideoLinks(loKey, conceptTitle) {
+            const lo = videoLinks[loKey] || {};
+            const links = lo[conceptTitle] || [];
+            if (!links.length) return '';
+            let html = `<div class="mt-3 p-3 bg-tech-dark-alt rounded-lg border border-tech-dark-alt">
+                            <h4 class="text-md font-bold text-tech-secondary mb-1">Videos</h4>`;
+            links.forEach((url, idx) => {
+                html += `
+                    <div class="mb-2">
+                        <a href="${url}" target="_blank" rel="noopener noreferrer" class="text-tech-primary hover:text-tech-secondary transition duration-200 text-sm underline font-semibold">Video ${idx + 1}</a>
+                    </div>
+                `;
+            });
+            html += `</div>`;
+            return html;
+        }
+
+        // Render Test Banks section
+        function renderTestBanks() {
+            const files = resourceFiles.testBanks || [];
+            let html = `
+                <h2 class="text-3xl font-extrabold mb-6 text-tech-primary border-b border-tech-secondary/50 pb-2">اسئلة</h2>
+                <div class="p-6 bg-tech-dark-alt rounded-xl border border-tech-secondary/50 shadow-subtle-glow">
+                    <p class="text-xl font-medium text-tech-light mb-6">نزل هذه الاسئلة للتدريب عليها</p>
+            `;
+            files.forEach(f => {
+                const name = f.split('/').pop();
+                const url = shareMap[name] || f;
+                html += `
+                    <div class="mb-4">
+                        <a href="${url}" target="_blank" rel="noopener noreferrer" class="text-tech-secondary hover:text-tech-primary transition duration-200 text-lg underline font-semibold">${name}</a>
+                    </div>
+                `;
+            });
+            html += `</div>`;
+            return html;
+        }
+
+        // Render file list for a given LO key
+        function renderFilesList(loKey) {
+            const files = resourceFiles[loKey] || [];
+            if (!files.length) return '';
+            let html = `<div class="mt-3 p-3 bg-tech-dark-alt rounded-lg border border-tech-dark-alt">
+                            <h4 class="text-md font-bold text-tech-secondary mb-1">Files & Presentations</h4>`;
+            files.forEach(f => {
+                const name = f.split('/').pop();
+                const url = shareMap[name] || f;
+                html += `
+                    <div class="mb-2">
+                        <a href="${url}" target="_blank" rel="noopener noreferrer" class="text-tech-primary hover:text-tech-secondary transition duration-200 text-sm underline font-semibold">${name}</a>
+                    </div>
+                `;
+            });
+            html += `</div>`;
+            return html;
+        }
+
+        // Function to create a single downloadable link block
+        function createLinkBlock(title, placeholderText) {
+            // Show placeholder text (no fake downloads)
+            return `
+                <div class="mt-3 p-3 bg-tech-dark-alt rounded-lg border border-tech-dark-alt">
+                    <h4 class="text-md font-bold text-tech-secondary mb-1">${title}</h4>
+                    <p class="text-sm text-tech-light/70 italic mb-2">${placeholderText}</p>
+                </div>
+            `;
+        }
+
+        // Function to render the expandable concept content
+        function renderConcept(loKey, conceptTitle) {
+            // Placeholder text for description (can be replaced with actual content later)
+            const description = `This section covers the fundamental principles of **${conceptTitle}**. Understanding this concept is crucial for solving problems related to classical mechanics. It often involves analysis of vectors and their components.`;
+
+            return `
+                <details class="mb-4 bg-tech-dark-alt rounded-xl border border-tech-primary/30 shadow-lg overflow-hidden">
+                    <summary class="flex items-center justify-between p-4 cursor-pointer text-lg font-semibold text-tech-light hover:bg-tech-primary/20 transition duration-300">
+                        <span class="truncate">${conceptTitle}</span>
+                        <svg class="w-5 h-5 ml-2 transition-transform duration-300 arrow-icon flex-shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                    </summary>
+                    <div class="px-4 pb-4 pt-2 border-t border-tech-primary/30 space-y-4">
+                        <!-- Description -->
+                        <div class="bg-tech-dark-alt p-3 rounded-lg border border-tech-dark-alt">
+                            <h4 class="text-md font-bold text-tech-secondary mb-1">Concept Description</h4>
+                            <p class="text-tech-light/90 text-sm">${description}</p>
+                        </div>
+                        <!-- Video links for this concept -->
+                        ${renderVideoLinks(loKey, conceptTitle)}
+                    </div>
+                </details>
+            `;
+        }
+
+        /**
+         * Main function to handle content rendering (called by click and by Firestore snapshot).
+         * @param {string} loKey - The key of the Learning Objective.
+         * @param {boolean} isProgressUpdate - If true, skips scrolling the content area to the top.
+         */
+        function renderContent(loKey, isProgressUpdate = false) {
+            const contentArea = document.getElementById('dynamic-content');
+            const defaultMessage = document.getElementById('default-message');
+
+            // Hide default message
+            if (defaultMessage) {
+                defaultMessage.style.display = 'none';
+            }
+
+            // Render Content
+            if (loKey === 'revisions') {
+                contentArea.innerHTML = renderRevisions();
+            } else if (loKey === 'test-banks') {
+                contentArea.innerHTML = renderTestBanks();
+            } else if (learningObjectives[loKey]) {
+                contentArea.innerHTML = renderLO(loKey, learningObjectives[loKey]);
+            } else {
+                contentArea.innerHTML = `<h2 class="text-red-400">Error: LO not found.</h2>`;
+            }
+
+            // Scroll content area to the top, but only if the action was a user-initiated navigation 
+            if (!isProgressUpdate) {
+                document.getElementById('content-area').scrollTop = 0;
+            }
+        }
+
+        // Function to render a selected LO
+        function renderLO(loKey, loData) {
+            let html = `
+                <h2 class="text-3xl font-extrabold mb-6 text-tech-primary border-b border-tech-secondary/50 pb-2">${loData.title}</h2>
+            `;
+
+            // 1. LO summarized video(s)
+            if (loSummaryVideos[loKey]) {
+                html += `
+                    <div class="mb-6 p-4 bg-tech-dark-alt/80 rounded-lg border border-tech-primary/30">
+                        <h3 class="text-xl font-bold text-tech-secondary mb-3">Summary Videos</h3>
+                        <div class="space-y-2">
+                `;
+                loSummaryVideos[loKey].forEach((vid, idx) => {
+                    html += `
+                        <a href="${vid}" target="_blank" class="flex items-center space-x-2 text-tech-light hover:text-tech-primary transition">
+                            <svg class="w-5 h-5 text-red-500" fill="currentColor" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
+                            <span class="underline">Watch Summary Video ${idx + 1}</span>
+                        </a>
+                     `;
+                });
+                html += `</div></div>`;
+            }
+
+            // Render all concepts
+            loData.concepts.forEach(concept => {
+                html += renderConcept(loKey, concept);
+            });
+
+            // 2. Files / Presentations
+            // Render files list once per LO
+            html += renderFilesList(loKey);
+
+            // 3. Test Banks Link
+            html += `
+                <div class="mt-8 p-4 bg-tech-dark-alt rounded-lg border border-tech-dark-alt">
+                    <p class="text-tech-light/80 mb-3">هل تبحث عن اختبارات تدريبية؟ تحقق من قسم الاسئلة.</p>
+                    <button onclick="handleNavigationClick('test-banks')" class="px-3 py-2 bg-tech-primary text-tech-bg rounded-md font-semibold hover:bg-tech-secondary transition duration-200">افتح الاسئلة</button>
+                </div>
+            `;
+
+            return html;
+        }
+
+        // Function to render revisions list
+        function renderRevisions() {
+            let html = `
+                <h2 class="text-3xl font-extrabold mb-6 text-tech-primary border-b border-tech-secondary/50 pb-2">كتب</h2>
+            `;
+
+            // Helper for video sections
+            const renderVidSection = (title, vids) => {
+                if (!vids || !vids.length) return '';
+                let block = `
+                    <div class="mb-6">
+                        <h3 class="text-2xl font-bold text-tech-light mb-4">${title}</h3>
+                        <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                `;
+                vids.forEach((v, idx) => {
+                    block += `
+                        <a href="${v}" target="_blank" class="block p-4 bg-tech-dark-alt rounded-lg border border-tech-primary/30 hover:border-tech-secondary hover:shadow-subtle-glow transition group">
+                            <div class="flex items-center space-x-3">
+                                <svg class="w-8 h-8 text-red-500 group-hover:text-red-400 transition" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/>
+                                </svg>
+                                <span class="font-semibold text-tech-light group-hover:text-tech-primary">Watch Video ${idx + 1}</span>
+                            </div>
+                        </a>
+                    `;
+                });
+                block += `</div></div>`;
+                return block;
+            }
+
+            // Midterm Revision Videos
+            if (revisionVideos && revisionVideos.midterm) {
+                html += renderVidSection('Midterm Revision', revisionVideos.midterm);
+            }
+
+            // Reference Files (Books)
+            html += `
+                <div class="mt-8">
+                    <h3 class="text-2xl font-bold text-tech-light mb-4">كتب</h3>
+                    <div class="p-6 bg-tech-dark-alt rounded-xl border border-tech-secondary/50 shadow-subtle-glow">
+                        <p class="text-xl font-medium text-tech-light mb-6">
+                            نزل هذه الكتب للمذاكرة بعمق :
+                        </p>
+            `;
+            const refs = resourceFiles.references || [];
+            refs.forEach((f) => {
+                const name = f.split('/').pop();
+                const url = shareMap[name] || f;
+                html += `
+                    <div class="mb-4">
+                        <a href="${url}" target="_blank" rel="noopener noreferrer" class="text-tech-secondary hover:text-tech-primary transition duration-200 text-lg underline font-semibold">${name}</a>
+                    </div>
+                `;
+            });
+            html += `</div></div>`;
+
+            return html;
+        }
+
+        // Progress tracking removed
+
+
+        // Function to handle navigation click and update sidebar state
+        function handleNavigationClick(loKey) {
+            const loItems = document.querySelectorAll('.lo-item');
+
+            // 1. Update Active State in Sidebar
+            loItems.forEach(item => item.classList.remove('active'));
+            document.getElementById(`lo-${loKey}`).classList.add('active');
+
+            // Render Content (which handles scrolling)
+            renderContent(loKey);
+        }
+
+        // DOM Content Loaded: Initialize Navigation Bar
+        document.addEventListener('DOMContentLoaded', () => {
+            const loList = document.getElementById('lo-list');
+
+            // Loop through all defined LOs to create sidebar buttons
+            // Loop through all defined LOs to create sidebar buttons
+            Object.keys(learningObjectives).forEach(key => {
+                const displayText = learningObjectives[key].title;
+
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `
+                    <button id="lo-${key}" 
+                        class="lo-item w-full flex justify-between items-center text-left p-3 rounded-lg border-l-4 border-tech-dark-alt transition duration-200 
+                                hover:bg-tech-primary/10 hover:border-tech-primary font-medium text-sm sm:text-base"
+                        data-lo-key="${key}">
+                        <span class="truncate">${displayText}</span>
+                    </button>
+                `;
+                loList.appendChild(listItem);
+            });
+
+            // Add Revisions Button
+            const revItem = document.createElement('li');
+            revItem.innerHTML = `
+                <button id="lo-revisions" 
+                    class="lo-item w-full flex justify-between items-center text-left p-3 rounded-lg border-l-4 border-tech-dark-alt transition duration-200 
+                            hover:bg-tech-primary/10 hover:border-tech-primary font-medium text-sm sm:text-base"
+                    data-lo-key="revisions">
+                    <span class="truncate">كتب</span>
+                </button>
+            `;
+            loList.appendChild(revItem);
+
+            // Add Test Banks button to the sidebar
+            const tbItem = document.createElement('li');
+            tbItem.innerHTML = `
+                <button id="lo-test-banks" 
+                    class="lo-item w-full flex justify-between items-center text-left p-3 rounded-lg border-l-4 border-tech-dark-alt transition duration-200 
+                            hover:bg-tech-primary/10 hover:border-tech-primary font-medium text-sm sm:text-base"
+                    data-lo-key="test-banks">
+                    <span class="truncate">اسئلة</span>
+                </button>
+            `;
+            loList.appendChild(tbItem);
+
+            // Attach event listener to the list container (delegation)
+            loList.addEventListener('click', (event) => {
+                const button = event.target.closest('.lo-item');
+                if (button) {
+                    const loKey = button.getAttribute('data-lo-key');
+                    handleNavigationClick(loKey);
+                }
+            });
+
+            // Initialize first render
+            renderContent('LO9');
+
+            // Theme toggle initialization for this page
+            // Theme toggle initialization for this page
+            const themeToggleIcon = document.getElementById('theme-toggle-icon');
+
+            function setTheme(theme) {
+                document.documentElement.setAttribute('data-theme', theme);
+                localStorage.setItem('theme', theme);
+
+                // update icon if present
+                if (themeToggleIcon) {
+                    if (theme === 'dark') {
+                        themeToggleIcon.innerHTML = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>';
+                    } else {
+                        // Light/Christmas/Midnight - use generic or specific icons if needed
+                        // For now, keeping the "sun" icon for non-dark themes or simplified logic
+                        themeToggleIcon.innerHTML = '<circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>';
+                    }
+                }
+
+                // Use centralized effects
+                if (window.ThemeEffects) {
+                    window.ThemeEffects.setEffect(theme);
+                } else {
+                    if (theme === 'christmas') {
+                        startSnow();
+                    } else {
+                        stopSnow();
+                    }
+                }
+            }
+
+            // Default to dark unless user has saved preference
+            // Christmas / Language Logic
+            const translations = {
+                en: { "settings": "Settings", "language": "Language", "theme": "Theme", "close": "Close", "footer_contact": "If you have any comments please text me" },
+                ar: { "settings": "الإعدادات", "language": "اللغة", "theme": "السمة", "close": "إغلاق", "footer_contact": "إذا كان لديك أي تعليقات يرجى مراسلتي" }
+            };
+            function updateText(lang) {
+                const t = translations[lang];
+                document.querySelectorAll('[data-i18n]').forEach(el => {
+                    const key = el.getAttribute('data-i18n');
+                    if (t[key]) el.textContent = t[key];
+                });
+            }
+            function setLanguage(lang) {
+                document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+                document.documentElement.setAttribute('lang', lang);
+                localStorage.setItem('language', lang);
+                updateText(lang);
+            }
+
+            // Snow helper functions (fallback)
+            function startSnow() {
+                const c = document.getElementById('snow-container'); if (!c) return; stopSnow();
+                window.snowInterval = setInterval(() => {
+                    const s = document.createElement('div');
+                    s.className = 'snowflake';
+                    s.style.left = Math.random() * 100 + 'vw';
+                    s.style.width = s.style.height = (Math.random() * 5 + 3) + 'px';
+                    s.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                    s.style.opacity = Math.random();
+                    c.appendChild(s);
+                    setTimeout(() => s.remove(), 5000);
+                }, 100);
+            }
+            function stopSnow() { if (window.snowInterval) clearInterval(window.snowInterval); const c = document.getElementById('snow-container'); if (c) c.innerHTML = ''; }
+
+            // Init
+            setLanguage(localStorage.getItem('language') || 'en');
+            const saved = localStorage.getItem('theme');
+            if (saved) setTheme(saved); else setTheme('dark');
+
+            // Listeners
+            document.getElementById('open-settings')?.addEventListener('click', (e) => { e.preventDefault(); document.getElementById('settings-modal').classList.remove('hidden'); });
+            document.getElementById('close-settings')?.addEventListener('click', () => document.getElementById('settings-modal').classList.add('hidden'));
+            document.getElementById('settings-modal')?.addEventListener('click', (e) => { if (e.target === document.getElementById('settings-modal')) document.getElementById('settings-modal').classList.add('hidden'); });
+            document.getElementById('lang-en')?.addEventListener('click', () => setLanguage('en'));
+            document.getElementById('lang-ar')?.addEventListener('click', () => setLanguage('ar'));
+            document.getElementById('theme-dark')?.addEventListener('click', () => setTheme('dark'));
+            document.getElementById('theme-midnight')?.addEventListener('click', () => setTheme('midnight'));
+            document.getElementById('theme-christmas')?.addEventListener('click', () => setTheme('christmas'));
+            document.getElementById('theme-space')?.addEventListener('click', () => setTheme('space'));
+
+            // Legacy
+            const legacyToggle = document.getElementById('theme-toggle');
+            if (legacyToggle) legacyToggle.addEventListener('click', () => { setTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'christmas' : 'dark'); });
+
+        });
+    </script>
+    <script src="../space-theme.js"></script>
+</body>
+
+</html>
